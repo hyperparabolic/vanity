@@ -1,0 +1,15 @@
+.vanity_bar {}
+
+.bar_center {
+  min-height: 25px;
+  padding: 4px;
+}
+
+.bar_segment {
+  background-color: #{"@theme_bg_color"};
+
+}
+
+.focused {
+  color: #{"@theme_selected_bg_color"};
+}
