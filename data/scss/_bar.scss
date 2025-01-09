@@ -1,13 +1,16 @@
-.vanity_bar {}
+.vanity_bar {
+  background-color: transparent;
+}
 
 .bar_center {
   min-height: 25px;
-  padding: 4px;
 }
 
 .bar_segment {
+  opacity: 0.6;
+  border-radius: 25px;
+  padding: 5px;
   background-color: #{"@theme_bg_color"};
-
 }
 
 .focused {

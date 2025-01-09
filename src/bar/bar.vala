@@ -16,6 +16,9 @@ public class Vanity.Bar : Astal.Window {
   }
 
   construct {
+    // Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION is lower priority than the theme styles,
+    // and generally I think this is correct. Ignore window.background from that here though.
+    this.remove_css_class("background");
     init_clock();
     instance = this;
   }
