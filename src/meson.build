@@ -1,11 +1,11 @@
 subdir('bar')
 
-project_resources += ['main.vala', 'app.vala']
+project_resources += ['app.vala', 'main.vala']
 
 executable(
   project_name,
   project_resources,
-  dependencies:  [
+  dependencies: [
     dependency('astal-4-4.0'),
     dependency('astal-hyprland-0.1'),
     dependency('astal-io-0.1'),
