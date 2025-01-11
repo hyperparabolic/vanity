@@ -7,6 +7,7 @@ executable(
   project_resources,
   dependencies: [
     dependency('astal-4-4.0'),
+    dependency('astal-battery-0.1'),
     dependency('astal-hyprland-0.1'),
     dependency('astal-io-0.1'),
     dependency('astal-tray-0.1'),
@@ -15,5 +16,7 @@ executable(
     dependency('gtk4-layer-shell-0'),
     dependency('libadwaita-1'),
   ],
+  link_args: ['-lm'], # link math library
   install: true,
+  install_dir: get_option('prefix') / get_option('bindir')
 )

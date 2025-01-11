@@ -4,6 +4,8 @@ using GtkLayerShell;
 public class Vanity.Bar : Astal.Window {
   public static Bar instance { get; private set; }
 
+  public AstalBattery.Device battery { get; set; }
+
   [GtkChild]
   public unowned Gtk.Label clock;
 
@@ -19,6 +21,7 @@ public class Vanity.Bar : Astal.Window {
     // Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION is lower priority than the theme styles,
     // and generally I think this is correct. Ignore window.background from that here though.
     this.remove_css_class("background");
+    battery = AstalBattery.Device.get_default();
     init_clock();
     instance = this;
   }

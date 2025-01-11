@@ -1,5 +1,6 @@
 using Gtk 4.0;
 using Astal 4.0;
+using AstalBattery 0.1;
 
 template $VanityBar: Astal.Window {
   styles [
@@ -16,15 +17,32 @@ template $VanityBar: Astal.Window {
     styles [
       "bar_center"
     ]
+
     [end]
     Box right_box {
       styles [
         "bar_segment"
       ]
 
+      spacing: 10;
+
+      Box {
+        visible: bind template.battery as <AstalBattery.Device>.is-present;
+
+        Image {
+          icon-name: bind template.battery as <AstalBattery.Device>.battery-icon-name;
+        }
+      }
+
       Box {
         Label clock {
           name: "clock";
+        }
+      }
+
+      Box {
+        Image {
+          icon-name: "nixos-symbolic";
         }
       }
     }

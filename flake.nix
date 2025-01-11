@@ -23,6 +23,7 @@
 
         astal-libs = with astal.packages.${system}; [
           astal4
+          battery
           hyprland
           io
           tray
