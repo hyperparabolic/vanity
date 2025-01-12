@@ -46,6 +46,7 @@
           gtk4
           gtk4-layer-shell
           libadwaita
+          wrapGAppsHook4
         ];
 
         vanity = pkgs.stdenv.mkDerivation {
@@ -53,7 +54,7 @@
           src = ./.;
           version = version;
 
-          buildInputs =
+          nativeBuildInputs =
             astal-libs
             ++ build-tools
             ++ compiler-tools
