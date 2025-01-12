@@ -4,16 +4,22 @@ using GtkLayerShell;
 public class Vanity.Bar : Astal.Window {
   public static Bar instance { get; private set; }
 
+  public bool is_sidecar { get; private set; }
+
   public AstalBattery.Device battery { get; set; }
 
   [GtkChild]
   public unowned Gtk.Label clock;
 
-  public Bar() {
+  public Bar(Gdk.Monitor monitor, bool is_sidecar) {
     Object(
-      namespace: "Bar",
+      application: Vanity.Application.instance,
+      namespace: @"bar-$(monitor.get_connector())",
+      name: @"bar-$(monitor.get_connector())",
+      gdkmonitor: monitor,
       anchor: Astal.WindowAnchor.LEFT | Astal.WindowAnchor.TOP | Astal.WindowAnchor.RIGHT
     );
+    this.is_sidecar = is_sidecar;
     present();
   }
 

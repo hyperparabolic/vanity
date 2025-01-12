@@ -29,7 +29,18 @@ class Vanity.Application : Astal.Application {
     Gtk.StyleContext.add_provider_for_display(Gdk.Display.get_default(), provider,
                                               Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
 
-    add_window(new Vanity.Bar());
+    var monitors = Gdk.Display.get_default().get_monitors();
+    for (var i = 0; i <= monitors.get_n_items(); ++i) {
+      var monitor = (Gdk.Monitor)monitors.get_item(i);
+
+      if (monitor != null) {
+        var r = (Cairo.RectangleInt)monitor.get_geometry();
+        var is_sidecar = r.height > r.width;
+        add_window(new Vanity.Bar(monitor, is_sidecar));
+      }
+    }
+
+
     this.hold();
   }
 }
