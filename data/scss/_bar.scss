@@ -13,9 +13,26 @@
   padding-top: 5px;
   padding-left: 10px;
   padding-right: 10px;
-  background-color: #{"@theme_bg_color"};
+  background-color: #{"@window_bg_color"};
 }
 
-.focused {
-  color: #{"@theme_selected_bg_color"};
+.ws_button {
+  transition:
+    min-width 0.5s,
+    background-color 0.5s;
+  min-height: 15px;
+  min-width: 15px;
+  border-radius: 15px;
+  background-color: transparent;
+
+  border: 2px solid #{"@card_fg_color"};
+
+  &.occupied {
+    background-color: #{"@card_fg_color"};
+  }
+
+  &.focused {
+    min-width: 30px;
+    border-radius: 15px;
+  }
 }

@@ -4,6 +4,7 @@ using GtkLayerShell;
 public class Vanity.Bar : Astal.Window {
   public static Bar instance { get; private set; }
 
+  public string monitor_connector { get; private set; }
   public bool is_sidecar { get; private set; }
 
   public AstalBattery.Device battery { get; set; }
@@ -20,6 +21,7 @@ public class Vanity.Bar : Astal.Window {
       anchor: Astal.WindowAnchor.LEFT | Astal.WindowAnchor.TOP | Astal.WindowAnchor.RIGHT
     );
     this.is_sidecar = is_sidecar;
+    this.monitor_connector = monitor.get_connector();
     present();
   }
 

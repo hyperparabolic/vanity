@@ -18,6 +18,18 @@ template $VanityBar: Astal.Window {
       "bar_center"
     ]
 
+    [start]
+    Box left_box {
+      styles [
+        "bar_segment"
+      ]
+
+      spacing: 10;
+
+      $VanityHyprlandWorkspaces {
+      }
+    }
+
     [end]
     Box right_box {
       styles [

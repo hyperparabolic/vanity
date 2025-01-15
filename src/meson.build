@@ -16,7 +16,7 @@ executable(
     dependency('gtk4-layer-shell-0'),
     dependency('libadwaita-1'),
   ],
-  link_args: ['-lm'], # link math library
+  link_args: ['-lm'],  # link math library
   install: true,
-  install_dir: get_option('prefix') / get_option('bindir')
+  install_dir: get_option('prefix') / get_option('bindir'),
 )
