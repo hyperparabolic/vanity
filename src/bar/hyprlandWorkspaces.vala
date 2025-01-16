@@ -139,7 +139,11 @@ public class Vanity.HyprlandWorkspaces : Gtk.Box {
       }
     });
 
-    button.clicked.connect(ws.focus);
+    button.clicked.connect(() => {
+      if (hyprland.focused_workspace != ws) {
+        ws.focus();
+      }
+    });
     update_button_styles(button, ws);
 
     return button;
