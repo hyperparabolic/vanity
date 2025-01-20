@@ -1,4 +1,5 @@
 subdir('bar')
+subdir('menu')
 
 project_resources += ['app.vala', 'main.vala']
 

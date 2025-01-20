@@ -1,0 +1,28 @@
+using Gtk 4.0;
+using Adw 1;
+using Astal 4.0;
+
+template $VanityMenu: Astal.Window {
+  styles [
+    "vanity_menu",
+    "open"
+  ]
+
+  title: "VanityMenu";
+  keymode: on_demand;
+  margin-top: 15;
+  margin-right: 5;
+  margin-bottom: 15;
+
+  Box {
+    vexpand: true;
+    orientation: vertical;
+
+    Adw.NavigationView nav_view {
+      Adw.NavigationPage {
+        tag: "main";
+        title: "Main";
+      }
+    }
+  }
+}

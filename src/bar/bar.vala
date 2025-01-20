@@ -12,6 +12,11 @@ public class Vanity.Bar : Astal.Window {
   [GtkChild]
   public unowned Gtk.Label clock;
 
+  [GtkCallback]
+  public void toggle_menu() {
+    Vanity.Application.instance.toggle_menu();
+  }
+
   public Bar(Gdk.Monitor monitor, bool is_sidecar) {
     Object(
       application: Vanity.Application.instance,

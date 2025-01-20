@@ -1,6 +1,6 @@
 blueprints = custom_target(
   'blueprints',
-  input: files('bar.blp'),
+  input: files('bar.blp', 'menu.blp'),
   output: '.',
   command: [
     find_program('blueprint-compiler'),

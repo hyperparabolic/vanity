@@ -8,7 +8,7 @@ template $VanityBar: Astal.Window {
   ]
   title: "VanityBar";
   exclusivity: exclusive;
-  keymode: on_demand;
+  keymode: none;
   margin_left: 15;
   margin_right: 15;
   margin_top: 5;
@@ -52,10 +52,10 @@ template $VanityBar: Astal.Window {
         }
       }
 
-      Box {
-        Image {
-          icon-name: "nixos-symbolic";
-        }
+      Button menu_button {
+        icon-name: "nixos-symbolic";
+        name: "menu-button";
+        clicked => $toggle_menu();
       }
     }
   }
