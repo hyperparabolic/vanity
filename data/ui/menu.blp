@@ -1,6 +1,7 @@
 using Gtk 4.0;
 using Adw 1;
 using Astal 4.0;
+using AstalWp 0.1;
 
 template $VanityMenu: Astal.Window {
   styles [
@@ -11,17 +12,89 @@ template $VanityMenu: Astal.Window {
   title: "VanityMenu";
   keymode: on_demand;
   margin-top: 15;
-  margin-right: 5;
+  margin-right: 15;
   margin-bottom: 15;
 
   Box {
-    vexpand: true;
     orientation: vertical;
+    spacing:15;
+    margin-top: 15;
+    margin-bottom: 15;
+    margin-start: 15;
+    margin-end: 15;
+
+    Box quick_controls {
+      styles [
+        "menu_segment"
+      ]
+
+      Button {
+        icon-name: bind template.wp as <AstalWp.Wp>.audio as <AstalWp.Audio>.default-speaker as <AstalWp.Endpoint>.volume-icon;
+        clicked => $toggle_mute_source();
+      }
+      Scale {
+        hexpand: true;
+        adjustment: Adjustment source_volume {
+          lower: 0;
+          upper: 1.0;
+        };
+      }
+    }
+
+    Box {
+      styles [
+        "menu_segment"
+      ]
+
+      hexpand: true;
+      Label {
+        label: "toggles and page selectors placeholder";
+      }
+    }
 
     Adw.NavigationView nav_view {
       Adw.NavigationPage {
-        tag: "main";
-        title: "Main";
+        tag: "hud";
+        title: "Vanity";
+        child: Box {
+          styles [
+            "menu_segment"
+          ]
+
+          orientation: vertical;
+          hexpand: true;
+          vexpand: true;
+
+          Label {
+            label: "hud placeholder";
+          }
+        };
+      }
+
+      Adw.NavigationPage {
+        tag: "audio";
+        title: "Audio";
+        child: Box {
+          styles [
+            "menu_segment"
+          ]
+
+          Adw.HeaderBar {
+            hexpand: true;
+            show-end-title-buttons: false;
+          }
+        };
+      }
+    }
+
+    Box {
+      styles [
+        "menu_segment"
+      ]
+
+      hexpand: true;
+      Label {
+        label: "system controls placeholder";
       }
     }
   }

@@ -2,8 +2,17 @@ using GtkLayerShell;
 
 [GtkTemplate(ui = "/com/github/hyperparabolic/vanity/ui/menu.ui")]
 public class Vanity.Menu : Astal.Window {
+  public AstalWp.Wp wp { get; private set; }
 
   public string monitor_connector { get; private set; }
+
+  [GtkCallback]
+  public void toggle_mute_source() {
+    this.wp.audio.default_speaker.mute = !this.wp.audio.default_speaker.mute;
+  }
+
+  [GtkChild]
+  private unowned Gtk.Adjustment source_volume;
 
   public Menu(Gdk.Monitor monitor, bool is_sidecar) {
     Object(
@@ -23,6 +32,9 @@ public class Vanity.Menu : Astal.Window {
   }
 
   construct {
+    this.wp = AstalWp.get_default();
+
+    this.wp.audio.default_speaker.bind_property("volume", source_volume, "value", GLib.BindingFlags.BIDIRECTIONAL | GLib.BindingFlags.SYNC_CREATE);
     init_watch_active();
   }
 
