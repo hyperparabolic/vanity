@@ -21,8 +21,8 @@
     min-width 0.5s,
     background-color 0.5s;
   min-height: 15px;
-  min-width: 15px;
-  border-radius: 15px;
+  min-width: 25px;
+  border-radius: 20px;
   background-color: transparent;
 
   border: 2px solid #{"@card_fg_color"};
@@ -32,7 +32,6 @@
   }
 
   &.focused {
-    min-width: 30px;
-    border-radius: 15px;
+    min-width: 50px;
   }
 }
