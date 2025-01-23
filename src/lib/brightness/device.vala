@@ -28,7 +28,19 @@ public class VanityBrightness.Device : Object {
 
   public string name { get; private set; }
 
-  public uint32 brightness { get; private set; }
+  private uint32 _brightness;
+  public uint32 brightness {
+    get { return get_brightness_private(); }
+    set { set_brightness_private(value); }
+  }
+
+  private uint32 get_brightness_private() {
+    return this._brightness;
+  }
+
+  public void set_brightness_private(uint32 value) {
+    set_device_brightness(value);
+  }
 
   public uint32 max_brightness { get; private set; }
 
@@ -93,7 +105,6 @@ public class VanityBrightness.Device : Object {
    */
   public Device(string path, uint32? timer_refresh_ms) throws Error {
     this.device_path = path;
-    message(this.device_path);
 
     this.proxy = Bus.get_proxy_sync(BusType.SYSTEM, "org.freedesktop.login1", "/org/freedesktop/login1/session/auto");
 
@@ -121,7 +132,7 @@ public class VanityBrightness.Device : Object {
 
     try {
       this.max_brightness = get_brightness_value_sync(max_brightness_path);
-      this.brightness = get_brightness_value_sync(this.brightness_path);
+      this._brightness = get_brightness_value_sync(this.brightness_path);
 
       var file = File.new_for_path(this.brightness_path);
       brightness_monitor = file.monitor_file(FileMonitorFlags.NONE);
@@ -158,7 +169,7 @@ public class VanityBrightness.Device : Object {
     }
   }
 
-  public void set_device_brightness(uint32 value) {
+  private void set_device_brightness(uint32 value) {
     try {
       uint32 new_brightness = value;
       if (value > this.max_brightness) {
@@ -167,7 +178,7 @@ public class VanityBrightness.Device : Object {
 
       proxy.set_brightness(this.class, this.name, new_brightness);
     } catch (Error e) {
-      message(e.message);
+      critical(e.message);
     }
   }
 
@@ -179,8 +190,8 @@ public class VanityBrightness.Device : Object {
         FileInputStream is = file.read_async.end(res);
         DataInputStream dis = new DataInputStream(is);
         var new_brightness = int.parse(dis.read_line());
-        if (new_brightness != this.brightness) {
-          this.brightness = new_brightness;
+        if (new_brightness != this._brightness) {
+          this._brightness = new_brightness;
         }
       } catch (Error e) {
         error("VanityBrightness.Device.update_brightness error: %s", e.message);
