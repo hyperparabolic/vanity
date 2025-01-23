@@ -28,16 +28,32 @@ template $VanityMenu: Astal.Window {
         "menu_segment"
       ]
 
-      Button {
-        icon-name: bind template.wp as <AstalWp.Wp>.audio as <AstalWp.Audio>.default-speaker as <AstalWp.Endpoint>.volume-icon;
-        clicked => $toggle_mute_source();
+      orientation: vertical;
+
+      Box {
+        Button {
+          icon-name: bind template.wp as <AstalWp.Wp>.audio as <AstalWp.Audio>.default-speaker as <AstalWp.Endpoint>.volume-icon;
+          clicked => $toggle_mute_source();
+        }
+        Scale {
+          hexpand: true;
+          adjustment: Adjustment source_volume {
+            lower: 0;
+            upper: 1.0;
+          };
+        }
       }
-      Scale {
-        hexpand: true;
-        adjustment: Adjustment source_volume {
-          lower: 0;
-          upper: 1.0;
-        };
+      Box {
+        Button backlight_brightness_button {
+          icon-name: "display-brightness-symbolic";
+        }
+        Scale backlight_brightness_control {
+          hexpand: true;
+          adjustment: Adjustment backlight_brightness {
+            lower: 0;
+            upper: 1;
+          };
+        }
       }
     }
 
