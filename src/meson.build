@@ -1,4 +1,5 @@
 subdir('bar')
+subdir('lib')
 subdir('menu')
 
 project_resources += ['app.vala', 'main.vala']
@@ -13,6 +14,7 @@ executable(
     dependency('astal-io-0.1'),
     dependency('astal-tray-0.1'),
     dependency('astal-wireplumber-0.1'),
+    dependency('gio-2.0'),
     dependency('gtk4'),
     dependency('gtk4-layer-shell-0'),
     dependency('libadwaita-1'),
