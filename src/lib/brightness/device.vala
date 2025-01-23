@@ -9,21 +9,22 @@ errordomain VanityBrightness.DeviceError {
 
 public class VanityBrightness.Device : Object {
   private string device_path;
-
   private string brightness_path;
-
   private FileMonitor brightness_monitor;
+  private IBrightnessBus proxy;
 
   public string class { get; private set; }
 
   public string name { get; private set; }
 
-  public int brightness { get; private set; }
+  public uint32 brightness { get; private set; }
 
-  public int max_brightness { get; private set; }
+  public uint32 max_brightness { get; private set; }
 
   public Device(string path) throws Error {
     this.device_path = path;
+
+    this.proxy = Bus.get_proxy_sync(BusType.SYSTEM, "org.freedesktop.login1", "/org/freedesktop/login1/session/auto");
 
     var s = this.device_path.split("/", -1);
 
@@ -71,6 +72,19 @@ public class VanityBrightness.Device : Object {
   ~Device() {
     if (this.brightness_monitor != null) {
       brightness_monitor.unref();
+    }
+  }
+
+  public void set_device_brightness(uint32 value) {
+    try {
+      uint32 new_brightness = value;
+      if (value > this.max_brightness) {
+        new_brightness = this.max_brightness;
+      }
+
+      proxy.set_brightness(this.class, this.name, new_brightness);
+    } catch (Error e) {
+      message(e.message);
     }
   }
 

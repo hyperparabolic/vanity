@@ -1,1 +1,1 @@
-project_resources += files('device.vala')
+project_resources += files('device.vala', 'ifaces.vala')
