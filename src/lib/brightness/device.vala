@@ -1,4 +1,12 @@
-namespace VanityBrightness {}
+namespace VanityBrightness {
+  public Device? get_default_screen() {
+    return Device.get_default_screen(null);
+  }
+
+  public Device? get_default_keyboard() {
+    return Device.get_default_keyboard(null);
+  }
+}
 
 errordomain VanityBrightness.DeviceError {
   CODE_INVALID_PATH,
@@ -8,6 +16,9 @@ errordomain VanityBrightness.DeviceError {
 }
 
 public class VanityBrightness.Device : Object {
+  private static Device default_screen;
+  private static Device default_keyboard;
+
   private string device_path;
   private string brightness_path;
   private FileMonitor brightness_monitor;
@@ -21,8 +32,68 @@ public class VanityBrightness.Device : Object {
 
   public uint32 max_brightness { get; private set; }
 
-  public Device(string path) throws Error {
+  public static Device? get_default_screen(uint32? timer_refresh_ms) {
+    // discover first device /sys/class/backlight/*
+    if (default_screen != null) {
+      return default_screen;
+    }
+
+    try {
+      var backlight_dir = "/sys/class/backlight";
+      var bl_dir = File.new_for_path(backlight_dir);
+      var e = bl_dir.enumerate_children("standard::*", FileQueryInfoFlags.NONE);
+
+      var info = e.next_file();
+      if (info.get_file_type() == FileType.DIRECTORY) {
+        default_screen = new Device(bl_dir.resolve_relative_path(info.get_name()).get_path(), timer_refresh_ms);
+        return default_screen;
+      }
+
+      return null;
+    } catch (Error e) {
+      critical(e.message);
+    }
+
+    return null;
+  }
+
+  public static Device? get_default_keyboard(uint32? timer_refresh_ms) {
+    if (default_keyboard != null) {
+      return default_keyboard;
+    }
+
+    //discovery first device /sys/class/leds/*::kbd_backlight
+    try {
+      var leds_dir = "/sys/class/leds";
+      var l_dir = File.new_for_path(leds_dir);
+      var e = l_dir.enumerate_children("standard::*", FileQueryInfoFlags.NONE);
+
+      FileInfo info = null;
+      while ((info = e.next_file()) != null) {
+        // look for  *::kbd_backlight device
+        if (info.get_name().contains("::kbd_backlight")) {
+          default_keyboard = new Device(l_dir.resolve_relative_path(info.get_name()).get_path(), timer_refresh_ms);
+          return default_keyboard;
+        }
+      }
+      return null;
+    } catch (Error e) {
+      critical(e.message);
+    }
+
+    return null;
+  }
+
+  /**
+   * path is expected to be `/sys/class/<class>/<name>`
+   *
+   * At least for my device, hardware controls for the keyboard brightness do not update
+   * the /sys/class/leds/brightness file. timer_refresh_ms may be specified to force
+   * this.brightness to update every timer_refresh_ms ms.
+   */
+  public Device(string path, uint32? timer_refresh_ms) throws Error {
     this.device_path = path;
+    message(this.device_path);
 
     this.proxy = Bus.get_proxy_sync(BusType.SYSTEM, "org.freedesktop.login1", "/org/freedesktop/login1/session/auto");
 
@@ -59,9 +130,21 @@ public class VanityBrightness.Device : Object {
         update_brightness();
       });
 
+      if (timer_refresh_ms != null) {
+        GLib.Timeout.add(timer_refresh_ms, () => {
+          if (this.brightness_monitor == null || this.brightness_monitor.cancelled) {
+            return false;
+          }
+          update_brightness();
+          return true;
+        });
+      }
+
       brightness_monitor.ref();
       brightness_monitor.notify["cancelled"].connect(() => {
-        brightness_monitor.unref();
+        if (!this.brightness_monitor.cancelled) {
+          brightness_monitor.unref();
+        }
       });
 
     } catch (Error e) {
