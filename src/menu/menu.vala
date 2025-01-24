@@ -27,7 +27,11 @@ public class Vanity.Menu : Astal.Window {
   public Menu(Gdk.Monitor monitor, bool is_sidecar) {
     Object(
       application: Vanity.Application.instance,
+      // uncrustify bug, being interpreted as a namespace and applying an
+      // incorrect rule, disable here.
+      // *INDENT-OFF*
       namespace: @"menu-$(monitor.get_connector())",
+      // *INDENT-ON*
       name: @"menu-$(monitor.get_connector())",
       gdkmonitor: monitor,
       anchor: Astal.WindowAnchor.TOP | Astal.WindowAnchor.RIGHT | Astal.WindowAnchor.BOTTOM
@@ -35,7 +39,7 @@ public class Vanity.Menu : Astal.Window {
 
     this.monitor_connector = monitor.get_connector();
     if (is_sidecar) {
-      this.add_css_class ("sidecar");
+      this.add_css_class("sidecar");
     }
 
     present();

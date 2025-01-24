@@ -30,8 +30,12 @@ public class VanityBrightness.Device : Object {
 
   private uint32 _brightness;
   public uint32 brightness {
-    get { return get_brightness_private(); }
-    set { set_brightness_private(value); }
+    get {
+      return get_brightness_private();
+    }
+    set {
+      set_brightness_private(value);
+    }
   }
 
   private uint32 get_brightness_private() {
@@ -74,7 +78,7 @@ public class VanityBrightness.Device : Object {
       return default_keyboard;
     }
 
-    //discovery first device /sys/class/leds/*::kbd_backlight
+    // discovery first device /sys/class/leds/*::kbd_backlight
     try {
       var leds_dir = "/sys/class/leds";
       var l_dir = File.new_for_path(leds_dir);
@@ -157,7 +161,6 @@ public class VanityBrightness.Device : Object {
           brightness_monitor.unref();
         }
       });
-
     } catch (Error e) {
       throw new DeviceError.CODE_INIT_FAIL("Initialization error: %s", e.message);
     }
