@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+set -e 
+set -o pipefail
+
+pushd $(git rev-parse --show-toplevel)
+io.elementary.vala-lint -c vala-lint.conf
+popd
