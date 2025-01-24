@@ -40,6 +40,7 @@
           libxml2
           pkg-config
           vala
+          vala-lint
         ];
         system-libs = with pkgs; [
           glib
