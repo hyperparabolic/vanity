@@ -14,8 +14,8 @@ public class Vanity.HyprlandWorkspaces : Gtk.Box {
   construct {
     hyprland = AstalHyprland.Hyprland.get_default();
     ws_map = new HashTable<int, Gtk.Button>(
-      (a) => { return a;},
-      (a,b) => { return  a == b;}
+      (a) => { return a; },
+      (a, b) => { return a == b; }
     );
     init_workspaces();
   }
@@ -100,7 +100,7 @@ public class Vanity.HyprlandWorkspaces : Gtk.Box {
     var workspaces = get_sorted_workspaces();
     GenericSet<int> ws_id_set = new GenericSet<int>(
       (a) => {return a;},
-      (a,b) => { return a == b; }
+      (a, b) => { return a == b; }
     );
     foreach (var ws in workspaces) {
       if (ws == null || ws.monitor == null || ws.monitor.name != monitor_connector) {

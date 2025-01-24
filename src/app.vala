@@ -1,5 +1,4 @@
-namespace Vanity{
-}
+namespace Vanity {}
 
 class Vanity.Application : Astal.Application {
   public static Application instance;
