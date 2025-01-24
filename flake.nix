@@ -39,6 +39,7 @@
           gobject-introspection
           libxml2
           pkg-config
+          uncrustify
           vala
           vala-lint
         ];
