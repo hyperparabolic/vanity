@@ -39,7 +39,9 @@
           gobject-introspection
           libxml2
           pkg-config
+          uncrustify
           vala
+          vala-lint
         ];
         system-libs = with pkgs; [
           glib

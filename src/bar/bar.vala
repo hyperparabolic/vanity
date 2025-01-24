@@ -20,7 +20,11 @@ public class Vanity.Bar : Astal.Window {
   public Bar(Gdk.Monitor monitor, bool is_sidecar) {
     Object(
       application: Vanity.Application.instance,
+      // uncrustify bug, being interpreted as a namespace and applying an
+      // incorrect rule, disable here.
+      // *INDENT-OFF*
       namespace: @"bar-$(monitor.get_connector())",
+      // *INDENT-ON*
       name: @"bar-$(monitor.get_connector())",
       gdkmonitor: monitor,
       anchor: Astal.WindowAnchor.LEFT | Astal.WindowAnchor.TOP | Astal.WindowAnchor.RIGHT

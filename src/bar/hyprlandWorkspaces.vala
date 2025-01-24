@@ -14,9 +14,8 @@ public class Vanity.HyprlandWorkspaces : Gtk.Box {
   construct {
     hyprland = AstalHyprland.Hyprland.get_default();
     ws_map = new HashTable<int, Gtk.Button>(
-      (a) => { return a;},
-      (a,b) => { return  a == b;}
-    );
+      (a) => { return a; },
+      (a, b) => { return a == b; });
     init_workspaces();
   }
 
@@ -59,7 +58,7 @@ public class Vanity.HyprlandWorkspaces : Gtk.Box {
     var workspaces = hyprland.workspaces.copy();
 
     workspaces.sort((a, b) => {
-      return (int) (a.id > b.id) - (int) (a.id < b.id);
+      return (int)(a.id > b.id) - (int)(a.id < b.id);
     });
 
     return workspaces;
@@ -68,7 +67,7 @@ public class Vanity.HyprlandWorkspaces : Gtk.Box {
   private void update_css() {
     var workspaces = get_sorted_workspaces();
 
-    foreach(var ws in workspaces) {
+    foreach (var ws in workspaces) {
       if (ws == null || ws.monitor == null || ws.monitor.name != monitor_connector) {
         continue;
       }
@@ -81,7 +80,7 @@ public class Vanity.HyprlandWorkspaces : Gtk.Box {
   private void handle_add_workspaces() {
     var workspaces = get_sorted_workspaces();
 
-    foreach(var ws in workspaces) {
+    foreach (var ws in workspaces) {
       if (ws == null || ws.monitor == null || ws.monitor.name != monitor_connector) {
         continue;
       }
@@ -99,9 +98,8 @@ public class Vanity.HyprlandWorkspaces : Gtk.Box {
   private void handle_remove_workspaces() {
     var workspaces = get_sorted_workspaces();
     GenericSet<int> ws_id_set = new GenericSet<int>(
-      (a) => {return a;},
-      (a,b) => { return a == b; }
-    );
+      (a) => { return a; },
+      (a, b) => { return a == b; });
     foreach (var ws in workspaces) {
       if (ws == null || ws.monitor == null || ws.monitor.name != monitor_connector) {
         continue;
@@ -117,7 +115,7 @@ public class Vanity.HyprlandWorkspaces : Gtk.Box {
         remove_list.append(id);
       }
     });
-    foreach(var id in remove_list) {
+    foreach (var id in remove_list) {
       ws_map.remove(id);
     }
   }
