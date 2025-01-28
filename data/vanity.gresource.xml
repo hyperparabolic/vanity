@@ -4,6 +4,7 @@
         <file>vanity.css</file>
         <file preprocess="xml-stripblanks">ui/bar.ui</file>
         <file preprocess="xml-stripblanks">ui/menu.ui</file>
+        <file preprocess="xml-stripblanks">ui/menu-selector.ui</file>
 
         <file compressed="true">icons/symbolic/apps/nixos-symbolic.svg</file>
     </gresource>

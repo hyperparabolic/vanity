@@ -1,0 +1,28 @@
+using Gtk 4.0;
+
+template $VanityMenuSelector : Box {
+  styles [
+    "menu_selector"
+  ]
+  Button {
+    styles [
+      "split_button_left"
+    ]
+    Image {
+      icon-name: bind template.icon;
+    }
+    clicked => $on_toggle_clicked();
+  }
+  Separator {
+    orientation: vertical;
+  }
+  Button {
+    styles [
+      "split_button_right"
+    ]
+    Image {
+      icon-name: "go-next-symbolic";
+    }
+    clicked => $on_navigate_clicked();
+  }
+}

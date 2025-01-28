@@ -6,5 +6,6 @@ public static void main(string[] args) {
   typeof (Vanity.Bar).ensure();
   typeof (Vanity.HyprlandWorkspaces).ensure();
   typeof (Vanity.Menu).ensure();
+  typeof (Vanity.MenuSelector).ensure();
   app.run(args);
 }
