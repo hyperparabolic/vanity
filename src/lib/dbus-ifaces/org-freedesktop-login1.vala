@@ -144,7 +144,7 @@ namespace Org {
          * return is a file descriptor, hopefully compatible with GLib.FileUtils
          */
         [DBus(name = "Inhibit")]
-        public abstract int inhibit(string what, string who, string why, string mode) throws DBusError, IOError;
+        public abstract UnixInputStream inhibit(string what, string who, string why, string mode) throws DBusError, IOError;
 
         [DBus(name = "CanRebootParameter")]
         public abstract string can_reboot_parameter() throws DBusError, IOError;
@@ -342,7 +342,7 @@ namespace Org {
          * return is a file descriptor, hopefully compatible with GLib.FileUtils
          */
         [DBus(name = "Inhibit")]
-        public abstract int inhibit(string what, string who, string why, string mode) throws DBusError, IOError;
+        public abstract UnixInputStream inhibit(string what, string who, string why, string mode) throws DBusError, IOError;
 
         [DBus(name = "CanRebootParameter")]
         public abstract string can_reboot_parameter() throws DBusError, IOError;
