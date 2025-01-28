@@ -6,8 +6,26 @@ class Vanity.Application : Astal.Application {
 
   private static Vanity.Menu menu;
 
+  // *INDENT-OFF*
+  private Regex cmd_re = /^(?P<context>.*):(?P<command>.*)$/;
+  // *INDENT-ON*
+
   public override void request(string msg, GLib.SocketConnection conn) {
-    AstalIO.write_sock.begin(conn, @"missing response implementation on $instance_name");
+    MatchInfo m;
+    if (!cmd_re.match(msg, 0, out m)) {
+      AstalIO.write_sock.begin(conn, @"invalid message format on $instance_name");
+      return;
+    }
+    var context = m.fetch_named("context");
+    var command = m.fetch_named("command");
+
+    // transition to switch and handler functions if this grows
+    if (context == "menu" && command == "toggle") {
+      this.toggle_menu();
+      AstalIO.write_sock.begin(conn, @"menu toggled on $instance_name");
+    } else {
+      AstalIO.write_sock.begin(conn, @"unknown context: $context or command: $command on $instance_name");
+    }
   }
 
   construct {
