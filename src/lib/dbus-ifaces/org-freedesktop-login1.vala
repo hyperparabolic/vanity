@@ -11,104 +11,14 @@ namespace Org {
       [DBus(name = "org.freedesktop.login1.Manager", timeout = 120000)]
       public interface Manager : GLib.Object {
 
-        [DBus(name = "EnableWallMessages")]
-        public abstract bool enable_wall_messages { get; set; }
+        // [DBus(name = "EnableWallMessages")]
+        // public abstract bool enable_wall_messages { get; set; }
 
-        [DBus(name = "WallMessage")]
-        public abstract string wall_message { owned get; set; }
-
-        [DBus(name = "NAutoVTs")]
-        public abstract uint n_auto_v_ts { get; }
-
-        [DBus(name = "KillOnlyUsers")]
-        public abstract string[] kill_only_users { owned get; }
-
-        [DBus(name = "KillExcludeUsers")]
-        public abstract string[] kill_exclude_users { owned get; }
-
-        [DBus(name = "KillUserProcesses")]
-        public abstract bool kill_user_processes { get; }
-
-        [DBus(name = "RebootParameter")]
-        public abstract string reboot_parameter { owned get; }
-
-        [DBus(name = "RebootToFirmwareSetup")]
-        public abstract bool reboot_to_firmware_setup { get; }
-
-        [DBus(name = "RebootToBootLoaderMenu")]
-        public abstract uint64 reboot_to_boot_loader_menu { get; }
-
-        [DBus(name = "RebootToBootLoaderEntry")]
-        public abstract string reboot_to_boot_loader_entry { owned get; }
-
-        [DBus(name = "BootLoaderEntries")]
-        public abstract string[] boot_loader_entries { owned get; }
-
-        [DBus(name = "IdleHint")]
-        public abstract bool idle_hint { get; }
-
-        [DBus(name = "IdleSinceHint")]
-        public abstract uint64 idle_since_hint { get; }
-
-        [DBus(name = "IdleSinceHintMonotonic")]
-        public abstract uint64 idle_since_hint_monotonic { get; }
-
-        [DBus(name = "BlockInhibited")]
-        public abstract string block_inhibited { owned get; }
-
-        [DBus(name = "DelayInhibited")]
-        public abstract string delay_inhibited { owned get; }
+        // [DBus(name = "WallMessage")]
+        // public abstract string wall_message { owned get; set; }
 
         [DBus(name = "InhibitDelayMaxUSec")]
         public abstract uint64 inhibit_delay_max_u_sec { get; }
-
-        [DBus(name = "UserStopDelayUSec")]
-        public abstract uint64 user_stop_delay_u_sec { get; }
-
-        [DBus(name = "SleepOperation")]
-        public abstract string[] sleep_operation { owned get; }
-
-        [DBus(name = "HandlePowerKey")]
-        public abstract string handle_power_key { owned get; }
-
-        [DBus(name = "HandlePowerKeyLongPress")]
-        public abstract string handle_power_key_long_press { owned get; }
-
-        [DBus(name = "HandleRebootKey")]
-        public abstract string handle_reboot_key { owned get; }
-
-        [DBus(name = "HandleRebootKeyLongPress")]
-        public abstract string handle_reboot_key_long_press { owned get; }
-
-        [DBus(name = "HandleSuspendKey")]
-        public abstract string handle_suspend_key { owned get; }
-
-        [DBus(name = "HandleSuspendKeyLongPress")]
-        public abstract string handle_suspend_key_long_press { owned get; }
-
-        [DBus(name = "HandleHibernateKey")]
-        public abstract string handle_hibernate_key { owned get; }
-
-        [DBus(name = "HandleHibernateKeyLongPress")]
-        public abstract string handle_hibernate_key_long_press { owned get; }
-
-        [DBus(name = "HandleLidSwitch")]
-        public abstract string handle_lid_switch { owned get; }
-
-        [DBus(name = "HandleLidSwitchExternalPower")]
-        public abstract string handle_lid_switch_external_power { owned get; }
-
-        [DBus(name = "HandleLidSwitchDocked")]
-        public abstract string handle_lid_switch_docked { owned get; }
-
-        [DBus(name = "HoldoffTimeoutUSec")]
-        public abstract uint64 holdoff_timeout_u_sec { get; }
-
-        [DBus(name = "IdleAction")]
-        public abstract string idle_action { owned get; }
-
-        [DBus(name = "IdleActionUSec")]
-        public abstract uint64 idle_action_u_sec { get; }
 
         [DBus(name = "PreparingForShutdown")]
         public abstract bool preparing_for_shutdown { get; }
@@ -116,8 +26,8 @@ namespace Org {
         [DBus(name = "PreparingForSleep")]
         public abstract bool preparing_for_sleep { get; }
 
-        [DBus(name = "ScheduledShutdown")]
-        public abstract ManagerScheduledShutdownStruct scheduled_shutdown { owned get; }
+        // [DBus(name = "ScheduledShutdown")]
+        // public abstract ManagerScheduledShutdownStruct scheduled_shutdown { owned get; }
 
         [DBus(name = "Docked")]
         public abstract bool docked { get; }
@@ -128,110 +38,32 @@ namespace Org {
         [DBus(name = "OnExternalPower")]
         public abstract bool on_external_power { get; }
 
-        [DBus(name = "RemoveIPC")]
-        public abstract bool remove_i_p_c { get; }
-
-        [DBus(name = "RuntimeDirectorySize")]
-        public abstract uint64 runtime_directory_size { get; }
-
-        [DBus(name = "RuntimeDirectoryInodesMax")]
-        public abstract uint64 runtime_directory_inodes_max { get; }
-
         [DBus(name = "InhibitorsMax")]
         public abstract uint64 inhibitors_max { get; }
 
         [DBus(name = "NCurrentInhibitors")]
         public abstract uint64 n_current_inhibitors { get; }
 
-        [DBus(name = "SessionsMax")]
-        public abstract uint64 sessions_max { get; }
+        // [DBus(name = "GetUser")]
+        // public abstract GLib.ObjectPath get_user(uint uid) throws DBusError, IOError;
 
-        [DBus(name = "NCurrentSessions")]
-        public abstract uint64 n_current_sessions { get; }
+        // [DBus(name = "GetUserByPID")]
+        // public abstract GLib.ObjectPath get_user_by_p_i_d(uint pid) throws DBusError, IOError;
 
-        [DBus(name = "StopIdleSessionUSec")]
-        public abstract uint64 stop_idle_session_u_sec { get; }
-
-        [DBus(name = "GetSession")]
-        public abstract GLib.ObjectPath get_session(string session_id) throws DBusError, IOError;
-
-        [DBus(name = "GetSessionByPID")]
-        public abstract GLib.ObjectPath get_session_by_p_i_d(uint pid) throws DBusError, IOError;
-
-        [DBus(name = "GetUser")]
-        public abstract GLib.ObjectPath get_user(uint uid) throws DBusError, IOError;
-
-        [DBus(name = "GetUserByPID")]
-        public abstract GLib.ObjectPath get_user_by_p_i_d(uint pid) throws DBusError, IOError;
-
-        [DBus(name = "GetSeat")]
-        public abstract GLib.ObjectPath get_seat(string seat_id) throws DBusError, IOError;
-
-        [DBus(name = "ListSessions")]
-        public abstract ManagerSessionStruct[] list_sessions() throws DBusError, IOError;
-
-        [DBus(name = "ListSessionsEx")]
-        public abstract ManagerSessionStruct2[] list_sessions_ex() throws DBusError, IOError;
-
-        [DBus(name = "ListUsers")]
-        public abstract ManagerUserStruct[] list_users() throws DBusError, IOError;
-
-        [DBus(name = "ListSeats")]
-        public abstract ManagerSeatStruct[] list_seats() throws DBusError, IOError;
+        // [DBus(name = "ListUsers")]
+        // public abstract ManagerUserStruct[] list_users() throws DBusError, IOError;
 
         [DBus(name = "ListInhibitors")]
         public abstract ManagerInhibitorStruct[] list_inhibitors() throws DBusError, IOError;
 
-        [DBus(name = "CreateSession")]
-        public abstract void create_session(uint uid, uint pid, string service, string type, string class_, string desktop, string seat_id, uint vtnr, string tty, string display, bool remote, string remote_user, string remote_host, ManagerPropertyStruct[] properties, out string session_id, out GLib.ObjectPath object_path, out string runtime_path, out unknown fifo_fd, out uint uid, out string seat_id, out uint vtnr, out bool existing) throws DBusError, IOError;
+        // [DBus(name = "KillUser")]
+        // public abstract void kill_user(uint uid, int signal_number) throws DBusError, IOError;
 
-        [DBus(name = "CreateSessionWithPIDFD")]
-        public abstract void create_session_with_p_i_d_f_d(uint uid, unknown pidfd, string service, string type, string class_, string desktop, string seat_id, uint vtnr, string tty, string display, bool remote, string remote_user, string remote_host, uint64 flags, ManagerPropertyStruct2[] properties, out string session_id, out GLib.ObjectPath object_path, out string runtime_path, out unknown fifo_fd, out uint uid, out string seat_id, out uint vtnr, out bool existing) throws DBusError, IOError;
+        // [DBus(name = "TerminateUser")]
+        // public abstract void terminate_user(uint uid) throws DBusError, IOError;
 
-        [DBus(name = "ReleaseSession")]
-        public abstract void release_session(string session_id) throws DBusError, IOError;
-
-        [DBus(name = "ActivateSession")]
-        public abstract void activate_session(string session_id) throws DBusError, IOError;
-
-        [DBus(name = "ActivateSessionOnSeat")]
-        public abstract void activate_session_on_seat(string session_id, string seat_id) throws DBusError, IOError;
-
-        [DBus(name = "LockSession")]
-        public abstract void lock_session(string session_id) throws DBusError, IOError;
-
-        [DBus(name = "UnlockSession")]
-        public abstract void unlock_session(string session_id) throws DBusError, IOError;
-
-        [DBus(name = "LockSessions")]
-        public abstract void lock_sessions() throws DBusError, IOError;
-
-        [DBus(name = "UnlockSessions")]
-        public abstract void unlock_sessions() throws DBusError, IOError;
-
-        [DBus(name = "KillSession")]
-        public abstract void kill_session(string session_id, string who, int signal_number) throws DBusError, IOError;
-
-        [DBus(name = "KillUser")]
-        public abstract void kill_user(uint uid, int signal_number) throws DBusError, IOError;
-
-        [DBus(name = "TerminateSession")]
-        public abstract void terminate_session(string session_id) throws DBusError, IOError;
-
-        [DBus(name = "TerminateUser")]
-        public abstract void terminate_user(uint uid) throws DBusError, IOError;
-
-        [DBus(name = "TerminateSeat")]
-        public abstract void terminate_seat(string seat_id) throws DBusError, IOError;
-
-        [DBus(name = "SetUserLinger")]
-        public abstract void set_user_linger(uint uid, bool enable, bool interactive) throws DBusError, IOError;
-
-        [DBus(name = "AttachDevice")]
-        public abstract void attach_device(string seat_id, string sysfs_path, bool interactive) throws DBusError, IOError;
-
-        [DBus(name = "FlushDevices")]
-        public abstract void flush_devices(bool interactive) throws DBusError, IOError;
+        // [DBus(name = "SetUserLinger")]
+        // public abstract void set_user_linger(uint uid, bool enable, bool interactive) throws DBusError, IOError;
 
         [DBus(name = "PowerOff")]
         public abstract void power_off(bool interactive) throws DBusError, IOError;
@@ -302,14 +134,17 @@ namespace Org {
         [DBus(name = "CanSleep")]
         public abstract string can_sleep() throws DBusError, IOError;
 
-        [DBus(name = "ScheduleShutdown")]
-        public abstract void schedule_shutdown(string type, uint64 usec) throws DBusError, IOError;
+        // [DBus(name = "ScheduleShutdown")]
+        // public abstract void schedule_shutdown(string type, uint64 usec) throws DBusError, IOError;
 
-        [DBus(name = "CancelScheduledShutdown")]
-        public abstract bool cancel_scheduled_shutdown() throws DBusError, IOError;
+        // [DBus(name = "CancelScheduledShutdown")]
+        // public abstract bool cancel_scheduled_shutdown() throws DBusError, IOError;
 
+        /**
+         * return is a file descriptor, hopefully compatible with GLib.FileUtils
+         */
         [DBus(name = "Inhibit")]
-        public abstract unknown inhibit(string what, string who, string why, string mode) throws DBusError, IOError;
+        public abstract int inhibit(string what, string who, string why, string mode) throws DBusError, IOError;
 
         [DBus(name = "CanRebootParameter")]
         public abstract string can_reboot_parameter() throws DBusError, IOError;
@@ -335,83 +170,29 @@ namespace Org {
         [DBus(name = "SetRebootToBootLoaderEntry")]
         public abstract void set_reboot_to_boot_loader_entry(string boot_loader_entry) throws DBusError, IOError;
 
-        [DBus(name = "SetWallMessage")]
-        public abstract void set_wall_message(string wall_message, bool enable) throws DBusError, IOError;
+        // [DBus(name = "SetWallMessage")]
+        // public abstract void set_wall_message(string wall_message, bool enable) throws DBusError, IOError;
 
-        [DBus(name = "SessionNew")]
-        public signal void session_new(string session_id, GLib.ObjectPath object_path);
+        // [DBus(name = "PrepareForShutdown")]
+        // public signal void prepare_for_shutdown(bool start);
 
-        [DBus(name = "SessionRemoved")]
-        public signal void session_removed(string session_id, GLib.ObjectPath object_path);
+        // [DBus(name = "PrepareForShutdownWithMetadata")]
+        // public signal void prepare_for_shutdown_with_metadata(bool start, GLib.HashTable<string, GLib.Variant> metadata);
 
-        [DBus(name = "UserNew")]
-        public signal void user_new(uint uid, GLib.ObjectPath object_path);
-
-        [DBus(name = "UserRemoved")]
-        public signal void user_removed(uint uid, GLib.ObjectPath object_path);
-
-        [DBus(name = "SeatNew")]
-        public signal void seat_new(string seat_id, GLib.ObjectPath object_path);
-
-        [DBus(name = "SeatRemoved")]
-        public signal void seat_removed(string seat_id, GLib.ObjectPath object_path);
-
-        [DBus(name = "PrepareForShutdown")]
-        public signal void prepare_for_shutdown(bool start);
-
-        [DBus(name = "PrepareForShutdownWithMetadata")]
-        public signal void prepare_for_shutdown_with_metadata(bool start, GLib.HashTable<string, GLib.Variant> metadata);
-
-        [DBus(name = "PrepareForSleep")]
-        public signal void prepare_for_sleep(bool start);
+        // [DBus(name = "PrepareForSleep")]
+        // public signal void prepare_for_sleep(bool start);
       }
 
-      public struct ManagerSeatStruct {
-        public string attr1;
-        public GLib.ObjectPath attr2;
-      }
+      // public struct ManagerScheduledShutdownStruct {
+      //   public string attr1;
+      //   public uint64 attr2;
+      // }
 
-      public struct ManagerPropertyStruct2 {
-        public string attr1;
-        public GLib.Variant attr2;
-      }
-
-      public struct ManagerScheduledShutdownStruct {
-        public string attr1;
-        public uint64 attr2;
-      }
-
-      public struct ManagerPropertyStruct {
-        public string attr1;
-        public GLib.Variant attr2;
-      }
-
-      public struct ManagerSessionStruct {
-        public string attr1;
-        public uint attr2;
-        public string attr3;
-        public string attr4;
-        public GLib.ObjectPath attr5;
-      }
-
-      public struct ManagerSessionStruct2 {
-        public string attr1;
-        public uint attr2;
-        public string attr3;
-        public string attr4;
-        public uint attr5;
-        public string attr6;
-        public string attr7;
-        public bool attr8;
-        public uint64 attr9;
-        public GLib.ObjectPath attr10;
-      }
-
-      public struct ManagerUserStruct {
-        public uint attr1;
-        public string attr2;
-        public GLib.ObjectPath attr3;
-      }
+      // public struct ManagerUserStruct {
+      //   public uint attr1;
+      //   public string attr2;
+      //   public GLib.ObjectPath attr3;
+      // }
 
       public struct ManagerInhibitorStruct {
         public string attr1;
@@ -425,53 +206,11 @@ namespace Org {
       [DBus(name = "org.freedesktop.login1.Manager", timeout = 120000)]
       public interface ManagerSync : GLib.Object {
 
-        [DBus(name = "EnableWallMessages")]
-        public abstract bool enable_wall_messages { get; set; }
+        // [DBus(name = "EnableWallMessages")]
+        // public abstract bool enable_wall_messages { get; set; }
 
-        [DBus(name = "WallMessage")]
-        public abstract string wall_message { owned get; set; }
-
-        [DBus(name = "NAutoVTs")]
-        public abstract uint n_auto_v_ts { get; }
-
-        [DBus(name = "KillOnlyUsers")]
-        public abstract string[] kill_only_users { owned get; }
-
-        [DBus(name = "KillExcludeUsers")]
-        public abstract string[] kill_exclude_users { owned get; }
-
-        [DBus(name = "KillUserProcesses")]
-        public abstract bool kill_user_processes { get; }
-
-        [DBus(name = "RebootParameter")]
-        public abstract string reboot_parameter { owned get; }
-
-        [DBus(name = "RebootToFirmwareSetup")]
-        public abstract bool reboot_to_firmware_setup { get; }
-
-        [DBus(name = "RebootToBootLoaderMenu")]
-        public abstract uint64 reboot_to_boot_loader_menu { get; }
-
-        [DBus(name = "RebootToBootLoaderEntry")]
-        public abstract string reboot_to_boot_loader_entry { owned get; }
-
-        [DBus(name = "BootLoaderEntries")]
-        public abstract string[] boot_loader_entries { owned get; }
-
-        [DBus(name = "IdleHint")]
-        public abstract bool idle_hint { get; }
-
-        [DBus(name = "IdleSinceHint")]
-        public abstract uint64 idle_since_hint { get; }
-
-        [DBus(name = "IdleSinceHintMonotonic")]
-        public abstract uint64 idle_since_hint_monotonic { get; }
-
-        [DBus(name = "BlockInhibited")]
-        public abstract string block_inhibited { owned get; }
-
-        [DBus(name = "DelayInhibited")]
-        public abstract string delay_inhibited { owned get; }
+        // [DBus(name = "WallMessage")]
+        // public abstract string wall_message { owned get; set; }
 
         [DBus(name = "InhibitDelayMaxUSec")]
         public abstract uint64 inhibit_delay_max_u_sec { get; }
@@ -479,59 +218,14 @@ namespace Org {
         [DBus(name = "UserStopDelayUSec")]
         public abstract uint64 user_stop_delay_u_sec { get; }
 
-        [DBus(name = "SleepOperation")]
-        public abstract string[] sleep_operation { owned get; }
-
-        [DBus(name = "HandlePowerKey")]
-        public abstract string handle_power_key { owned get; }
-
-        [DBus(name = "HandlePowerKeyLongPress")]
-        public abstract string handle_power_key_long_press { owned get; }
-
-        [DBus(name = "HandleRebootKey")]
-        public abstract string handle_reboot_key { owned get; }
-
-        [DBus(name = "HandleRebootKeyLongPress")]
-        public abstract string handle_reboot_key_long_press { owned get; }
-
-        [DBus(name = "HandleSuspendKey")]
-        public abstract string handle_suspend_key { owned get; }
-
-        [DBus(name = "HandleSuspendKeyLongPress")]
-        public abstract string handle_suspend_key_long_press { owned get; }
-
-        [DBus(name = "HandleHibernateKey")]
-        public abstract string handle_hibernate_key { owned get; }
-
-        [DBus(name = "HandleHibernateKeyLongPress")]
-        public abstract string handle_hibernate_key_long_press { owned get; }
-
-        [DBus(name = "HandleLidSwitch")]
-        public abstract string handle_lid_switch { owned get; }
-
-        [DBus(name = "HandleLidSwitchExternalPower")]
-        public abstract string handle_lid_switch_external_power { owned get; }
-
-        [DBus(name = "HandleLidSwitchDocked")]
-        public abstract string handle_lid_switch_docked { owned get; }
-
-        [DBus(name = "HoldoffTimeoutUSec")]
-        public abstract uint64 holdoff_timeout_u_sec { get; }
-
-        [DBus(name = "IdleAction")]
-        public abstract string idle_action { owned get; }
-
-        [DBus(name = "IdleActionUSec")]
-        public abstract uint64 idle_action_u_sec { get; }
-
         [DBus(name = "PreparingForShutdown")]
         public abstract bool preparing_for_shutdown { get; }
 
         [DBus(name = "PreparingForSleep")]
         public abstract bool preparing_for_sleep { get; }
 
-        [DBus(name = "ScheduledShutdown")]
-        public abstract ManagerSyncScheduledShutdownStruct scheduled_shutdown { owned get; }
+        // [DBus(name = "ScheduledShutdown")]
+        // public abstract ManagerSyncScheduledShutdownStruct scheduled_shutdown { owned get; }
 
         [DBus(name = "Docked")]
         public abstract bool docked { get; }
@@ -542,110 +236,32 @@ namespace Org {
         [DBus(name = "OnExternalPower")]
         public abstract bool on_external_power { get; }
 
-        [DBus(name = "RemoveIPC")]
-        public abstract bool remove_i_p_c { get; }
-
-        [DBus(name = "RuntimeDirectorySize")]
-        public abstract uint64 runtime_directory_size { get; }
-
-        [DBus(name = "RuntimeDirectoryInodesMax")]
-        public abstract uint64 runtime_directory_inodes_max { get; }
-
         [DBus(name = "InhibitorsMax")]
         public abstract uint64 inhibitors_max { get; }
 
         [DBus(name = "NCurrentInhibitors")]
         public abstract uint64 n_current_inhibitors { get; }
 
-        [DBus(name = "SessionsMax")]
-        public abstract uint64 sessions_max { get; }
+        // [DBus(name = "GetUser")]
+        // public abstract GLib.ObjectPath get_user(uint uid) throws DBusError, IOError;
 
-        [DBus(name = "NCurrentSessions")]
-        public abstract uint64 n_current_sessions { get; }
+        // [DBus(name = "GetUserByPID")]
+        // public abstract GLib.ObjectPath get_user_by_p_i_d(uint pid) throws DBusError, IOError;
 
-        [DBus(name = "StopIdleSessionUSec")]
-        public abstract uint64 stop_idle_session_u_sec { get; }
-
-        [DBus(name = "GetSession")]
-        public abstract GLib.ObjectPath get_session(string session_id) throws DBusError, IOError;
-
-        [DBus(name = "GetSessionByPID")]
-        public abstract GLib.ObjectPath get_session_by_p_i_d(uint pid) throws DBusError, IOError;
-
-        [DBus(name = "GetUser")]
-        public abstract GLib.ObjectPath get_user(uint uid) throws DBusError, IOError;
-
-        [DBus(name = "GetUserByPID")]
-        public abstract GLib.ObjectPath get_user_by_p_i_d(uint pid) throws DBusError, IOError;
-
-        [DBus(name = "GetSeat")]
-        public abstract GLib.ObjectPath get_seat(string seat_id) throws DBusError, IOError;
-
-        [DBus(name = "ListSessions")]
-        public abstract ManagerSyncSessionStruct[] list_sessions() throws DBusError, IOError;
-
-        [DBus(name = "ListSessionsEx")]
-        public abstract ManagerSyncSessionStruct2[] list_sessions_ex() throws DBusError, IOError;
-
-        [DBus(name = "ListUsers")]
-        public abstract ManagerSyncUserStruct[] list_users() throws DBusError, IOError;
-
-        [DBus(name = "ListSeats")]
-        public abstract ManagerSyncSeatStruct[] list_seats() throws DBusError, IOError;
+        // [DBus(name = "ListUsers")]
+        // public abstract ManagerSyncUserStruct[] list_users() throws DBusError, IOError;
 
         [DBus(name = "ListInhibitors")]
         public abstract ManagerSyncInhibitorStruct[] list_inhibitors() throws DBusError, IOError;
 
-        [DBus(name = "CreateSession")]
-        public abstract void create_session(uint uid, uint pid, string service, string type, string class_, string desktop, string seat_id, uint vtnr, string tty, string display, bool remote, string remote_user, string remote_host, ManagerSyncPropertyStruct[] properties, out string session_id, out GLib.ObjectPath object_path, out string runtime_path, out unknown fifo_fd, out uint uid, out string seat_id, out uint vtnr, out bool existing) throws DBusError, IOError;
+        // [DBus(name = "KillUser")]
+        // public abstract void kill_user(uint uid, int signal_number) throws DBusError, IOError;
 
-        [DBus(name = "CreateSessionWithPIDFD")]
-        public abstract void create_session_with_p_i_d_f_d(uint uid, unknown pidfd, string service, string type, string class_, string desktop, string seat_id, uint vtnr, string tty, string display, bool remote, string remote_user, string remote_host, uint64 flags, ManagerSyncPropertyStruct2[] properties, out string session_id, out GLib.ObjectPath object_path, out string runtime_path, out unknown fifo_fd, out uint uid, out string seat_id, out uint vtnr, out bool existing) throws DBusError, IOError;
+        // [DBus(name = "TerminateUser")]
+        // public abstract void terminate_user(uint uid) throws DBusError, IOError;
 
-        [DBus(name = "ReleaseSession")]
-        public abstract void release_session(string session_id) throws DBusError, IOError;
-
-        [DBus(name = "ActivateSession")]
-        public abstract void activate_session(string session_id) throws DBusError, IOError;
-
-        [DBus(name = "ActivateSessionOnSeat")]
-        public abstract void activate_session_on_seat(string session_id, string seat_id) throws DBusError, IOError;
-
-        [DBus(name = "LockSession")]
-        public abstract void lock_session(string session_id) throws DBusError, IOError;
-
-        [DBus(name = "UnlockSession")]
-        public abstract void unlock_session(string session_id) throws DBusError, IOError;
-
-        [DBus(name = "LockSessions")]
-        public abstract void lock_sessions() throws DBusError, IOError;
-
-        [DBus(name = "UnlockSessions")]
-        public abstract void unlock_sessions() throws DBusError, IOError;
-
-        [DBus(name = "KillSession")]
-        public abstract void kill_session(string session_id, string who, int signal_number) throws DBusError, IOError;
-
-        [DBus(name = "KillUser")]
-        public abstract void kill_user(uint uid, int signal_number) throws DBusError, IOError;
-
-        [DBus(name = "TerminateSession")]
-        public abstract void terminate_session(string session_id) throws DBusError, IOError;
-
-        [DBus(name = "TerminateUser")]
-        public abstract void terminate_user(uint uid) throws DBusError, IOError;
-
-        [DBus(name = "TerminateSeat")]
-        public abstract void terminate_seat(string seat_id) throws DBusError, IOError;
-
-        [DBus(name = "SetUserLinger")]
-        public abstract void set_user_linger(uint uid, bool enable, bool interactive) throws DBusError, IOError;
-
-        [DBus(name = "AttachDevice")]
-        public abstract void attach_device(string seat_id, string sysfs_path, bool interactive) throws DBusError, IOError;
-
-        [DBus(name = "FlushDevices")]
-        public abstract void flush_devices(bool interactive) throws DBusError, IOError;
+        // [DBus(name = "SetUserLinger")]
+        // public abstract void set_user_linger(uint uid, bool enable, bool interactive) throws DBusError, IOError;
 
         [DBus(name = "PowerOff")]
         public abstract void power_off(bool interactive) throws DBusError, IOError;
@@ -716,14 +332,17 @@ namespace Org {
         [DBus(name = "CanSleep")]
         public abstract string can_sleep() throws DBusError, IOError;
 
-        [DBus(name = "ScheduleShutdown")]
-        public abstract void schedule_shutdown(string type, uint64 usec) throws DBusError, IOError;
+        // [DBus(name = "ScheduleShutdown")]
+        // public abstract void schedule_shutdown(string type, uint64 usec) throws DBusError, IOError;
 
-        [DBus(name = "CancelScheduledShutdown")]
-        public abstract bool cancel_scheduled_shutdown() throws DBusError, IOError;
+        // [DBus(name = "CancelScheduledShutdown")]
+        // public abstract bool cancel_scheduled_shutdown() throws DBusError, IOError;
 
+        /**
+         * return is a file descriptor, hopefully compatible with GLib.FileUtils
+         */
         [DBus(name = "Inhibit")]
-        public abstract unknown inhibit(string what, string who, string why, string mode) throws DBusError, IOError;
+        public abstract int inhibit(string what, string who, string why, string mode) throws DBusError, IOError;
 
         [DBus(name = "CanRebootParameter")]
         public abstract string can_reboot_parameter() throws DBusError, IOError;
@@ -749,42 +368,24 @@ namespace Org {
         [DBus(name = "SetRebootToBootLoaderEntry")]
         public abstract void set_reboot_to_boot_loader_entry(string boot_loader_entry) throws DBusError, IOError;
 
-        [DBus(name = "SetWallMessage")]
-        public abstract void set_wall_message(string wall_message, bool enable) throws DBusError, IOError;
+        // [DBus(name = "SetWallMessage")]
+        // public abstract void set_wall_message(string wall_message, bool enable) throws DBusError, IOError;
 
-        [DBus(name = "SessionNew")]
-        public signal void session_new(string session_id, GLib.ObjectPath object_path);
+        // [DBus(name = "PrepareForShutdown")]
+        // public signal void prepare_for_shutdown(bool start);
 
-        [DBus(name = "SessionRemoved")]
-        public signal void session_removed(string session_id, GLib.ObjectPath object_path);
+        // [DBus(name = "PrepareForShutdownWithMetadata")]
+        // public signal void prepare_for_shutdown_with_metadata(bool start, GLib.HashTable<string, GLib.Variant> metadata);
 
-        [DBus(name = "UserNew")]
-        public signal void user_new(uint uid, GLib.ObjectPath object_path);
-
-        [DBus(name = "UserRemoved")]
-        public signal void user_removed(uint uid, GLib.ObjectPath object_path);
-
-        [DBus(name = "SeatNew")]
-        public signal void seat_new(string seat_id, GLib.ObjectPath object_path);
-
-        [DBus(name = "SeatRemoved")]
-        public signal void seat_removed(string seat_id, GLib.ObjectPath object_path);
-
-        [DBus(name = "PrepareForShutdown")]
-        public signal void prepare_for_shutdown(bool start);
-
-        [DBus(name = "PrepareForShutdownWithMetadata")]
-        public signal void prepare_for_shutdown_with_metadata(bool start, GLib.HashTable<string, GLib.Variant> metadata);
-
-        [DBus(name = "PrepareForSleep")]
-        public signal void prepare_for_sleep(bool start);
+        // [DBus(name = "PrepareForSleep")]
+        // public signal void prepare_for_sleep(bool start);
       }
 
-      public struct ManagerSyncUserStruct {
-        public uint attr1;
-        public string attr2;
-        public GLib.ObjectPath attr3;
-      }
+      // public struct ManagerSyncUserStruct {
+      //   public uint attr1;
+      //   public string attr2;
+      //   public GLib.ObjectPath attr3;
+      // }
 
       public struct ManagerSyncInhibitorStruct {
         public string attr1;
@@ -795,46 +396,10 @@ namespace Org {
         public uint attr6;
       }
 
-      public struct ManagerSyncPropertyStruct {
-        public string attr1;
-        public GLib.Variant attr2;
-      }
-
-      public struct ManagerSyncPropertyStruct2 {
-        public string attr1;
-        public GLib.Variant attr2;
-      }
-
-      public struct ManagerSyncSessionStruct2 {
-        public string attr1;
-        public uint attr2;
-        public string attr3;
-        public string attr4;
-        public uint attr5;
-        public string attr6;
-        public string attr7;
-        public bool attr8;
-        public uint64 attr9;
-        public GLib.ObjectPath attr10;
-      }
-
-      public struct ManagerSyncScheduledShutdownStruct {
-        public string attr1;
-        public uint64 attr2;
-      }
-
-      public struct ManagerSyncSeatStruct {
-        public string attr1;
-        public GLib.ObjectPath attr2;
-      }
-
-      public struct ManagerSyncSessionStruct {
-        public string attr1;
-        public uint attr2;
-        public string attr3;
-        public string attr4;
-        public GLib.ObjectPath attr5;
-      }
+      // public struct ManagerSyncScheduledShutdownStruct {
+      //   public string attr1;
+      //   public uint64 attr2;
+      // }
     }
   }
 }
