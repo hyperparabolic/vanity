@@ -140,9 +140,6 @@ namespace Org {
         // [DBus(name = "CancelScheduledShutdown")]
         // public abstract bool cancel_scheduled_shutdown() throws DBusError, IOError;
 
-        /**
-         * return is a file descriptor, hopefully compatible with GLib.FileUtils
-         */
         [DBus(name = "Inhibit")]
         public abstract UnixInputStream inhibit(string what, string who, string why, string mode) throws DBusError, IOError;
 
@@ -338,9 +335,6 @@ namespace Org {
         // [DBus(name = "CancelScheduledShutdown")]
         // public abstract bool cancel_scheduled_shutdown() throws DBusError, IOError;
 
-        /**
-         * return is a file descriptor, hopefully compatible with GLib.FileUtils
-         */
         [DBus(name = "Inhibit")]
         public abstract UnixInputStream inhibit(string what, string who, string why, string mode) throws DBusError, IOError;
 
