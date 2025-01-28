@@ -4,8 +4,7 @@ class Vanity.Application : Astal.Application {
   public static Application instance;
   public AstalHyprland.Hyprland hyprland { get; set; }
 
-  private static Vanity.Menu menu = null;
-  private static Mutex menu_mutex = Mutex();
+  private static Vanity.Menu menu;
 
   public override void request(string msg, GLib.SocketConnection conn) {
     AstalIO.write_sock.begin(conn, @"missing response implementation on $instance_name");
@@ -42,20 +41,21 @@ class Vanity.Application : Astal.Application {
       }
     }
 
+    menu = new Vanity.Menu();
+    add_window(menu);
 
     this.hold();
   }
 
   public void toggle_menu() {
-    menu_mutex.lock();
-    if (menu != null) {
-      remove_window(menu);
-      menu.close();
-      menu = null;
-      menu_mutex.unlock();
-      return;
+    if (menu.visible == true) {
+      menu.close_menu();
+    } else {
+      menu.open_menu();
     }
+  }
 
+  public Gdk.Monitor get_active_monitor() {
     var monitors = Gdk.Display.get_default().get_monitors();
     Gdk.Monitor? active_monitor = null;
     var focus = hyprland.focused_monitor;
@@ -66,16 +66,10 @@ class Vanity.Application : Astal.Application {
         active_monitor = monitor;
       }
     }
-
-    if (active_monitor != null) {
-      debug("opening menu on %s", active_monitor.connector);
-      menu = new Vanity.Menu(active_monitor, is_sidecar_monitor(active_monitor));
-      add_window(menu);
-    }
-    menu_mutex.unlock();
+    return active_monitor;
   }
 
-  private static bool is_sidecar_monitor(Gdk.Monitor mon) {
+  public static bool is_sidecar_monitor(Gdk.Monitor mon) {
     var r = (Cairo.RectangleInt)mon.get_geometry();
     return r.height > r.width;
   }

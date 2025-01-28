@@ -5,7 +5,12 @@ public class Vanity.Menu : Astal.Window {
   public AstalWp.Wp wp { get; private set; }
   public VanityBrightness.Device vbs { get; private set; }
 
-  public string monitor_connector { get; private set; }
+  /**
+   * Automatically close menu on losing window focus
+   */
+  public bool close_inactive { get; set; }
+
+  private static uint? active_timeout;
 
   [GtkCallback]
   public void toggle_mute_source() {
@@ -24,25 +29,20 @@ public class Vanity.Menu : Astal.Window {
   [GtkChild]
   private unowned Gtk.Adjustment backlight_brightness;
 
-  public Menu(Gdk.Monitor monitor, bool is_sidecar) {
+  public Menu() {
     Object(
       application: Vanity.Application.instance,
       // uncrustify bug, being interpreted as a namespace and applying an
       // incorrect rule, disable here.
       // *INDENT-OFF*
-      namespace: @"menu-$(monitor.get_connector())",
+      namespace: "menu",
       // *INDENT-ON*
-      name: @"menu-$(monitor.get_connector())",
-      gdkmonitor: monitor,
-      anchor: Astal.WindowAnchor.TOP | Astal.WindowAnchor.RIGHT | Astal.WindowAnchor.BOTTOM
+      name: "menu",
+      anchor: Astal.WindowAnchor.TOP | Astal.WindowAnchor.RIGHT | Astal.WindowAnchor.BOTTOM,
+      visible: false
     );
 
-    this.monitor_connector = monitor.get_connector();
-    if (is_sidecar) {
-      this.add_css_class("sidecar");
-    }
-
-    present();
+    this.close_inactive = true;
   }
 
   construct {
@@ -57,16 +57,33 @@ public class Vanity.Menu : Astal.Window {
       backlight_brightness_button.sensitive = false;
       backlight_brightness_control.sensitive = false;
     }
-    init_watch_active();
   }
 
-  private void init_watch_active() {
-    GLib.Timeout.add(100, () => {
-      if (this.is_active == false) {
-        Vanity.Application.instance.toggle_menu();
-        return false;
-      }
-      return true;
-    });
+  public void open_menu() {
+    this.gdkmonitor = Application.instance.get_active_monitor();
+    if (Application.is_sidecar_monitor(this.gdkmonitor)) {
+      this.add_css_class("sidecar");
+    } else {
+      this.remove_css_class("sidecar");
+    }
+    present();
+
+    // I'm not sure why, but notify["is_active"] doesn't ever emit events, despite the state changing.
+    // work around this with a timeout, and cancel in close if necessary.
+    if (this.close_inactive) {
+      active_timeout = GLib.Timeout.add(100, () => {
+        if (this.is_active == false) {
+          this.close_menu();
+        }
+        return true;
+      });
+    }
+  }
+
+  public void close_menu() {
+    if (active_timeout != null) {
+      GLib.Source.remove(active_timeout);
+    }
+    this.visible = false;
   }
 }
