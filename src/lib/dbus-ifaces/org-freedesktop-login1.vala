@@ -11,12 +11,6 @@ namespace Org {
       [DBus(name = "org.freedesktop.login1.Manager", timeout = 120000)]
       public interface Manager : GLib.Object {
 
-        // [DBus(name = "EnableWallMessages")]
-        // public abstract bool enable_wall_messages { get; set; }
-
-        // [DBus(name = "WallMessage")]
-        // public abstract string wall_message { owned get; set; }
-
         [DBus(name = "InhibitDelayMaxUSec")]
         public abstract uint64 inhibit_delay_max_u_sec { get; }
 
@@ -202,12 +196,6 @@ namespace Org {
 
       [DBus(name = "org.freedesktop.login1.Manager", timeout = 120000)]
       public interface ManagerSync : GLib.Object {
-
-        // [DBus(name = "EnableWallMessages")]
-        // public abstract bool enable_wall_messages { get; set; }
-
-        // [DBus(name = "WallMessage")]
-        // public abstract string wall_message { owned get; set; }
 
         [DBus(name = "InhibitDelayMaxUSec")]
         public abstract uint64 inhibit_delay_max_u_sec { get; }
