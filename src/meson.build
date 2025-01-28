@@ -15,6 +15,7 @@ executable(
     dependency('astal-tray-0.1'),
     dependency('astal-wireplumber-0.1'),
     dependency('gio-2.0'),
+    dependency('gio-unix-2.0'),
     dependency('gtk4'),
     dependency('gtk4-layer-shell-0'),
     dependency('libadwaita-1'),
