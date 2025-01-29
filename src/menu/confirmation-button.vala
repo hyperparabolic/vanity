@@ -30,6 +30,7 @@ public class Vanity.ConfirmationButton : Gtk.Button {
       GLib.Source.remove(confirmation_timeout);
     }
     this.icon_name = this.icon;
+    this.remove_css_class("confirm");
   }
 
   [GtkCallback]

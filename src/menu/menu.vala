@@ -2,6 +2,8 @@ using GtkLayerShell;
 
 [GtkTemplate(ui = "/com/github/hyperparabolic/vanity/ui/menu.ui")]
 public class Vanity.Menu : Astal.Window {
+  public static Menu instance;
+
   public AstalWp.Wp wp { get; private set; }
   public VanityBrightness.Device vbs { get; private set; }
 
@@ -100,6 +102,7 @@ public class Vanity.Menu : Astal.Window {
     );
 
     this.close_inactive = true;
+    instance = this;
   }
 
   construct {

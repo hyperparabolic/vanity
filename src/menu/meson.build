@@ -1,1 +1,6 @@
-project_resources += files('confirmation-button.vala', 'menu.vala', 'menu-selector.vala')
+project_resources += files(
+  'confirmation-button.vala',
+  'menu-selector.vala',
+  'menu-system-controls.vala',
+  'menu.vala',
+)

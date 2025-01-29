@@ -1,0 +1,39 @@
+using Gtk 4.0;
+
+template $VanityMenuSystemControls : Box {
+  styles ["system_controls"]
+
+  hexpand: true;
+  halign: center;
+  spacing: 20;
+
+  $VanityConfirmationButton lock_button {
+    icon: "system-lock-screen-symbolic";
+    confirmation-icon: "dialog-question-symbolic";
+    activated => $activate_lock();
+  }
+
+  $VanityConfirmationButton logout_button {
+    icon: "system-log-out-symbolic";
+    confirmation-icon: "dialog-question-symbolic";
+    activated => $activate_logout();
+  }
+
+  $VanityConfirmationButton sleep_button {
+    icon: "system-suspend-symbolic";
+    confirmation-icon: "dialog-question-symbolic";
+    activated => $activate_sleep();
+  }
+
+  $VanityConfirmationButton reboot_button {
+    icon: "system-reboot-symbolic";
+    confirmation-icon: "dialog-question-symbolic";
+    activated => $activate_reboot();
+  }
+
+  $VanityConfirmationButton poweroff_button {
+    icon: "system-shutdown-symbolic";
+    confirmation-icon: "dialog-question-symbolic";
+    activated => $activate_poweroff();
+  }
+}

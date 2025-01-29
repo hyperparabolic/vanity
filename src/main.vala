@@ -8,5 +8,6 @@ public static void main(string[] args) {
   typeof (Vanity.HyprlandWorkspaces).ensure();
   typeof (Vanity.Menu).ensure();
   typeof (Vanity.MenuSelector).ensure();
+  typeof (Vanity.MenuSystemControls).ensure();
   app.run(args);
 }
