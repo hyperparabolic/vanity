@@ -3,6 +3,7 @@
     <gresource prefix="/com/github/hyperparabolic/vanity">
         <file>vanity.css</file>
         <file preprocess="xml-stripblanks">ui/bar.ui</file>
+        <file preprocess="xml-stripblanks">ui/confirmation-button.ui</file>
         <file preprocess="xml-stripblanks">ui/menu.ui</file>
         <file preprocess="xml-stripblanks">ui/menu-selector.ui</file>
 
