@@ -19,10 +19,17 @@ public class VanityIdle.Inhibitor : Object {
 
   private static uint? inhibit_timeout;
 
+  private static DateTime? inhibit_until;
+
   private ManagerSync proxy;
 
   public bool inhibit { get; private set; }
 
+  public string status_icon { get; private set; }
+
+  public static string enable_icon { get; set; default = "my-caffeine-on-symbolic"; }
+
+  public static string disable_icon { get; set; default = "my-caffeine-off-symbolic"; }
 
   public static Inhibitor? get_default() {
     if (default_inhibitor != null) {
@@ -90,8 +97,11 @@ public class VanityIdle.Inhibitor : Object {
         GLib.Timeout.add_seconds_once(
           timeout_seconds,
           () => { this.disable(); });
+        var now = new DateTime.now_local();
+        inhibit_until = now.add_seconds(timeout_seconds);
       }
 
+      this.status_icon = enable_icon;
       this.inhibit = true;
     } catch (Error e) {
       critical(e.message);
@@ -115,11 +125,13 @@ public class VanityIdle.Inhibitor : Object {
     var ret = 0;
     try {
       inhibit_fd.close();
+      inhibit_fd = null;
 
       if (inhibit_timeout != null) {
         GLib.Source.remove(inhibit_timeout);
       }
 
+      this.status_icon = disable_icon;
       this.inhibit = false;
     } catch (Error e) {
       critical(e.message);
@@ -128,5 +140,17 @@ public class VanityIdle.Inhibitor : Object {
       inhibit_fd_mutex.unlock();
     }
     return ret;
+  }
+
+  public string? disable_status() {
+    if (!inhibit) {
+      return null;
+    }
+    if (inhibit_until == null) {
+      return "until cancelled";
+    }
+
+    var time_string = inhibit_until.format("%I:%M %p");
+    return @"until $(time_string)";
   }
 }
