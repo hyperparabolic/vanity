@@ -12,11 +12,6 @@ public class Vanity.Menu : Astal.Window {
 
   private static uint? active_timeout;
 
-  [GtkCallback]
-  public void toggle_mute_source() {
-    this.wp.audio.default_speaker.mute = !this.wp.audio.default_speaker.mute;
-  }
-
   [GtkChild]
   private unowned Gtk.Adjustment source_volume;
 
@@ -28,6 +23,68 @@ public class Vanity.Menu : Astal.Window {
 
   [GtkChild]
   private unowned Gtk.Adjustment backlight_brightness;
+
+  [GtkChild]
+  private unowned Gtk.Button navigate_back;
+
+  [GtkChild]
+  private unowned Adw.NavigationView nav_view;
+
+  [GtkCallback]
+  public void navigate_hud() {
+    if (nav_view.visible_page.tag != "hud") {
+      nav_view.pop_to_tag("hud");
+    }
+  }
+
+  private void navigate_non_root(string tag) {
+    if (nav_view.visible_page.tag == tag) {
+      return;
+    }
+    if (nav_view.visible_page.tag != "hud") {
+      var tags = new string[2];
+      tags[0] = "hud";
+      tags[1] = tag;
+      nav_view.replace_with_tags(tags);
+    } else {
+      nav_view.push_by_tag(tag);
+    }
+  }
+
+  [GtkCallback]
+  public void navigate_audio() {
+    navigate_non_root("audio");
+  }
+
+  [GtkCallback]
+  public void navigate_network() {
+    navigate_non_root("network");
+  }
+
+  [GtkCallback]
+  public void navigate_bluetooth() {
+    navigate_non_root("bluetooth");
+  }
+
+  [GtkCallback]
+  public void navigate_notifications() {
+    navigate_non_root("notifications");
+  }
+
+  [GtkCallback]
+  public void navigate_idle() {
+    navigate_non_root("idle");
+  }
+
+  [GtkCallback]
+  public void navigate_sunset() {
+    navigate_non_root("sunset");
+  }
+
+  [GtkCallback]
+  public void toggle_mute_source() {
+    this.wp.audio.default_speaker.mute = !this.wp.audio.default_speaker.mute;
+  }
 
   public Menu() {
     Object(
@@ -57,6 +114,14 @@ public class Vanity.Menu : Astal.Window {
       backlight_brightness_button.sensitive = false;
       backlight_brightness_control.sensitive = false;
     }
+
+    nav_view.pushed.connect(() => {
+      navigate_back.sensitive = true;
+    });
+
+    nav_view.popped.connect(() => {
+      navigate_back.sensitive = false;
+    });
   }
 
   public void open_menu() {

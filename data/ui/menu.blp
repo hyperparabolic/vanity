@@ -59,23 +59,105 @@ template $VanityMenu: Astal.Window {
 
     Box {
       styles [
-        "menu_segment"
+        "menu_segment",
       ]
 
       hexpand: true;
-      Label {
-        label: "toggles and page selectors placeholder";
+      Button navigate_back {
+        styles [ "navigate_block" ]
+        icon-name: "go-previous-symbolic";
+        sensitive: false;
+        clicked => $navigate_hud();
+      }
+      Separator {
+      }
+      Grid {
+        styles [ "navigate_block" ]
+        row-spacing: 10;
+        column-spacing: 10;
+
+        $VanityMenuSelector {
+          // audio
+          icon: bind template.wp as <AstalWp.Wp>.audio as <AstalWp.Audio>.default-speaker as <AstalWp.Endpoint>.volume-icon;
+          inactive: bind template.wp as <AstalWp.Wp>.audio as <AstalWp.Audio>.default-speaker as <AstalWp.Endpoint>.mute;
+          toggle_clicked => $toggle_mute_source();
+          navigate_clicked => $navigate_audio();
+
+          layout {
+            row: "0";
+            column: "0";
+          }
+        }
+
+        $VanityMenuSelector {
+          // network
+          icon: "network-wireless-connected-100-symbolic";
+          active: false;
+          navigate_clicked => $navigate_network();
+
+          layout {
+            row: "0";
+            column: "1";
+          }
+        }
+
+        $VanityMenuSelector {
+          // bluetooth
+          icon: "bluetooth-active-symbolic";
+          active: false;
+          navigate_clicked => $navigate_bluetooth();
+
+          layout {
+            row: "0";
+            column: "2";
+          }
+        }
+
+        $VanityMenuSelector {
+          // notifications
+          icon: "notification-active-symbolic";
+          active: false;
+          navigate_clicked => $navigate_notifications();
+
+          layout {
+            row: "1";
+            column: "0";
+          }
+        }
+
+        $VanityMenuSelector {
+          // idle
+          icon: "my-caffeine-off-symbolic";
+          active: false;
+          navigate_clicked => $navigate_idle();
+
+          layout {
+            row: "1";
+            column: "1";
+          }
+        }
+
+        $VanityMenuSelector {
+          // sunset
+          icon: "night-light-symbolic";
+          active: false;
+          navigate_clicked => $navigate_sunset();
+
+          layout {
+            row: "1";
+            column: "2";
+          }
+        }
+
       }
     }
 
     Adw.NavigationView nav_view {
       Adw.NavigationPage {
         tag: "hud";
-        title: "Vanity";
+        title: "HUD";
         child: Box {
-          styles [
-            "menu_segment"
-          ]
+          styles [ "menu_segment" ]
 
           orientation: vertical;
           hexpand: true;
@@ -91,13 +173,94 @@ template $VanityMenu: Astal.Window {
         tag: "audio";
         title: "Audio";
         child: Box {
-          styles [
-            "menu_segment"
-          ]
+          styles [ "menu_segment" ]
 
-          Adw.HeaderBar {
-            hexpand: true;
-            show-end-title-buttons: false;
+          orientation: vertical;
+          hexpand: true;
+          vexpand: true;
+
+          Label {
+            label: "audio placeholder";
+          }
+        };
+      }
+
+      Adw.NavigationPage {
+        tag: "network";
+        title: "Network";
+        child: Box {
+          styles [ "menu_segment" ]
+
+          orientation: vertical;
+          hexpand: true;
+          vexpand: true;
+
+          Label {
+            label: "network placeholder";
+          }
+        };
+      }
+
+      Adw.NavigationPage {
+        tag: "bluetooth";
+        title: "Bluetooth";
+        child: Box {
+          styles [ "menu_segment" ]
+
+          orientation: vertical;
+          hexpand: true;
+          vexpand: true;
+
+          Label {
+            label: "bluetooth placeholder";
+          }
+        };
+      }
+
+      Adw.NavigationPage {
+        tag: "notifications";
+        title: "Notifications";
+        child: Box {
+          styles [ "menu_segment" ]
+
+          orientation: vertical;
+          hexpand: true;
+          vexpand: true;
+
+          Label {
+            label: "notifications placeholder";
+          }
+        };
+      }
+
+      Adw.NavigationPage {
+        tag: "idle";
+        title: "Idle";
+        child: Box {
+          styles [ "menu_segment" ]
+
+          orientation: vertical;
+          hexpand: true;
+          vexpand: true;
+
+          Label {
+            label: "idle placeholder";
+          }
+        };
+      }
+
+      Adw.NavigationPage {
+        tag: "sunset";
+        title: "Sunset";
+        child: Box {
+          styles [ "menu_segment" ]
+
+          orientation: vertical;
+          hexpand: true;
+          vexpand: true;
+
+          Label {
+            label: "sunset placeholder";
           }
         };
       }

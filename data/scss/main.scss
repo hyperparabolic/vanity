@@ -7,10 +7,10 @@
 
 button {
   background-color: transparent;
-}
 
-button:hover {
-  color: #{"@accent_bg_color"};
+  &:hover {
+    color: #{"@accent_bg_color"};
+  }
 }
 
 label {
