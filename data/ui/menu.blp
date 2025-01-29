@@ -125,10 +125,11 @@ template $VanityMenu: Astal.Window {
           }
         }
 
-        $VanityMenuSelector {
+        $VanityMenuSelector selector_idle {
           // idle
           icon: "my-caffeine-off-symbolic";
           active: false;
+          toggle_clicked => $toggle_idle();
           navigate_clicked => $navigate_idle();
 
           layout {
