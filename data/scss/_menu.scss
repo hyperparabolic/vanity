@@ -60,3 +60,23 @@
     }
   }
 }
+
+.system_controls {
+  padding: 5px;
+
+  button {
+    min-height: 40px;
+    min-width: 40px;
+    border-radius: 50%;
+    background-color: #{"@card_bg_color"};
+
+    &.confirm {
+      background-color: #{"@accent_bg_color"};
+      color: #{"@accent_fg_color"};
+
+      &:hover {
+        background-color: color-mix(in srgb, #{"@accent_bg_color"} 90%, #{"@accent_fg_color"});
+      }
+    }
+  }
+}
