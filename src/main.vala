@@ -7,6 +7,7 @@ public static void main(string[] args) {
   typeof (Vanity.ConfirmationButton).ensure();
   typeof (Vanity.HyprlandWorkspaces).ensure();
   typeof (Vanity.Menu).ensure();
+  typeof (Vanity.MenuIdle).ensure();
   typeof (Vanity.MenuSelector).ensure();
   typeof (Vanity.MenuSystemControls).ensure();
   app.run(args);

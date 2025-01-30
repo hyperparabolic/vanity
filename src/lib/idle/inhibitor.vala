@@ -131,6 +131,7 @@ public class VanityIdle.Inhibitor : Object {
         GLib.Source.remove(inhibit_timeout);
       }
 
+      inhibit_until = null;
       this.status_icon = disable_icon;
       this.inhibit = false;
     } catch (Error e) {
@@ -142,9 +143,9 @@ public class VanityIdle.Inhibitor : Object {
     return ret;
   }
 
-  public string? disable_status() {
+  public string disable_status() {
     if (!inhibit) {
-      return null;
+      return "inactive";
     }
     if (inhibit_until == null) {
       return "until cancelled";

@@ -237,16 +237,7 @@ template $VanityMenu: Astal.Window {
       Adw.NavigationPage {
         tag: "idle";
         title: "Idle";
-        child: Box {
-          styles [ "menu_segment" ]
-
-          orientation: vertical;
-          hexpand: true;
-          vexpand: true;
-
-          Label {
-            label: "idle placeholder";
-          }
+        child: $VanityMenuIdle {
         };
       }
 
