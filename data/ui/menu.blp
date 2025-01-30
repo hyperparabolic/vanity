@@ -125,10 +125,11 @@ template $VanityMenu: Astal.Window {
           }
         }
 
-        $VanityMenuSelector {
+        $VanityMenuSelector selector_idle {
           // idle
           icon: "my-caffeine-off-symbolic";
           active: false;
+          toggle_clicked => $toggle_idle();
           navigate_clicked => $navigate_idle();
 
           layout {
@@ -236,16 +237,7 @@ template $VanityMenu: Astal.Window {
       Adw.NavigationPage {
         tag: "idle";
         title: "Idle";
-        child: Box {
-          styles [ "menu_segment" ]
-
-          orientation: vertical;
-          hexpand: true;
-          vexpand: true;
-
-          Label {
-            label: "idle placeholder";
-          }
+        child: $VanityMenuIdle {
         };
       }
 

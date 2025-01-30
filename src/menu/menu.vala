@@ -6,6 +6,7 @@ public class Vanity.Menu : Astal.Window {
 
   public AstalWp.Wp wp { get; private set; }
   public VanityBrightness.Device vbs { get; private set; }
+  public VanityIdle.Inhibitor vii { get; private set; }
 
   /**
    * Automatically close menu on losing window focus
@@ -31,6 +32,9 @@ public class Vanity.Menu : Astal.Window {
 
   [GtkChild]
   private unowned Adw.NavigationView nav_view;
+
+  [GtkChild]
+  private unowned Vanity.MenuSelector selector_idle;
 
   [GtkCallback]
   public void navigate_hud() {
@@ -88,6 +92,31 @@ public class Vanity.Menu : Astal.Window {
     this.wp.audio.default_speaker.mute = !this.wp.audio.default_speaker.mute;
   }
 
+  [GtkCallback]
+  public void toggle_idle() {
+    if (this.vii.inhibit) {
+      this.vii.disable();
+      return;
+    }
+
+    // default toggle sets inhibitor to disable at 2:00AM, just in case I
+    // forget to disable it.
+    var time_now = new DateTime.now_local();
+
+    // let datetime handle date rollover complexity
+    var tomorrow = time_now.add_days(1);
+    var tomorrow_two_am = new DateTime.local(
+      tomorrow.get_year(),
+      tomorrow.get_month(),
+      tomorrow.get_day_of_month(),
+      2,
+      0,
+      0);
+    var d_seconds = (tomorrow_two_am.to_unix() - time_now.to_unix()) % 86400;
+
+    this.vii.enable((int)d_seconds);
+  }
+
   public Menu() {
     Object(
       application: Vanity.Application.instance,
@@ -118,12 +147,23 @@ public class Vanity.Menu : Astal.Window {
       backlight_brightness_control.sensitive = false;
     }
 
+    this.vii = VanityIdle.Inhibitor.get_default();
+
+    init_signals();
+  }
+
+  private void init_signals() {
     nav_view.pushed.connect(() => {
       navigate_back.sensitive = true;
     });
 
     nav_view.popped.connect(() => {
       navigate_back.sensitive = false;
+    });
+
+    this.vii.notify["inhibit"].connect(() => {
+      selector_idle.active = this.vii.inhibit;
+      selector_idle.icon = this.vii.status_icon;
     });
   }
 

@@ -3,6 +3,7 @@ blueprints = custom_target(
   input: files(
     'bar.blp',
     'confirmation-button.blp',
+    'menu-idle.blp',
     'menu-selector.blp',
     'menu-system-controls.blp',
     'menu.blp',

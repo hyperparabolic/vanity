@@ -1,0 +1,98 @@
+using Gtk 4.0;
+
+template $VanityMenuIdle : Box {
+  styles [ "menu_segment" ]
+
+  orientation: vertical;
+  hexpand: true;
+  vexpand: true;
+
+  Label {
+    label: "Inhibit Idle";
+  }
+
+  Box inhibit_status {
+    halign: center;
+
+    Label disable_status {
+      label: "Inhibited until 2:00 AM";
+    }
+
+    Button {
+      label: "Disable";
+      clicked => $disable_inhibit();
+    }
+  }
+
+  Box inhibit_controls {
+    orientation: vertical;
+    halign: center;
+
+    Grid {
+      Box {
+        styles [ "continuous_buttons" ]
+
+        Button {
+          label: "10";
+          clicked => $inhibit_10_min();
+        }
+        Button {
+          label: "20";
+          clicked => $inhibit_20_min();
+        }
+        Button {
+          label: "30";
+          clicked => $inhibit_30_min();
+        }
+        layout {
+          row: "0";
+          column: "0";
+        }
+      }
+
+      Label {
+        label: "Minutes";
+        layout {
+          row: "0";
+          column: "1";
+        }
+      }
+
+      Box {
+        styles [ "continuous_buttons" ]
+
+        Button {
+          label: "1";
+          clicked => $inhibit_1_hr();
+        }
+        Button {
+          label: "2";
+          clicked => $inhibit_2_hr();
+        }
+        Button {
+          label: "4";
+          clicked => $inhibit_4_hr();
+        }
+        layout {
+          row: "1";
+          column: "0";
+        }
+      }
+
+      Label {
+        label: "Hours";
+        layout {
+          row: "1";
+          column: "1";
+        }
+      }
+    }
+
+    Box {
+      Button {
+        label: "Until Cancelled";
+        clicked => $inhibit();
+      }
+    }
+  }
+}
