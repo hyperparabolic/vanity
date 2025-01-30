@@ -136,12 +136,14 @@ public class Vanity.Menu : Astal.Window {
 
   construct {
     this.wp = AstalWp.get_default();
-    this.wp.audio.default_speaker.bind_property("volume", source_volume, "value", GLib.BindingFlags.BIDIRECTIONAL | GLib.BindingFlags.SYNC_CREATE);
+    this.wp.audio.default_speaker.bind_property("volume", source_volume, "value",
+                                                GLib.BindingFlags.BIDIRECTIONAL | GLib.BindingFlags.SYNC_CREATE);
 
     this.vbs = VanityBrightness.get_default_screen();
     if (vbs != null) {
       backlight_brightness.upper = this.vbs.max_brightness;
-      this.vbs.bind_property("brightness", backlight_brightness, "value", GLib.BindingFlags.BIDIRECTIONAL | GLib.BindingFlags.SYNC_CREATE);
+      this.vbs.bind_property("brightness", backlight_brightness, "value",
+                             GLib.BindingFlags.BIDIRECTIONAL | GLib.BindingFlags.SYNC_CREATE);
     } else {
       backlight_brightness_button.sensitive = false;
       backlight_brightness_control.sensitive = false;

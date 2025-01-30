@@ -135,7 +135,10 @@ namespace Org {
         // public abstract bool cancel_scheduled_shutdown() throws DBusError, IOError;
 
         [DBus(name = "Inhibit")]
-        public abstract UnixInputStream inhibit(string what, string who, string why, string mode) throws DBusError, IOError;
+        public abstract UnixInputStream inhibit(string what,
+                                                string who,
+                                                string why,
+                                                string mode) throws DBusError, IOError;
 
         [DBus(name = "CanRebootParameter")]
         public abstract string can_reboot_parameter() throws DBusError, IOError;
@@ -175,14 +178,14 @@ namespace Org {
       }
 
       // public struct ManagerScheduledShutdownStruct {
-      //   public string attr1;
-      //   public uint64 attr2;
+      // public string attr1;
+      // public uint64 attr2;
       // }
 
       // public struct ManagerUserStruct {
-      //   public uint attr1;
-      //   public string attr2;
-      //   public GLib.ObjectPath attr3;
+      // public uint attr1;
+      // public string attr2;
+      // public GLib.ObjectPath attr3;
       // }
 
       public struct ManagerInhibitorStruct {
@@ -324,7 +327,10 @@ namespace Org {
         // public abstract bool cancel_scheduled_shutdown() throws DBusError, IOError;
 
         [DBus(name = "Inhibit")]
-        public abstract UnixInputStream inhibit(string what, string who, string why, string mode) throws DBusError, IOError;
+        public abstract UnixInputStream inhibit(string what,
+                                                string who,
+                                                string why,
+                                                string mode) throws DBusError, IOError;
 
         [DBus(name = "CanRebootParameter")]
         public abstract string can_reboot_parameter() throws DBusError, IOError;
@@ -364,9 +370,9 @@ namespace Org {
       }
 
       // public struct ManagerSyncUserStruct {
-      //   public uint attr1;
-      //   public string attr2;
-      //   public GLib.ObjectPath attr3;
+      // public uint attr1;
+      // public string attr2;
+      // public GLib.ObjectPath attr3;
       // }
 
       public struct ManagerSyncInhibitorStruct {
@@ -379,8 +385,8 @@ namespace Org {
       }
 
       // public struct ManagerSyncScheduledShutdownStruct {
-      //   public string attr1;
-      //   public uint64 attr2;
+      // public string attr1;
+      // public uint64 attr2;
       // }
     }
   }
