@@ -56,6 +56,14 @@
           src = ./.;
           version = version;
 
+          meta = {
+            homepage = "https://github.com/hyperparabolic/vanity";
+            description = "vanity desktop shell";
+            license = nixpkgs.lib.licenses.mit;
+            mainProgram = "vanity";
+            platforms = nixpkgs.lib.platforms.linux;
+          };
+
           nativeBuildInputs =
             astal-libs
             ++ build-tools
