@@ -33,6 +33,19 @@ template $VanityMenu: Astal.Window {
       Box {
         Button {
           icon-name: bind template.wp as <AstalWp.Wp>.audio as <AstalWp.Audio>.default-speaker as <AstalWp.Endpoint>.volume-icon;
+          clicked => $toggle_mute_sink();
+        }
+        Scale {
+          hexpand: true;
+          adjustment: Adjustment sink_volume {
+            lower: 0;
+            upper: 1.0;
+          };
+        }
+      }
+      Box {
+        Button {
+          icon-name: bind template.wp as <AstalWp.Wp>.audio as <AstalWp.Audio>.default-microphone as <AstalWp.Endpoint>.volume-icon;
           clicked => $toggle_mute_source();
         }
         Scale {
@@ -80,7 +93,7 @@ template $VanityMenu: Astal.Window {
           // audio
           icon: bind template.wp as <AstalWp.Wp>.audio as <AstalWp.Audio>.default-speaker as <AstalWp.Endpoint>.volume-icon;
           inactive: bind template.wp as <AstalWp.Wp>.audio as <AstalWp.Audio>.default-speaker as <AstalWp.Endpoint>.mute;
-          toggle_clicked => $toggle_mute_source();
+          toggle_clicked => $toggle_mute_sink();
           navigate_clicked => $navigate_audio();
 
           layout {
@@ -173,16 +186,7 @@ template $VanityMenu: Astal.Window {
       Adw.NavigationPage {
         tag: "audio";
         title: "Audio";
-        child: Box {
-          styles [ "menu_segment" ]
-
-          orientation: vertical;
-          hexpand: true;
-          vexpand: true;
-
-          Label {
-            label: "audio placeholder";
-          }
+        child: $VanityMenuAudio {
         };
       }
 

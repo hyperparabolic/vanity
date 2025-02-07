@@ -61,6 +61,10 @@
   }
 }
 
+.audio_default {
+  background-color: color-mix(in srgb, #{"@window_bg_color"} 90%, #{"@accent_bg_color"});
+}
+
 .system_controls {
   padding: 5px;
 
