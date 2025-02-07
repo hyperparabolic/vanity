@@ -1,0 +1,29 @@
+using Gtk 4.0;
+using AstalWp 0.1;
+
+template $VanityMenuAudioRow: ListBoxRow {
+  activatable: false;
+  selectable: false;
+  child: Box  {
+    Image {
+      icon-size: large;
+      icon-name: bind template.endpoint as <AstalWp.Endpoint>.volume-icon;
+    }
+    Box {
+      orientation: vertical;
+      Label {
+        label: bind template.endpoint as <AstalWp.Endpoint>.description;
+      }
+      Scale {
+        hexpand: true;
+        adjustment: Adjustment volume_adjust {
+          lower: 0;
+          upper: 1.0;
+        };
+      }
+    }
+    GestureClick {
+      pressed => $on_clicked();
+    }
+  };
+}

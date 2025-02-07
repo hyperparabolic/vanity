@@ -1,0 +1,36 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $VanityMenuAudio : Box {
+  styles [ "menu_segment" ]
+
+  orientation: vertical;
+  hexpand: true;
+  vexpand: true;
+
+  Label {
+    label: "Audio";
+  }
+
+  ListBox {
+    Adw.ExpanderRow sinks_expander {
+      title: "Speakers";
+      activatable: false;
+      selectable: false;
+    }
+    Adw.ExpanderRow sources_expander {
+      title: "Microphones";
+      activatable: false;
+      selectable: false;
+    }
+    Adw.ExpanderRow streams_expander {
+      title: "Mixer";
+      activatable: false;
+      selectable: false;
+      expanded: true;
+    }
+  }
+
+}
+
+
