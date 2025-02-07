@@ -19,6 +19,9 @@ public class Vanity.Menu : Astal.Window {
   private unowned Gtk.Adjustment sink_volume;
 
   [GtkChild]
+  private unowned Gtk.Adjustment source_volume;
+
+  [GtkChild]
   private unowned Gtk.Scale backlight_brightness_control;
 
   [GtkChild]
@@ -93,6 +96,11 @@ public class Vanity.Menu : Astal.Window {
   }
 
   [GtkCallback]
+  public void toggle_mute_source() {
+    this.wp.audio.default_microphone.mute = !this.wp.audio.default_microphone.mute;
+  }
+
+  [GtkCallback]
   public void toggle_idle() {
     if (this.vii.inhibit) {
       this.vii.disable();
@@ -138,6 +146,8 @@ public class Vanity.Menu : Astal.Window {
     this.wp = AstalWp.get_default();
     this.wp.audio.default_speaker.bind_property("volume", sink_volume, "value",
                                                 GLib.BindingFlags.BIDIRECTIONAL | GLib.BindingFlags.SYNC_CREATE);
+    this.wp.audio.default_microphone.bind_property("volume", source_volume, "value",
+                                                   GLib.BindingFlags.BIDIRECTIONAL | GLib.BindingFlags.SYNC_CREATE);
 
     this.vbs = VanityBrightness.get_default_screen();
     if (vbs != null) {

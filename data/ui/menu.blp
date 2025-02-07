@@ -44,6 +44,19 @@ template $VanityMenu: Astal.Window {
         }
       }
       Box {
+        Button {
+          icon-name: bind template.wp as <AstalWp.Wp>.audio as <AstalWp.Audio>.default-microphone as <AstalWp.Endpoint>.volume-icon;
+          clicked => $toggle_mute_source();
+        }
+        Scale {
+          hexpand: true;
+          adjustment: Adjustment source_volume {
+            lower: 0;
+            upper: 1.0;
+          };
+        }
+      }
+      Box {
         Button backlight_brightness_button {
           icon-name: "display-brightness-symbolic";
         }
