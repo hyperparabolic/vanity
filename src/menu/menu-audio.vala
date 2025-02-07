@@ -39,9 +39,7 @@ class Vanity.MenuAudio : Gtk.Box {
     this.row_map = new HashTable<uint, Vanity.MenuAudioRow>(
       (a) => { return a; },
       (a, b) => { return a == b; });
-    this.ignore_set = new GenericSet<string>(
-      (a) => { return a.hash(); },
-      (a, b) => { return a == b; });
+    this.ignore_set = new GenericSet<string>(str_hash, str_equal);
     foreach (var ignore in IGNORE_ENDPOINTS) {
       this.ignore_set.add(ignore);
     }
