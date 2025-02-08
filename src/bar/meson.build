@@ -1,1 +1,1 @@
-project_resources += files('bar.vala', 'hyprland-workspaces.vala')
+project_resources += files('bar.vala', 'hyprland-workspaces.vala', 'tray.vala')
