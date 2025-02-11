@@ -9,9 +9,11 @@ public static void main(string[] args) {
   typeof (Vanity.Menu).ensure();
   typeof (Vanity.MenuAudio).ensure();
   typeof (Vanity.MenuAudioRow).ensure();
+  typeof (Vanity.MenuHud).ensure();
   typeof (Vanity.MenuIdle).ensure();
   typeof (Vanity.MenuSelector).ensure();
   typeof (Vanity.MenuSystemControls).ensure();
+  typeof (Vanity.Player).ensure();
   typeof (Vanity.Tray).ensure();
   app.run(args);
 }

@@ -1,0 +1,64 @@
+using Gtk 4.0;
+using AstalMpris 0.1;
+
+template $VanityPlayer: Box {
+  hexpand: true;
+
+  styles [
+    "player_card"
+  ]
+
+  Box {
+
+    Image player_album_art {
+      styles [
+        "player_album_art"
+      ]
+
+      file: bind $art_path(template.player as <AstalMpris.Player>.cover-art) as <string>;
+      pixel-size: 200;
+    }
+  }
+
+  Box {
+    styles [
+    ]
+
+    orientation: vertical;
+    hexpand: true;
+    valign: center;
+    spacing: 10;
+
+    Label {
+      label: bind template.player as <AstalMpris.Player>.title;
+      ellipsize: end;
+      max-width-chars: 50;
+    }
+
+    Label {
+      
+      label: bind template.player as <AstalMpris.Player>.artist;
+      ellipsize: end;
+      max-width-chars: 50;
+    }
+
+    Box {
+      halign: center;
+
+      Button {
+        icon-name: "media-skip-backward-symbolic";
+        clicked => $player_previous();
+      }
+
+      Button {
+        icon-name: bind $play_pause_icon(template.player as <AstalMpris.Player>.playback-status) as <string>;
+        clicked => $player_play_pause();
+      }
+
+      Button {
+        icon-name: "media-skip-forward-symbolic";
+        clicked => $player_next();
+      }
+    }
+  }
+}

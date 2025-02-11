@@ -3,12 +3,14 @@ blueprints = custom_target(
   input: files(
     'bar.blp',
     'confirmation-button.blp',
-    'menu-audio.blp',
     'menu-audio-row.blp',
+    'menu-audio.blp',
+    'menu-hud.blp',
     'menu-idle.blp',
     'menu-selector.blp',
     'menu-system-controls.blp',
     'menu.blp',
+    'player.blp',
   ),
   output: '.',
   command: [

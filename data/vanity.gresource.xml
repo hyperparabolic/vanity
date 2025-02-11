@@ -7,9 +7,11 @@
         <file preprocess="xml-stripblanks">ui/menu.ui</file>
         <file preprocess="xml-stripblanks">ui/menu-audio.ui</file>
         <file preprocess="xml-stripblanks">ui/menu-audio-row.ui</file>
+        <file preprocess="xml-stripblanks">ui/menu-hud.ui</file>
         <file preprocess="xml-stripblanks">ui/menu-idle.ui</file>
         <file preprocess="xml-stripblanks">ui/menu-selector.ui</file>
         <file preprocess="xml-stripblanks">ui/menu-system-controls.ui</file>
+        <file preprocess="xml-stripblanks">ui/player.ui</file>
 
         <file compressed="true">icons/symbolic/apps/nixos-symbolic.svg</file>
     </gresource>
