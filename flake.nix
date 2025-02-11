@@ -31,7 +31,6 @@
           wireplumber
         ];
         build-tools = with pkgs; [
-          cmake
           meson
           ninja
         ];
