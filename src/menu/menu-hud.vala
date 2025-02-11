@@ -8,15 +8,12 @@ class Vanity.MenuHud : Gtk.Box {
   private unowned Adw.Carousel players;
 
   private void on_player_added(AstalMpris.Player player) {
-    message(player.title);
-    message(player.cover_art);
     var vplayer = new Vanity.Player(player);
     player_map.insert(player.bus_name, vplayer);
     this.players.append(vplayer);
   }
 
   private void on_player_removed(AstalMpris.Player player) {
-    message(@"player removed $(player.bus_name)");
     if (!player_map.contains(player.bus_name)) {
       return;
     }
