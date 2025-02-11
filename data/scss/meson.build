@@ -1,4 +1,10 @@
-scss_deps = files('_bar.scss', '_colors.scss', '_menu.scss', 'main.scss')
+scss_deps = files(
+  '_bar.scss',
+  '_colors.scss',
+  '_menu.scss',
+  '_player.scss',
+  'main.scss',
+)
 
 scss = custom_target(
   'scss',

@@ -170,16 +170,7 @@ template $VanityMenu: Astal.Window {
       Adw.NavigationPage {
         tag: "hud";
         title: "HUD";
-        child: Box {
-          styles [ "menu_segment" ]
-
-          orientation: vertical;
-          hexpand: true;
-          vexpand: true;
-
-          Label {
-            label: "hud placeholder";
-          }
+        child: $VanityMenuHud {
         };
       }
 

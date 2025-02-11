@@ -12,6 +12,7 @@ executable(
     dependency('astal-battery-0.1'),
     dependency('astal-hyprland-0.1'),
     dependency('astal-io-0.1'),
+    dependency('astal-mpris-0.1'),
     dependency('astal-tray-0.1'),
     dependency('astal-wireplumber-0.1'),
     dependency('gio-2.0'),
