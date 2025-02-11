@@ -26,6 +26,7 @@
           battery
           hyprland
           io
+          mpris
           tray
           wireplumber
         ];
