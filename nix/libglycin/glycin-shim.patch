@@ -1,0 +1,26 @@
+diff --git a/libglycin/meson.build b/libglycin/meson.build
+index 3192e06..9f1cc65 100644
+--- a/libglycin/meson.build
++++ b/libglycin/meson.build
+@@ -18,7 +18,7 @@ cargo_options = [
+     '--manifest-path', manifest,
+ ]
+ 
+-pkg_uninstalled_path = {'PKG_CONFIG_PATH': meson.project_build_root() / 'meson-uninstalled'}
++pkg_uninstalled_path = {}
+ 
+ cargo_env = {
+     'CARGO_HOME': cargo_home,
+@@ -31,12 +31,6 @@ packages = [
+         'symbol_prefix_suffix': '',
+         'extra_deps': [],
+     },
+-    {
+-        'suffix': '-gtk4',
+-        'namespace_suffix': 'Gtk4',
+-        'symbol_prefix_suffix': '_gtk',
+-        'extra_deps': [dependency('gtk4', version: gtk4_req)],
+-    },
+ ]
+ 
+ foreach package : packages

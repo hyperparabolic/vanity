@@ -44,8 +44,12 @@
           vala
           vala-lint
         ];
+        local-libs = with self.packages.${system}; [
+          libglycin
+        ];
         system-libs = with pkgs; [
           glib
+          glycin-loaders
           gtk4
           gtk4-layer-shell
           libadwaita
@@ -69,6 +73,7 @@
             astal-libs
             ++ build-tools
             ++ compiler-tools
+            ++ local-libs
             ++ system-libs;
         };
 
@@ -77,10 +82,16 @@
             astal-libs
             ++ build-tools
             ++ compiler-tools
+            ++ local-libs
             ++ system-libs;
         };
+
+        libglycin-shim = pkgs.callPackage ./nix/libglycin/libglycin-shim.nix {};
+        libglycin = pkgs.callPackage ./nix/libglycin/libglycin.nix {inherit libglycin-shim;};
       in {
         packages.default = vanity;
+        packages.libglycin-shim = libglycin-shim;
+        packages.libglycin = libglycin;
         devShells.default = shell;
       }
     );

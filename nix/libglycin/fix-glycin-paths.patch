@@ -1,0 +1,33 @@
+diff --git a/vendor/glycin/.cargo-checksum.json b/vendor/glycin/.cargo-checksum.json
+index fa403e7..9db463b 100644
+--- a/vendor/glycin/.cargo-checksum.json
++++ b/vendor/glycin/.cargo-checksum.json
+@@ -1 +1 @@
+-{"files":{"Cargo.lock":"8f640d494c2c8cf8838b7f63fbee41f348a5495de22a08e9a3845834a7c1aea5","Cargo.toml":"606cd425f615a5828aac4f6812228c0c79260eb7a124b4571d31886bb4fb824f","LICENSE":"78dcffc5c141fab8667edb50a76ef6dbfb313884686cca7547a32f34138564eb","LICENSE-LGPL-2.1":"cdb29328127167b36d3dbb5de8ee0aab03cb8a473a725c465d89edbb8b9690ad","LICENSE-MPL-2.0":"3f3d9e0024b1921b067d6f7f88deb4a60cbe7a78e76c64e3f1d7fc3b779b9d04","README.md":"8969ebc8829551d1b10f7bd3d4a2ab7df912140360589ccadd7c1a12566532ed","examples/glycin-render.rs":"6186c21d705f553ff4badddee1e238969987dce63b7f0d8ef9aec01abbeb65c5","examples/glycin-rotate-cw.rs":"b22335437981f771ec3466c82ddac6bd7200ee3a061be483c881fb09d5d4dfb0","src/api_common.rs":"fd9717932c4068ee8bd06c64b0767a1dd9a7e83c47214a2d99fe413aede32850","src/api_editor.rs":"5d818c41a4dfd05e348db1fd2b0c4f5ce38491c4e21d3869bfb6b6afbc2da972","src/api_loader.rs":"4912e6620fe01acfbd4abeba7da5b35b99776fcadbbfe6705bbfd8ece5041296","src/config.rs":"9e4619f5749f7a9ee06f60e9dfc5c50c48825d3b4fc03576c574da7c8bf739f6","src/dbus.rs":"386df355ab27d02df3144c08cc97fd3ccf0889e3699ec015a1e000297bd12ad2","src/error.rs":"5c241adf15617c4f9201088f2b6526e515ae727b0b95693977145f86a2558388","src/fontconfig.rs":"cd2cbaeea556296d5187d94831aa39fea94bcd33d2cecb35760ac3455dd15005","src/gobject.rs":"3a89132c3565a8c66406a680ec686ada62fc1c2b0314db67f534797fdbca420c","src/gobject/frame.rs":"dcd365b9126d217640387a5f88a606a6f1ba6552af3810d1e5992e44d0ab31e2","src/gobject/image.rs":"54fe8ea0573f4be4948bc7d5840ee0a514c6a7517c7d328b8bc03988dc3f8822","src/gobject/loader.rs":"552c174cb80854f63f6513c7e40653c171ff274e7bed4bf7b43dffd030506ffc","src/icc.rs":"ad24fa13c44beb04599ccc4ceb979aed60a9267481920bf97babd115b506887f","src/lib.rs":"90e8ab16ca0f458231f80479e02171a295f871e6c45a79f60e96b923af6ee69f","src/orientation.rs":"233fd24fdb9fda15f23b5bef77f490f09dbca20d41e7b2872ed9f02decb4ee54","src/sandbox.rs":"66ec76b520cd8c427a559fc68a9fa58a7467c5a266443969287b216fc2a0a462","src/util.rs":"834ed8af11b283737dec3818981d2eb3d3441548026908959b0196012228c760"},"package":"a0c0c43ba80d02ea8cd540163e7cb49eced263fe3100c91c505acf5f9399ccb5"}
+\ No newline at end of file
++{"files":{"Cargo.lock":"8f640d494c2c8cf8838b7f63fbee41f348a5495de22a08e9a3845834a7c1aea5","Cargo.toml":"606cd425f615a5828aac4f6812228c0c79260eb7a124b4571d31886bb4fb824f","LICENSE":"78dcffc5c141fab8667edb50a76ef6dbfb313884686cca7547a32f34138564eb","LICENSE-LGPL-2.1":"cdb29328127167b36d3dbb5de8ee0aab03cb8a473a725c465d89edbb8b9690ad","LICENSE-MPL-2.0":"3f3d9e0024b1921b067d6f7f88deb4a60cbe7a78e76c64e3f1d7fc3b779b9d04","README.md":"8969ebc8829551d1b10f7bd3d4a2ab7df912140360589ccadd7c1a12566532ed","examples/glycin-render.rs":"6186c21d705f553ff4badddee1e238969987dce63b7f0d8ef9aec01abbeb65c5","examples/glycin-rotate-cw.rs":"b22335437981f771ec3466c82ddac6bd7200ee3a061be483c881fb09d5d4dfb0","src/api_common.rs":"fd9717932c4068ee8bd06c64b0767a1dd9a7e83c47214a2d99fe413aede32850","src/api_editor.rs":"5d818c41a4dfd05e348db1fd2b0c4f5ce38491c4e21d3869bfb6b6afbc2da972","src/api_loader.rs":"4912e6620fe01acfbd4abeba7da5b35b99776fcadbbfe6705bbfd8ece5041296","src/config.rs":"9e4619f5749f7a9ee06f60e9dfc5c50c48825d3b4fc03576c574da7c8bf739f6","src/dbus.rs":"386df355ab27d02df3144c08cc97fd3ccf0889e3699ec015a1e000297bd12ad2","src/error.rs":"5c241adf15617c4f9201088f2b6526e515ae727b0b95693977145f86a2558388","src/fontconfig.rs":"cd2cbaeea556296d5187d94831aa39fea94bcd33d2cecb35760ac3455dd15005","src/gobject.rs":"3a89132c3565a8c66406a680ec686ada62fc1c2b0314db67f534797fdbca420c","src/gobject/frame.rs":"dcd365b9126d217640387a5f88a606a6f1ba6552af3810d1e5992e44d0ab31e2","src/gobject/image.rs":"54fe8ea0573f4be4948bc7d5840ee0a514c6a7517c7d328b8bc03988dc3f8822","src/gobject/loader.rs":"552c174cb80854f63f6513c7e40653c171ff274e7bed4bf7b43dffd030506ffc","src/icc.rs":"ad24fa13c44beb04599ccc4ceb979aed60a9267481920bf97babd115b506887f","src/lib.rs":"90e8ab16ca0f458231f80479e02171a295f871e6c45a79f60e96b923af6ee69f","src/orientation.rs":"233fd24fdb9fda15f23b5bef77f490f09dbca20d41e7b2872ed9f02decb4ee54","src/sandbox.rs":"b558d24c7f4e394301dd34e90d99c840aa35c55a3c380fcd4ee548d8f39523ee","src/util.rs":"834ed8af11b283737dec3818981d2eb3d3441548026908959b0196012228c760"},"package":"a0c0c43ba80d02ea8cd540163e7cb49eced263fe3100c91c505acf5f9399ccb5"}
+\ No newline at end of file
+diff --git a/vendor/glycin/src/sandbox.rs b/vendor/glycin/src/sandbox.rs
+index d2d150d..d7cca83 100644
+--- a/vendor/glycin/src/sandbox.rs
++++ b/vendor/glycin/src/sandbox.rs
+@@ -202,7 +202,7 @@ impl Sandbox {
+ 
+                 args.push(self.exec());
+ 
+-                ("bwrap".into(), args, Some(seccomp_memfd))
++                ("@bwrap@".into(), args, Some(seccomp_memfd))
+             }
+             SandboxMechanism::FlatpakSpawn => {
+                 let memory_limit = Self::memory_limit();
+@@ -299,8 +299,8 @@ impl Sandbox {
+                 "/",
+                 // Make /usr available as read only
+                 "--ro-bind",
+-                "/usr",
+-                "/usr",
++                "/nix/store",
++                "/nix/store",
+                 // Make tmpfs dev available
+                 "--dev",
+                 "/dev",
