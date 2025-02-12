@@ -49,11 +49,16 @@
         ];
         system-libs = with pkgs; [
           glib
-          glycin-loaders
           gtk4
           gtk4-layer-shell
           libadwaita
           wrapGAppsHook4
+
+          # libglycin deps
+          glycin-loaders
+          libseccomp
+          lcms2
+          bubblewrap
         ];
 
         vanity = pkgs.stdenv.mkDerivation {

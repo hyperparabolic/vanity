@@ -16,3 +16,4 @@ libglycin is required to build libglycin-gtk4. The meson.build for libglycin doe
 - ./fix-glycin-deps.patch
   - Prevents modifications to PKG_CONFIG_PATH.
   - Declares libglycin as a meson dependency to libglycin-gtk.
+  - Renames vapi files to match .pc file name

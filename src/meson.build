@@ -2,11 +2,16 @@ subdir('bar')
 subdir('lib')
 subdir('menu')
 
+vapidir = meson.current_source_dir() + '/vapi/'
+
 project_resources += ['app.vala', 'main.vala']
 
 executable(
   project_name,
   project_resources,
+  vala_args: [
+    '--vapidir=' + vapidir,
+  ],
   dependencies: [
     dependency('astal-4-4.0'),
     dependency('astal-battery-0.1'),
@@ -17,6 +22,8 @@ executable(
     dependency('astal-wireplumber-0.1'),
     dependency('gio-2.0'),
     dependency('gio-unix-2.0'),
+    dependency('glycin-1'),
+    dependency('glycin-gtk4-1'),
     dependency('gtk4'),
     dependency('gtk4-layer-shell-0'),
     dependency('libadwaita-1'),
