@@ -20,17 +20,11 @@ public class Vanity.HyprlandWorkspaces : Gtk.Box {
   }
 
   private void init_workspaces() {
-    // There is a small timing window during construction when parents are not yet initialized.
-    // Small wait to work around this, consistently resolves after 1 timeout.
-    GLib.Timeout.add(1, () => {
+    this.realize.connect(() => {
       var c = get_root_monitor_connector();
-      if (c == null) {
-        return true;
-      }
       this.monitor_connector = c;
       handle_add_workspaces();
       setup_handlers();
-      return false;
     });
   }
 
