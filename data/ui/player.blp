@@ -27,18 +27,18 @@ template $VanityPlayer: Box {
     hexpand: true;
     valign: center;
     spacing: 10;
+    margin-start: 20;
 
-    Label {
+    $VanitySyncMarquee {
       label: bind template.player as <AstalMpris.Player>.title;
-      ellipsize: end;
-      max-width-chars: 50;
     }
 
-    Label {
-      
+    $VanitySyncMarquee {
       label: bind template.player as <AstalMpris.Player>.artist;
-      ellipsize: end;
-      max-width-chars: 50;
+    }
+
+    $VanitySyncMarquee {
+      label: bind template.player as <AstalMpris.Player>.album;
     }
 
     Box {

@@ -1,10 +1,11 @@
 subdir('bar')
 subdir('lib')
 subdir('menu')
+subdir('module')
 
 vapidir = meson.current_source_dir() + '/vapi/'
 
-project_resources += ['app.vala', 'main.vala']
+project_resources += files('app.vala', 'main.vala')
 
 executable(
   project_name,

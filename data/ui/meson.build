@@ -11,6 +11,7 @@ blueprints = custom_target(
     'menu-system-controls.blp',
     'menu.blp',
     'player.blp',
+    'sync-marquee.blp',
   ),
   output: '.',
   command: [
