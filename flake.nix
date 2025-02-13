@@ -47,18 +47,19 @@
         local-libs = with self.packages.${system}; [
           libglycin
         ];
+        runtime-deps = with pkgs; [
+          # libglycin deps
+          glycin-loaders
+          libseccomp
+          lcms2
+          bubblewrap
+        ];
         system-libs = with pkgs; [
           glib
           gtk4
           gtk4-layer-shell
           libadwaita
           wrapGAppsHook4
-
-          # libglycin deps
-          glycin-loaders
-          libseccomp
-          lcms2
-          bubblewrap
         ];
 
         vanity = pkgs.stdenv.mkDerivation {
@@ -80,6 +81,8 @@
             ++ compiler-tools
             ++ local-libs
             ++ system-libs;
+
+          propagatedBuildInputs = runtime-deps;
         };
 
         shell = pkgs.mkShell {
@@ -88,6 +91,7 @@
             ++ build-tools
             ++ compiler-tools
             ++ local-libs
+            ++ runtime-deps
             ++ system-libs;
         };
 
