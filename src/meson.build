@@ -16,6 +16,7 @@ executable(
   dependencies: [
     dependency('astal-4-4.0'),
     dependency('astal-battery-0.1'),
+    dependency('astal-bluetooth-0.1'),
     dependency('astal-hyprland-0.1'),
     dependency('astal-io-0.1'),
     dependency('astal-mpris-0.1'),

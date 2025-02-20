@@ -24,6 +24,7 @@
         astal-libs = with astal.packages.${system}; [
           astal4
           battery
+          bluetooth
           hyprland
           io
           mpris
