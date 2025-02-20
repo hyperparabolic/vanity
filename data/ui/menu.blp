@@ -92,7 +92,7 @@ template $VanityMenu: Astal.Window {
         $VanityMenuSelector {
           // audio
           icon: bind template.wp as <AstalWp.Wp>.audio as <AstalWp.Audio>.default-speaker as <AstalWp.Endpoint>.volume-icon;
-          inactive: bind template.wp as <AstalWp.Wp>.audio as <AstalWp.Audio>.default-speaker as <AstalWp.Endpoint>.mute;
+          active: bind template.wp as <AstalWp.Wp>.audio as <AstalWp.Audio>.default-speaker as <AstalWp.Endpoint>.mute;
           toggle_clicked => $toggle_mute_sink();
           navigate_clicked => $navigate_audio();
 
