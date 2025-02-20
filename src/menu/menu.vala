@@ -4,6 +4,7 @@ using GtkLayerShell;
 public class Vanity.Menu : Astal.Window {
   public static Menu instance;
 
+  public AstalBluetooth.Bluetooth bluetooth { get; private set; }
   public AstalWp.Wp wp { get; private set; }
   public VanityBrightness.Device vbs { get; private set; }
   public VanityIdle.Inhibitor vii { get; private set; }
@@ -101,6 +102,18 @@ public class Vanity.Menu : Astal.Window {
   }
 
   [GtkCallback]
+  public string bluetooth_icon(bool powered) {
+    return powered
+      ? "bluetooth-active-symbolic"
+      : "bluetooth-hardware-disabled-symbolic";
+  }
+
+  [GtkCallback]
+  public void toggle_bluetooth_power() {
+    this.bluetooth.adapter.powered = !this.bluetooth.adapter.powered;
+  }
+
+  [GtkCallback]
   public void toggle_idle() {
     if (this.vii.inhibit) {
       this.vii.disable();
@@ -143,6 +156,7 @@ public class Vanity.Menu : Astal.Window {
   }
 
   construct {
+    this.bluetooth = AstalBluetooth.get_default();
     this.wp = AstalWp.get_default();
     this.wp.audio.default_speaker.bind_property("volume", sink_volume, "value",
                                                 GLib.BindingFlags.BIDIRECTIONAL | GLib.BindingFlags.SYNC_CREATE);

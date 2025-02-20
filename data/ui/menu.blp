@@ -1,6 +1,7 @@
 using Gtk 4.0;
 using Adw 1;
 using Astal 4.0;
+using AstalBluetooth 0.1;
 using AstalWp 0.1;
 
 template $VanityMenu: Astal.Window {
@@ -116,8 +117,9 @@ template $VanityMenu: Astal.Window {
 
         $VanityMenuSelector {
           // bluetooth
-          icon: "bluetooth-active-symbolic";
-          active: false;
+          icon: bind $bluetooth_icon(template.bluetooth as <AstalBluetooth.Bluetooth>.is-powered) as <string>;
+          inactive: bind template.bluetooth as <AstalBluetooth.Bluetooth>.is-powered;
+          toggle_clicked => $toggle_bluetooth_power();
           navigate_clicked => $navigate_bluetooth();
 
           layout {
