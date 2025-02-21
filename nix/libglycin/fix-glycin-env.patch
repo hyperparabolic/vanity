@@ -1,0 +1,37 @@
+diff --git a/libglycin/meson.build b/libglycin/meson.build
+index b0b821d..36e8132 100644
+--- a/libglycin/meson.build
++++ b/libglycin/meson.build
+@@ -18,11 +18,9 @@ cargo_options = [
+     '--manifest-path', manifest,
+ ]
+ 
+-pkg_uninstalled_path = {'PKG_CONFIG_PATH': meson.project_build_root() / 'meson-uninstalled'}
+-
+-cargo_env = {
+-    'CARGO_HOME': cargo_home,
+-} + pkg_uninstalled_path
++env = environment()
++env.append('PKG_CONFIG_PATH', meson.project_build_root() / 'meson-uninstalled', separator: ':')
++env.set('CARGO_HOME', cargo_home)
+ 
+ packages = [
+     {
+@@ -66,7 +64,7 @@ foreach package : packages
+         depends: link_with,
+         output: f'Meson-does-not-support-sub-dir-output@suffix@',
+         console: true,
+-        env: cargo_env,
++        env: env,
+         command: [cargo_bin, 'build', cargo_options, '-p', f'libglycin@suffix@'],
+     )
+ 
+@@ -157,7 +155,7 @@ foreach package : packages
+             # Listed as "pkg-config files" in docs
+             export_packages: f'libglycin@suffix@-1',
+             install: true,
+-            env: pkg_uninstalled_path,
++            env: env,
+         )
+         if suffix == ''
+             global_libglycin_gir = libglycin_gir[0]
