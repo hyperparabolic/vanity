@@ -1,1 +1,1 @@
-project_resources += files('weather.vala')
+project_resources += files('geoclue-location.vala', 'weather.vala')
