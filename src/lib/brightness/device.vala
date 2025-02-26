@@ -28,23 +28,8 @@ public class VanityBrightness.Device : Object {
 
   public string name { get; private set; }
 
-  private uint32 _brightness;
-  public uint32 brightness {
-    get {
-      return get_brightness_private();
-    }
-    set {
-      set_brightness_private(value);
-    }
-  }
-
-  private uint32 get_brightness_private() {
-    return this._brightness;
-  }
-
-  public void set_brightness_private(uint32 value) {
-    set_device_brightness(value);
-  }
+  public uint32 brightness { get; set; }
+  private uint32 last_brightness;
 
   public uint32 max_brightness { get; private set; }
 
@@ -136,13 +121,19 @@ public class VanityBrightness.Device : Object {
 
     try {
       this.max_brightness = get_brightness_value_sync(max_brightness_path);
-      this._brightness = get_brightness_value_sync(this.brightness_path);
+      this.brightness = get_brightness_value_sync(this.brightness_path);
+      this.last_brightness = this.brightness;
 
       var file = File.new_for_path(this.brightness_path);
       brightness_monitor = file.monitor_file(FileMonitorFlags.NONE);
 
       brightness_monitor.changed.connect((_src, _dest, _event) => {
         update_brightness();
+      });
+
+      this.notify["brightness"].connect(() => {
+        set_device_brightness(this.brightness);
+        this.last_brightness = this.brightness;
       });
 
       if (timer_refresh_ms != null) {
@@ -178,7 +169,9 @@ public class VanityBrightness.Device : Object {
       if (value > this.max_brightness) {
         new_brightness = this.max_brightness;
       }
-
+      if (new_brightness == this.last_brightness) {
+        return;
+      }
       proxy.set_brightness(this.class, this.name, new_brightness);
     } catch (Error e) {
       critical(e.message);
@@ -193,9 +186,9 @@ public class VanityBrightness.Device : Object {
         FileInputStream is = file.read_async.end(res);
         DataInputStream dis = new DataInputStream(is);
         var new_brightness = int.parse(dis.read_line());
-        if (new_brightness != this._brightness) {
-          this._brightness = new_brightness;
-        }
+        // set last brightness to prevent dbus call;
+        this.last_brightness = new_brightness;
+        this.brightness = new_brightness;
       } catch (Error e) {
         error("VanityBrightness.Device.update_brightness error: %s", e.message);
       }

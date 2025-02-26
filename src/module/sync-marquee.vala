@@ -25,17 +25,13 @@ const uint SIXTY_FPS_MS = 16;
 [GtkTemplate(ui = "/com/github/hyperparabolic/vanity/ui/sync-marquee.ui")]
 class Vanity.SyncMarquee : Gtk.Box {
 
-  public string label { get; set; }
+  public Gtk.Widget child { get; set; }
 
   [GtkChild]
   private unowned Gtk.Adjustment scroll_adjust;
 
   [GtkChild]
   private unowned Gtk.ScrolledWindow viewport;
-
-  [GtkChild]
-  private unowned Gtk.Label scroll_label;
-
 
   // animation book keeping
   public bool root_visible { get; set; }
@@ -114,9 +110,11 @@ class Vanity.SyncMarquee : Gtk.Box {
   }
 
   construct {
+    this.bind_property("child", this.viewport, "child", BindingFlags.SYNC_CREATE);
+
     this.scroll_adjust.notify["upper"].connect(() => {
       var last = this.needs_scroll;
-      this.needs_scroll = this.scroll_label.get_width() > this.viewport.get_width();
+      this.needs_scroll = this.child.get_width() > this.viewport.get_width();
       if (this.needs_scroll != last) {
         // state changed, register or remove tick callback
         if (this.needs_scroll && this.visible) {

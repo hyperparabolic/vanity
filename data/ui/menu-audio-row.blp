@@ -11,8 +11,13 @@ template $VanityMenuAudioRow: ListBoxRow {
     }
     Box {
       orientation: vertical;
-      Label {
-        label: bind template.endpoint as <AstalWp.Endpoint>.description;
+      $VanitySyncMarquee {
+        margin-start: 12;
+        margin-end: 14;
+
+        child: Label {
+          label: bind template.endpoint as <AstalWp.Endpoint>.description;
+        };
       }
       Scale {
         hexpand: true;

@@ -97,11 +97,9 @@
             ++ system-libs;
         };
 
-        libglycin-shim = pkgs.callPackage ./nix/libglycin/libglycin-shim.nix {};
-        libglycin = pkgs.callPackage ./nix/libglycin/libglycin.nix {inherit libglycin-shim;};
+        libglycin = pkgs.callPackage ./nix/libglycin/libglycin.nix {};
       in {
         packages.default = vanity;
-        packages.libglycin-shim = libglycin-shim;
         packages.libglycin = libglycin;
         devShells.default = shell;
       }

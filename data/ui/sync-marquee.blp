@@ -2,7 +2,6 @@ using Gtk 4.0;
 
 template $VanitySyncMarquee : Box {
   styles [ "sync_marquee"]
-  label: "";
 
   ScrolledWindow viewport {
     hexpand: true;
@@ -13,9 +12,5 @@ template $VanitySyncMarquee : Box {
 
     hadjustment: Adjustment scroll_adjust {
     };
-
-    Label scroll_label {
-      label: bind template.label;
-    }
   }
 }

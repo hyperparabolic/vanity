@@ -30,15 +30,21 @@ template $VanityPlayer: Box {
     margin-start: 20;
 
     $VanitySyncMarquee {
-      label: bind template.player as <AstalMpris.Player>.title;
+      child: Label {
+        label: bind template.player as <AstalMpris.Player>.title;
+      };
     }
 
     $VanitySyncMarquee {
-      label: bind template.player as <AstalMpris.Player>.artist;
+      child: Label {
+        label: bind template.player as <AstalMpris.Player>.artist;
+      };
     }
 
     $VanitySyncMarquee {
-      label: bind template.player as <AstalMpris.Player>.album;
+      child: Label {
+        label: bind template.player as <AstalMpris.Player>.album;
+      };
     }
 
     Box {
