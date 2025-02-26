@@ -10,10 +10,6 @@ libglycin is required to build libglycin-gtk4. The meson.build for libglycin doe
 
 - ./fix-glycin-paths.patch
   - Normal nix path fixes. Replaces the `bwrap` with a full nix store binary path, and modifies the cargo checksums to allow modifying vendored code.
-- ./glycin-shim.patch
-  - Prevents modifications to PKG_CONFIG_PATH.
-  - Builds only libglycin
-- ./fix-glycin-deps.patch
-  - Prevents modifications to PKG_CONFIG_PATH.
-  - Declares libglycin as a meson dependency to libglycin-gtk.
-  - Renames vapi files to match .pc file name
+- ./fix-glycin-env.patch
+  - Preserve environment variables utilizing `environment()`.
+  - Append `<builddir>/meson-uninstalled` to `PKG_CONFIG_PATH`, allowing built but not installed packages to be used in the build. This feature is experimental and best effort (detailed [here](https://mesonbuild.com/Pkgconfig-module.html)).

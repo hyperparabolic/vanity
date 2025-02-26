@@ -13,7 +13,6 @@
   gnome,
   gtk4,
   lcms2,
-  libglycin-shim,
   libheif,
   libjxl,
   librsvg,
@@ -27,18 +26,18 @@
 }:
 stdenv.mkDerivation (finalAttrs: {
   pname = "libglycin-gtk4";
-  version = "1.1.4";
+  version = "1.1.5";
 
   src = fetchurl {
     url = "mirror://gnome/sources/glycin/${lib.versions.majorMinor finalAttrs.version}/glycin-${finalAttrs.version}.tar.xz";
-    hash = "sha256-0bbVkLaZtmgaZ9ARmKWBp/cQ2Mp0UJNN1/XbJB+hJQA=";
+    hash = "sha256-RU8NMp8t70ABVLJWuz+JnrQhzorUZjRa69W3y5He6p8=";
   };
 
   patches = [
     # Fix paths in glycin library.
     finalAttrs.passthru.glycinPathsPatch
-    # Fix build bugs and add glycin-shim as dependency
-    finalAttrs.passthru.glycinDepsPatch
+    # prevent PKG_CONFIG_PATH env mangling during build
+    finalAttrs.passthru.glycinEnvPatch
   ];
 
   nativeBuildInputs = [
@@ -57,7 +56,6 @@ stdenv.mkDerivation (finalAttrs: {
     fontconfig
     gobject-introspection
     lcms2
-    libglycin-shim
     libheif
     libxml2 # for librsvg crate
     librsvg
@@ -81,7 +79,7 @@ stdenv.mkDerivation (finalAttrs: {
       bwrap = "${bubblewrap}/bin/bwrap";
     };
 
-    glycinDepsPatch = ./fix-glycin-deps.patch;
+    glycinEnvPatch = ./fix-glycin-env.patch;
   };
 
   meta = with lib; {
