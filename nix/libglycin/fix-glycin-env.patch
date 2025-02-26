@@ -12,7 +12,7 @@ index b0b821d..36e8132 100644
 -    'CARGO_HOME': cargo_home,
 -} + pkg_uninstalled_path
 +env = environment()
-+env.append('PKG_CONFIG_PATH', meson.project_build_root() / 'meson-uninstalled', separator: ':')
++env.prepend('PKG_CONFIG_PATH', meson.project_build_root() / 'meson-uninstalled', separator: ':')
 +env.set('CARGO_HOME', cargo_home)
  
  packages = [
