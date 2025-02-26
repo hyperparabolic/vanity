@@ -26,11 +26,11 @@
 }:
 stdenv.mkDerivation (finalAttrs: {
   pname = "libglycin-gtk4";
-  version = "1.1.4";
+  version = "1.1.5";
 
   src = fetchurl {
     url = "mirror://gnome/sources/glycin/${lib.versions.majorMinor finalAttrs.version}/glycin-${finalAttrs.version}.tar.xz";
-    hash = "sha256-0bbVkLaZtmgaZ9ARmKWBp/cQ2Mp0UJNN1/XbJB+hJQA=";
+    hash = "sha256-RU8NMp8t70ABVLJWuz+JnrQhzorUZjRa69W3y5He6p8=";
   };
 
   patches = [
