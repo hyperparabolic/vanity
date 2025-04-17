@@ -26,18 +26,16 @@
 }:
 stdenv.mkDerivation (finalAttrs: {
   pname = "libglycin-gtk4";
-  version = "1.1.5";
+  version = "1.2.1";
 
   src = fetchurl {
     url = "mirror://gnome/sources/glycin/${lib.versions.majorMinor finalAttrs.version}/glycin-${finalAttrs.version}.tar.xz";
-    hash = "sha256-RU8NMp8t70ABVLJWuz+JnrQhzorUZjRa69W3y5He6p8=";
+    hash = "sha256-zMV46aPoPQ3BU1c30f2gm6qVxxZ/Xl7LFfeGZUCU7tU=";
   };
 
   patches = [
     # Fix paths in glycin library.
     finalAttrs.passthru.glycinPathsPatch
-    # prevent PKG_CONFIG_PATH env mangling during build
-    finalAttrs.passthru.glycinEnvPatch
   ];
 
   nativeBuildInputs = [
@@ -78,8 +76,6 @@ stdenv.mkDerivation (finalAttrs: {
     glycinPathsPatch = replaceVars ./fix-glycin-paths.patch {
       bwrap = "${bubblewrap}/bin/bwrap";
     };
-
-    glycinEnvPatch = ./fix-glycin-env.patch;
   };
 
   meta = with lib; {
