@@ -35,7 +35,9 @@ public class VanityYubikey.Detector : Object {
   }
 
   private Detector() throws Error {
-    this.proxy = Bus.get_proxy_sync(BusType.SESSION, "com.github.maximbaz.YubikeyTouchDetector", "/com/github/maximbaz/YubikeyTouchDetector");
+    this.proxy = Bus.get_proxy_sync(BusType.SESSION,
+                                    "com.github.maximbaz.YubikeyTouchDetector",
+                                    "/com/github/maximbaz/YubikeyTouchDetector");
     sync();
     this.proxy.g_properties_changed.connect(() => sync());
   }
