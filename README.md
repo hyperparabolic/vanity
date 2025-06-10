@@ -18,4 +18,5 @@ I've always wanted to learn to make native linux desktop applications, and have 
 - Libraries (I'll eventually get around to publishing these in my flake, and will push them upstream to Astal if there's much demand).
   - [Device and DBus driven brightness management](./src/lib/brightness/device.vala)
   - [DBus idle inhibition via org.freedesktop.login1.Manager](./src/lib/idle)
+  - [Yubikey touch request detection](./src/lib/yubikey-touch-detector)
 
