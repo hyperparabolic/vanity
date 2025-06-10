@@ -56,6 +56,7 @@ class Vanity.Application : Astal.Application {
 
       if (monitor != null) {
         add_window(new Vanity.Bar(monitor, is_sidecar_monitor(monitor)));
+        add_window(new Vanity.OSD(monitor));
       }
     }
 

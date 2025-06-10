@@ -25,6 +25,12 @@ template $VanityMenuSystemControls : Box {
     activated => $activate_sleep();
   }
 
+  $VanityConfirmationButton hibernate_button {
+    icon: "system-hibernate-symbolic";
+    confirmation-icon: "dialog-question-symbolic";
+    activated => $activate_hibernate();
+  }
+
   $VanityConfirmationButton reboot_button {
     icon: "system-reboot-symbolic";
     confirmation-icon: "dialog-question-symbolic";

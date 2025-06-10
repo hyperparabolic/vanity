@@ -28,4 +28,3 @@ public class VanityWeather.GeoclueLocation : VanityWeather.ILocation, Object {
     this.longitude = loc.longitude;
   }
 }
-
