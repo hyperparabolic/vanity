@@ -6,6 +6,8 @@ class Vanity.Application : Astal.Application {
 
   private static Vanity.Menu menu;
 
+  private VanityWeather.GeoclueLocation loc;
+
   // *INDENT-OFF*
   private Regex cmd_re = /^(?P<context>.*):(?P<command>.*)$/;
   // *INDENT-ON*
@@ -62,6 +64,10 @@ class Vanity.Application : Astal.Application {
 
     menu = new Vanity.Menu();
     add_window(menu);
+
+    loc = VanityWeather.GeoclueLocation.get_default();
+    critical(loc.latitude.to_string());
+    critical(loc.longitude.to_string());
 
     this.hold();
   }
