@@ -45,7 +45,7 @@ public class VanityBrightness.Device : Object {
       var e = bl_dir.enumerate_children("standard::*", FileQueryInfoFlags.NONE);
 
       var info = e.next_file();
-      if (info.get_file_type() == FileType.DIRECTORY) {
+      if (info != null && info.get_file_type() == FileType.DIRECTORY) {
         default_screen = new Device(bl_dir.resolve_relative_path(info.get_name()).get_path(), timer_refresh_ms);
         return default_screen;
       }
