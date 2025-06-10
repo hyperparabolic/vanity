@@ -1,0 +1,15 @@
+@use "colors";
+
+.vanity_osd {
+  border-radius: 25px;
+  padding: 25px;
+  background-color: colors.$window_bg_color_60_transparent;
+}
+
+.osd_notifier {
+  border-radius: 25px;
+  background-color: #{"@window_bg_color"};
+  padding: 5px;
+  opacity: 0.9;
+  border: 2px solid #{"@card_fg_color"};
+}

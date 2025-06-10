@@ -1,0 +1,35 @@
+using Gtk 4.0;
+using Astal 4.0;
+
+template $VanityOSD: Astal.Window {
+  styles [
+    "vanity_osd"
+  ]
+  title: "VanityOSD";
+  exclusivity: ignore;
+  keymode: none;
+  margin-bottom: 400;
+  hexpand: false;
+
+  Box {
+    spacing: 10;
+    halign: center;
+    valign: center;
+
+    Box yubikey {
+      styles [
+        "osd_notifier"
+      ]
+      orientation: vertical;
+      halign: center;
+
+      Image {
+        icon-name: "security-key-symbolic";
+        pixel-size: 200;
+      }
+      Label yubikey_subtext {
+        label: "";
+      }
+    }
+  }
+}

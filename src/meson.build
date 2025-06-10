@@ -2,6 +2,7 @@ subdir('bar')
 subdir('lib')
 subdir('menu')
 subdir('module')
+subdir('osd')
 
 vapidir = meson.current_source_dir() + '/vapi/'
 
