@@ -6,6 +6,8 @@ class Vanity.Application : Astal.Application {
 
   private static Vanity.Menu menu;
 
+  private VanityWeather.GeoclueLocation loc;
+
   // *INDENT-OFF*
   private Regex cmd_re = /^(?P<context>.*):(?P<command>.*)$/;
   // *INDENT-ON*

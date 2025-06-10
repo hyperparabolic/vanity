@@ -38,8 +38,7 @@ public class VanityWeather.Weather : Object {
 
     info = new GWeather.Info(gw_loc);
     info.set_application_id(VanityWeather.APP_ID);
-    // TODO
-    info.set_contact_info("");
+    info.set_contact_info(VanityWeather.APP_ID);
     info.set_enabled_providers(GWeather.Provider.NWS);
     info.update();
 

@@ -1,6 +1,7 @@
 public class VanityWeather.GeoclueLocation : VanityWeather.ILocation, Object {
   private static GeoclueLocation instance;
   private GClue.Simple gclue { get; set; }
+  private GClue.ClientProxy client { get; set; }
   public double latitude { get; set; }
   public double longitude { get; set; }
 
@@ -18,13 +19,14 @@ public class VanityWeather.GeoclueLocation : VanityWeather.ILocation, Object {
   }
 
   private GeoclueLocation() throws Error {
-    gclue = new GClue.Simple.sync(VanityWeather.APP_ID, GClue.AccuracyLevel.NEIGHBORHOOD);
-    this.sync();
+    gclue = new GClue.Simple.sync(VanityWeather.APP_ID, GClue.AccuracyLevel.EXACT);
+    client = gclue.get_client();
+    client.location_updated.connect(() => this.sync());
   }
 
   public void sync() {
     var loc = gclue.get_location();
-    this.latitude = loc.longitude;
+    this.latitude = loc.latitude;
     this.longitude = loc.longitude;
   }
 }
