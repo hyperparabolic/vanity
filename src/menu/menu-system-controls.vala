@@ -11,7 +11,7 @@ public class Vanity.MenuSystemControls : Gtk.Box {
   [GtkCallback]
   public void activate_lock() {
     Vanity.Menu.instance.close_menu();
-    AstalIO.Process.exec_asyncv.begin({ "bash", "-c", "swaylock" });
+    AstalIO.Process.exec_asyncv.begin({ "bash", "-c", "loginctl lock-session" });
   }
 
   [GtkCallback]
