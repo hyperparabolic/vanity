@@ -11,7 +11,9 @@ project_resources += files('app.vala', 'main.vala')
 executable(
   project_name,
   project_resources,
-  vala_args: ['--vapidir=' + vapidir],
+  vala_args: [
+    '--vapidir=' + vapidir,
+  ],
   dependencies: [
     dependency('astal-4-4.0'),
     dependency('astal-battery-0.1'),
@@ -26,9 +28,7 @@ executable(
     dependency('glycin-gtk4-1'),
     dependency('gtk4'),
     dependency('gtk4-layer-shell-0'),
-    dependency('gweather4'),
     dependency('libadwaita-1'),
-    dependency('libgeoclue-2.0'),
   ],
   link_args: ['-lm'],  # link math library
   install: true,
