@@ -15,4 +15,15 @@ template $VanityMenuHud : Box {
   Adw.CarouselIndicatorDots {
     carousel: players;
   }
+
+  Label latitude {
+  }
+
+  Label longitude {
+  }
+
+  Button {
+    label: "Refresh";
+    clicked => $refresh();
+  }
 }

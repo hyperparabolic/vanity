@@ -2,29 +2,23 @@ namespace VanityWeather {
   const string APP_ID = "com.github.hyperparabolic.vanity";
 }
 
-
 /**
- * Location interface, just a static placeholder. Possible implementations
- * to prototype:
+ * Location interface. Probably just sticking with geoclue (beacondb), but some
+ * other thoughts if I find it's flaky away from home:
  *
  * - zip code lookup table?
- * - geoclue (needs better local api)?
  * - ip based lookup?
  * - plus code conversion?
  */
 public interface VanityWeather.ILocation : Object {
   public abstract double latitude { get; set; }
   public abstract double longitude { get; set; }
-  public virtual void sync() {
-  }
-}
+  public signal void updated();
 
-public class VanityWeather.StaticLocation : ILocation, Object {
-  public double latitude { get; set; }
-  public double longitude { get; set; }
-  public void sync() {
-    this.latitude = 42.011568;
-    this.longitude = -87.665909;
+  public async virtual void init() {
+  }
+
+  public virtual void refresh() {
   }
 }
 
