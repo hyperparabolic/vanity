@@ -26,65 +26,71 @@ public class VanityWeather.Weather : Object {
   public GWeather.Info info { get; set; }
   public GWeather.Location gw_loc { get; set; }
 
+  public VanityWeather.Forecast forecast { get; set; }
+
   public Weather(ILocation location) {
     gw_loc = GWeather.Location.get_world();
     gw_loc = gw_loc.find_nearest_city(location.latitude, location.longitude);
 
     info = new GWeather.Info(gw_loc);
     info.set_application_id(VanityWeather.APP_ID);
-    info.set_contact_info(VanityWeather.APP_ID);
+    info.set_contact_info("hi@decent.id");
     info.set_enabled_providers(GWeather.Provider.NWS);
     info.update();
 
     info.updated.connect(() => {
-      console_dump(info);
-
-      var count = 0;
       unowned var list = info.get_forecast_list();
-      list.foreach((i) => {
-        count++;
-        message("");
-        message("next forecast");
-        console_dump(i);
+
+      var hour = 0;
+      list.foreach((info) => {
+        message(@"hour: $(hour)");
+        console_dump(info);
+        hour++;
       });
-      // 173 total, hourly for 7 days, but 5 extras? maybe remainder of the current day + 7?
-      message(@"$(count.to_string()) total forecasts");
+
+      try {
+        forecast = new NWSForecast(list);
+        debug("now: %s, %s", forecast.now_temp, forecast.now_icon);
+      } catch (Error e) {
+        critical(e.message);
+      }
     });
   }
 
   private void console_dump(GWeather.Info info) {
     // notes for NWS
     // "-"
-    message(@"conditions: $(info.get_conditions())");
+    // message(@"conditions: $(info.get_conditions())");
     message(@"daytime: $(info.is_daytime())");
+    message(@"update: $(info.get_update())");
     // ##.# °F
-    message(@"dew: $(info.get_dew())");
+    // message(@"dew: $(info.get_dew())");
     // ##%
-    message(@"humidity: $(info.get_humidity())");
-    message(@"icon: $(info.get_icon_name())");
+    // message(@"humidity: $(info.get_humidity())");
     // City
-    message(@"location name: $(info.get_location_name())");
+    // message(@"location name: $(info.get_location_name())");
     // Unknown
-    message(@"pressure: $(info.get_pressure())");
+    // message(@"pressure: $(info.get_pressure())");
     // Broken clouds
-    message(@"sky: $(info.get_sky())");
+    // message(@"sky: $(info.get_sky())");
     // ##:##
-    message(@"sunrise: $(info.get_sunrise())");
+    // message(@"sunrise: $(info.get_sunrise())");
     // ##:##
-    message(@"sunset: $(info.get_sunset())");
-    message(@"symbolic icon: $(info.get_symbolic_icon_name())");
+    // message(@"sunset: $(info.get_sunset())");
     // ##.# °F
     message(@"temp: $(info.get_temp())");
     // "-"
-    message(@"max temp: $(info.get_temp_max())");
+    // message(@"max temp: $(info.get_temp_max())");
     // "-"
-    message(@"min temp: $(info.get_temp_min())");
+    // message(@"min temp: $(info.get_temp_min())");
     // ##.# °F
-    message(@"temp summary: $(info.get_temp_summary())");
+    // message(@"temp summary: $(info.get_temp_summary())");
     // Unknown
-    message(@"visibility: $(info.get_visibility())");
+    // message(@"visibility: $(info.get_visibility())");
     // City : Sky
-    message(@"weather summary: $(info.get_weather_summary())");
+    // message(@"weather summary: $(info.get_weather_summary())");
+    message(@"symbolic icon name: $(info.get_symbolic_icon_name())");
+    message(@"icon name: $(info.get_icon_name())");
   }
 
   ~Weather() {

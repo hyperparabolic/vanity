@@ -2,6 +2,7 @@
 class Vanity.MenuHud : Gtk.Box {
   public AstalMpris.Mpris mpris { get; private set; }
   public VanityWeather.ILocation location { get; private set; }
+  public VanityWeather.Weather weather { get; private set; }
 
   private HashTable<string, Gtk.Widget> player_map;
 
@@ -45,5 +46,8 @@ class Vanity.MenuHud : Gtk.Box {
     this.location.notify["latitude"].connect(() => latitude.label = this.location.latitude.to_string());
     this.location.notify["longitude"].connect(() => longitude.label = this.location.longitude.to_string());
     this.location.init.begin();
+    this.location.updated.connect(() => {
+      this.weather = new VanityWeather.Weather(this.location);
+    });
   }
 }
