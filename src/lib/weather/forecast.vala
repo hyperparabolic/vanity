@@ -31,13 +31,15 @@ public class VanityWeather.NWSForecast : VanityWeather.Forecast, Object {
   /**
    * nws_forecast_list - GWeather.Info.get_forecast_list() for the
    * GWeather.Provider.NWS provider. These Info entries each summarize
-   * an hour for the upcoming week's forecast. There is no time attached
-   * to each, so this constructor needs to coalesce the list into 7
-   * DaySummarys.
+   * an hour for the upcoming week's forecast. The forecast actually
+   * starts several hours in the past, and the misnamed `get_value_update`
+   * contains a timestamp for each hour (not the time since last update as
+   * documented).
    */
   public NWSForecast(SList<GWeather.Info> nws_forecast_list) throws ForecastError {
-    if (nws_forecast_list.length() < 168) {
-      // random sampling has been in the 170-180 range. 168 ensures we have enough for 12AM.
+    if (nws_forecast_list.length() < 175) {
+      // 168 required for 7 full days, typically starts 6-7 hours in the past
+      // I don't think I've seen less than 178? We'll see if this error ever crops up
       throw new ForecastError.FATAL("expected at least 168 hourly forecasts, received %u", nws_forecast_list.length());
     }
     var sliced = slice_days(nws_forecast_list);
@@ -74,6 +76,17 @@ public class VanityWeather.NWSForecast : VanityWeather.Forecast, Object {
     SList<SList<weak GWeather.Info> > sliced = new SList<SList<weak GWeather.Info> >();
     unowned SList<GWeather.Info> current_hour = nws_forecast_list;
 
+    // discard Info entries that are more than an hour in the past
+    var unix_timestamp_now = new DateTime.now_utc().to_unix();
+    time_t unix_timestamp = 0;
+    current_hour.data.get_value_update(out unix_timestamp);
+    while (unix_timestamp_now - unix_timestamp > 60 * 60) {
+      debug(@"discarding info at $(current_hour.data.get_update())");
+      current_hour = current_hour.next;
+      current_hour.data.get_value_update(out unix_timestamp);
+    }
+    debug(@"keeping first info at $(current_hour.data.get_update())");
+
     var hours_max = hours_until_tomorrow();
     debug("%u hours until tomorrow", hours_max);
     for (int days = 0; days < 7; days++) {
@@ -82,8 +95,8 @@ public class VanityWeather.NWSForecast : VanityWeather.Forecast, Object {
 
       for (int hours = 0; hours < hours_max; hours++) {
         day.append(current_hour.data);
+        debug("day %i write hour %i, time: %s", days, hours, current_hour.data.get_update());
         current_hour = current_hour.next;
-        debug("day %i write hour %i", days, hours);
       }
 
       debug("day %i contains %i hours", days, hours_max);
@@ -97,7 +110,7 @@ public class VanityWeather.NWSForecast : VanityWeather.Forecast, Object {
   }
 
   /**
-   * Returns an int, number of hours until tomorrow (rounds up for a partial hour).
+   * Returns an int, number of hours until tomorrow (rounds up a partial hour).
    */
   private static int hours_until_tomorrow() {
     var time_now = new DateTime.now_local();
@@ -114,10 +127,9 @@ public class VanityWeather.NWSForecast : VanityWeather.Forecast, Object {
     // microseconds
     var delta = tomorrow_midnight.difference(time_now);
     var hours = delta / TimeSpan.HOUR;
-    // always return at least 1 if truncated to 0
-    if (hours == 0) {
-      hours = 1;
-    }
+    // increment, treat forecast at the start of the current hour as "now"
+    hours++;
+
     return (int)hours;
   }
 
@@ -140,7 +152,7 @@ public class VanityWeather.NWSForecast : VanityWeather.Forecast, Object {
       min = double.min(min, current);
 
       var icon = hour_info.get_symbolic_icon_name();
-      var current_map = hour_info.is_daytime() ? night_icon_count : day_icon_count;
+      var current_map = hour_info.is_daytime() ? day_icon_count : night_icon_count;
 
       if (!current_map.contains(icon)) {
         current_map.insert(icon, 1);
