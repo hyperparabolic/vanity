@@ -23,74 +23,87 @@ public interface VanityWeather.ILocation : Object {
 }
 
 public class VanityWeather.Weather : Object {
+  private static Weather instance;
   public GWeather.Info info { get; set; }
   public GWeather.Location gw_loc { get; set; }
 
+  public VanityWeather.ILocation v_loc { get; set; }
   public VanityWeather.Forecast forecast { get; set; }
 
-  public Weather(ILocation location) {
-    gw_loc = GWeather.Location.get_world();
-    gw_loc = gw_loc.find_nearest_city(location.latitude, location.longitude);
+  // emitted on forecast update
+  public signal void updated();
 
-    info = new GWeather.Info(gw_loc);
-    info.set_application_id(VanityWeather.APP_ID);
-    info.set_contact_info("hi@decent.id");
-    info.set_enabled_providers(GWeather.Provider.NWS);
-    info.update();
+  /**
+   * Get the default weather singleton with geoclue location.
+   */
+  public static Weather? get_default() {
+    if (instance != null) {
+      return instance;
+    }
 
-    info.updated.connect(() => {
-      unowned var list = info.get_forecast_list();
-
-      var hour = 0;
-      list.foreach((info) => {
-        message(@"hour: $(hour)");
-        console_dump(info);
-        hour++;
-      });
-
-      try {
-        forecast = new NWSForecast(list);
-        debug("now: %s, %s", forecast.now_temp, forecast.now_icon);
-      } catch (Error e) {
-        critical(e.message);
-      }
-    });
+    instance = new Weather(VanityWeather.GeoclueLocation.get_default());
+    return instance;
   }
 
-  private void console_dump(GWeather.Info info) {
-    // notes for NWS
-    // "-"
-    // message(@"conditions: $(info.get_conditions())");
-    message(@"daytime: $(info.is_daytime())");
-    message(@"update: $(info.get_update())");
-    // ##.# °F
-    // message(@"dew: $(info.get_dew())");
-    // ##%
-    // message(@"humidity: $(info.get_humidity())");
-    // City
-    // message(@"location name: $(info.get_location_name())");
-    // Unknown
-    // message(@"pressure: $(info.get_pressure())");
-    // Broken clouds
-    // message(@"sky: $(info.get_sky())");
-    // ##:##
-    // message(@"sunrise: $(info.get_sunrise())");
-    // ##:##
-    // message(@"sunset: $(info.get_sunset())");
-    // ##.# °F
-    message(@"temp: $(info.get_temp())");
-    // "-"
-    // message(@"max temp: $(info.get_temp_max())");
-    // "-"
-    // message(@"min temp: $(info.get_temp_min())");
-    // ##.# °F
-    // message(@"temp summary: $(info.get_temp_summary())");
-    // Unknown
-    // message(@"visibility: $(info.get_visibility())");
-    // City : Sky
-    // message(@"weather summary: $(info.get_weather_summary())");
-    message(@"symbolic icon name: $(info.get_symbolic_icon_name())");
-    message(@"icon name: $(info.get_icon_name())");
+  /**
+   * Weather provider.
+   *
+   * Can be constructed separately for some other location provider. Location should
+   * be unitialized or accept duplicate init().
+   */
+  public Weather(ILocation location) {
+    this.v_loc = location;
+    this.v_loc.init.begin();
+    this.v_loc.updated.connect(init);
+  }
+
+  private void init() {
+    this.v_loc.updated.disconnect(init);
+    this.gw_loc = GWeather.Location.get_world();
+    this.gw_loc = gw_loc.find_nearest_city(this.v_loc.latitude, this.v_loc.longitude);
+
+    this.info = new GWeather.Info(gw_loc);
+    this.info.set_application_id(VanityWeather.APP_ID);
+    this.info.set_contact_info("hi@decent.id");
+    this.info.set_enabled_providers(GWeather.Provider.NWS);
+
+    this.info.updated.connect(update_forecast);
+    this.v_loc.updated.connect(sync_location);
+    // auto update hourly
+    GLib.Timeout.add_seconds(3600, () => {
+      refresh();
+      return true;
+    });
+
+    this.info.update();
+  }
+
+  private void update_forecast() {
+    unowned var list = info.get_forecast_list();
+
+    try {
+      forecast = new NWSForecast(list);
+      message("weather now: %s, %s", forecast.now_temp, forecast.now_icon);
+      this.updated();
+    } catch (Error e) {
+      critical(e.message);
+    }
+  }
+
+  public void refresh() {
+    this.info.update();
+  }
+
+  /**
+   * Force weather to sync to location.
+   *
+   * This should be handled automatically unless location is modified manually.
+   */
+  public void sync_location() {
+    this.gw_loc = GWeather.Location.get_world();
+    this.gw_loc = gw_loc.find_nearest_city(this.v_loc.latitude, this.v_loc.longitude);
+    this.info.location = this.gw_loc;
+    message("weather location updated, %s", this.gw_loc.get_city_name());
   }
 
   ~Weather() {
