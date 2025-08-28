@@ -5,6 +5,7 @@ class Vanity.Application : Astal.Application {
   public AstalHyprland.Hyprland hyprland { get; set; }
 
   private static Vanity.Menu menu;
+  private static VanityWeather.Weather weather;
 
   // *INDENT-OFF*
   private Regex cmd_re = /^(?P<context>.*):(?P<command>.*)$/;
@@ -49,6 +50,10 @@ class Vanity.Application : Astal.Application {
     provider.load_from_resource("com/github/hyperparabolic/vanity/vanity.css");
     Gtk.StyleContext.add_provider_for_display(Gdk.Display.get_default(), provider,
                                               Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+
+    // weather singleton has async init that takes a while, start initialization now so other
+    // consumers are more likely to have a forecast ready when they request it
+    weather = VanityWeather.Weather.get_default();
 
     var monitors = Gdk.Display.get_default().get_monitors();
     for (var i = 0; i <= monitors.get_n_items(); ++i) {

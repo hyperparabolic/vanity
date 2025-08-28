@@ -55,10 +55,12 @@
           bubblewrap
         ];
         system-libs = with pkgs; [
+          geoclue2
           glib
           gtk4
           gtk4-layer-shell
           libadwaita
+          libgweather
           wrapGAppsHook4
         ];
 
