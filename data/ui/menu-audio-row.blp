@@ -7,7 +7,7 @@ template $VanityMenuAudioRow: ListBoxRow {
   child: Box  {
     Image {
       icon-size: large;
-      icon-name: bind template.endpoint as <AstalWp.Endpoint>.volume-icon;
+      icon-name: bind template.endpoint as <AstalWp.Node>.volume-icon;
     }
     Box {
       orientation: vertical;
@@ -16,7 +16,7 @@ template $VanityMenuAudioRow: ListBoxRow {
         margin-end: 14;
 
         child: Label {
-          label: bind template.endpoint as <AstalWp.Endpoint>.description;
+          label: bind template.endpoint as <AstalWp.Node>.description;
         };
       }
       Scale {

@@ -16,7 +16,7 @@ class Vanity.MenuAudio : Gtk.Box {
   [GtkChild]
   private unowned Adw.ExpanderRow streams_expander;
 
-  private void on_added(AstalWp.Endpoint ep, Adw.ExpanderRow exp) {
+  private void on_added(AstalWp.Node ep, Adw.ExpanderRow exp) {
     if (this.ignore_set.contains(ep.description)) {
       return;
     }
@@ -26,7 +26,7 @@ class Vanity.MenuAudio : Gtk.Box {
     exp.add_row(row);
   }
 
-  private void on_removed(AstalWp.Endpoint ep, Adw.ExpanderRow exp) {
+  private void on_removed(AstalWp.Node ep, Adw.ExpanderRow exp) {
     if (this.ignore_set.contains(ep.description)) {
       return;
     }
