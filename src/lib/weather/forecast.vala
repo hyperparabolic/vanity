@@ -185,7 +185,12 @@ public class VanityWeather.NWSForecast : VanityWeather.Forecast, Object {
       }
     });
     summary.icon_night = current_max_icon;
-    debug("day %u, max: %s, min; %s, icon_day: %s, icon_night: %s", summary.iso_day_of_week, summary.temp_max, summary.temp_min, summary.icon_day, summary.icon_night);
+    debug("day %u, max: %s, min; %s, icon_day: %s, icon_night: %s",
+          summary.iso_day_of_week,
+          summary.temp_max,
+          summary.temp_min,
+          summary.icon_day,
+          summary.icon_night);
 
     return summary;
   }
