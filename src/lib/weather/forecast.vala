@@ -37,9 +37,8 @@ public class VanityWeather.NWSForecast : VanityWeather.Forecast, Object {
    * documented).
    */
   public NWSForecast(SList<GWeather.Info> nws_forecast_list) throws ForecastError {
-    if (nws_forecast_list.length() < 175) {
-      // 168 required for 7 full days, typically starts 6-7 hours in the past
-      // I don't think I've seen less than 178? We'll see if this error ever crops up
+    if (nws_forecast_list.length() < 168) {
+      // 170 is the minimum I've observed, 168 should be here for full 7 days
       throw new ForecastError.FATAL("expected at least 168 hourly forecasts, received %u", nws_forecast_list.length());
     }
     var sliced = slice_days(nws_forecast_list);
