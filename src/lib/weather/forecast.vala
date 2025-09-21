@@ -95,6 +95,9 @@ public class VanityWeather.NWSForecast : VanityWeather.Forecast, Object {
       for (int hours = 0; hours < hours_max; hours++) {
         day.append(current_hour.data);
         debug("day %i write hour %i, time: %s", days, hours, current_hour.data.get_update());
+        if (current_hour.next == null) {
+          continue;
+        }
         current_hour = current_hour.next;
       }
 
