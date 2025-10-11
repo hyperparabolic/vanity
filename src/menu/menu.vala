@@ -181,11 +181,6 @@ public class Vanity.Menu : Astal.Window {
 
   public void open_menu() {
     this.gdkmonitor = Application.instance.get_active_monitor();
-    if (Application.is_sidecar_monitor(this.gdkmonitor)) {
-      this.add_css_class("sidecar");
-    } else {
-      this.remove_css_class("sidecar");
-    }
     present();
 
     // I'm not sure why, but notify["is_active"] doesn't ever emit events, despite the state changing.

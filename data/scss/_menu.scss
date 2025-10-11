@@ -1,13 +1,9 @@
 @use "colors";
 
 .vanity_menu {
-  min-width: 750px;
+  min-width: 500px;
   border-radius: 25px;
   background-color: colors.$window_bg_color_60_transparent;
-
-  &.sidecar {
-    min-width: 500px;
-  }
 }
 
 .menu_segment {

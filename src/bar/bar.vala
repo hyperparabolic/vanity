@@ -5,7 +5,6 @@ public class Vanity.Bar : Astal.Window {
   public static Bar instance { get; private set; }
 
   public string monitor_connector { get; private set; }
-  public bool is_sidecar { get; private set; }
 
   public AstalBattery.Device battery { get; set; }
 
@@ -17,7 +16,7 @@ public class Vanity.Bar : Astal.Window {
     Vanity.Application.instance.toggle_menu();
   }
 
-  public Bar(Gdk.Monitor monitor, bool is_sidecar) {
+  public Bar(Gdk.Monitor monitor) {
     Object(
       application: Vanity.Application.instance,
       // uncrustify bug, being interpreted as a namespace and applying an
@@ -29,7 +28,6 @@ public class Vanity.Bar : Astal.Window {
       gdkmonitor: monitor,
       anchor: Astal.WindowAnchor.LEFT | Astal.WindowAnchor.TOP | Astal.WindowAnchor.RIGHT
     );
-    this.is_sidecar = is_sidecar;
     this.monitor_connector = monitor.get_connector();
     present();
   }

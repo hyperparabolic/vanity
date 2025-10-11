@@ -60,7 +60,7 @@ class Vanity.Application : Astal.Application {
       var monitor = (Gdk.Monitor)monitors.get_item(i);
 
       if (monitor != null) {
-        add_window(new Vanity.Bar(monitor, is_sidecar_monitor(monitor)));
+        add_window(new Vanity.Bar(monitor));
         add_window(new Vanity.OSD(monitor));
       }
     }
@@ -91,10 +91,5 @@ class Vanity.Application : Astal.Application {
       }
     }
     return active_monitor;
-  }
-
-  public static bool is_sidecar_monitor(Gdk.Monitor mon) {
-    var r = (Cairo.RectangleInt)mon.get_geometry();
-    return r.height > r.width;
   }
 }
