@@ -12,25 +12,30 @@ template $VanityMenuAudio : Box {
     label: "Audio";
   }
 
-  ListBox {
-    Adw.ExpanderRow sinks_expander {
-      title: "Speakers";
-      activatable: false;
-      selectable: false;
-    }
-    Adw.ExpanderRow sources_expander {
-      title: "Microphones";
-      activatable: false;
-      selectable: false;
-    }
-    Adw.ExpanderRow streams_expander {
-      title: "Mixer";
-      activatable: false;
-      selectable: false;
-      expanded: true;
-    }
-  }
+  ScrolledWindow {
+    hscrollbar-policy: never;
+    min-content-height: 200;
+    vexpand: true;
 
+    child: ListBox {
+      Adw.ExpanderRow sinks_expander {
+        title: "Speakers";
+        activatable: false;
+        selectable: false;
+      }
+      Adw.ExpanderRow sources_expander {
+        title: "Microphones";
+        activatable: false;
+        selectable: false;
+      }
+      Adw.ExpanderRow streams_expander {
+        title: "Mixer";
+        activatable: false;
+        selectable: false;
+        expanded: true;
+      }
+    };
+  }
 }
 
 

@@ -134,7 +134,7 @@ public class Vanity.Menu : Astal.Window {
       namespace: "menu",
       // *INDENT-ON*
       name: "menu",
-      anchor: Astal.WindowAnchor.TOP | Astal.WindowAnchor.RIGHT | Astal.WindowAnchor.BOTTOM,
+      anchor: Astal.WindowAnchor.TOP | Astal.WindowAnchor.RIGHT,
       visible: false
     );
 
