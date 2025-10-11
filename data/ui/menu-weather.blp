@@ -16,10 +16,12 @@ template $VanityMenuWeather : Box {
 
     Button {
       icon-name: "find-location-symbolic";
+      clicked => $refresh_location();
     }
 
     Button {
       icon-name: "view-refresh-symbolic";
+      clicked => $refresh_weather();
     }
   }
 
