@@ -9,6 +9,7 @@ blueprints = custom_target(
     'menu-idle.blp',
     'menu-selector.blp',
     'menu-system-controls.blp',
+    'menu-weather.blp',
     'menu.blp',
     'osd.blp',
     'player.blp',

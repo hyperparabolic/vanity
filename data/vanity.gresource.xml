@@ -11,6 +11,7 @@
         <file preprocess="xml-stripblanks">ui/menu-idle.ui</file>
         <file preprocess="xml-stripblanks">ui/menu-selector.ui</file>
         <file preprocess="xml-stripblanks">ui/menu-system-controls.ui</file>
+        <file preprocess="xml-stripblanks">ui/menu-weather.ui</file>
         <file preprocess="xml-stripblanks">ui/osd.ui</file>
         <file preprocess="xml-stripblanks">ui/player.ui</file>
         <file preprocess="xml-stripblanks">ui/sync-marquee.ui</file>

@@ -13,6 +13,7 @@ public static void main(string[] args) {
   typeof (Vanity.MenuIdle).ensure();
   typeof (Vanity.MenuSelector).ensure();
   typeof (Vanity.MenuSystemControls).ensure();
+  typeof (Vanity.MenuWeather).ensure();
   typeof (Vanity.OSD).ensure();
   typeof (Vanity.Player).ensure();
   typeof (Vanity.SyncMarquee).ensure();

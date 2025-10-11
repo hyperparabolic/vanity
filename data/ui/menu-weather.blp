@@ -1,0 +1,76 @@
+using Gtk 4.0;
+
+
+template $VanityMenuWeather : Box {
+  orientation: vertical;
+
+  Box {
+    orientation: horizontal;
+
+    $VanitySyncMarquee {
+      child: Label location {
+        hexpand: true;
+        label: "Loading...";
+      };
+    }
+
+    Button {
+      icon-name: "find-location-symbolic";
+    }
+
+    Button {
+      icon-name: "view-refresh-symbolic";
+    }
+  }
+
+  ScrolledWindow {
+    vscrollbar-policy: never;
+    Box {
+      orientation: horizontal;
+      margin-top: 15;
+      margin-bottom: 15;
+
+      Box {
+        // "now" forecast"
+        orientation: vertical;
+        margin-start: 15;
+        margin-end: 15;
+
+        Label {
+          label: "Now";
+        }
+
+        Box {
+          orientation: horizontal;
+
+          Image now_icon {
+            icon-name: "weather-none-available-symbolic";
+            pixel-size: 200;
+          }
+
+          Box {
+            orientation: vertical;
+
+            Label now_temp {
+              vexpand: true;
+              label: "...°F";
+            }
+          }
+        }
+      }
+
+      Box forecast {
+        margin-start: 15;
+        margin-end: 15;
+        spacing: 15;
+        orientation: horizontal;
+
+        Separator {
+          orientation: horizontal;
+        }
+      }
+    }
+
+  }
+}
+
