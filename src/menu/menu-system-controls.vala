@@ -20,37 +20,37 @@ public class Vanity.MenuSystemControls : Gtk.Box {
   [GtkCallback]
   public void activate_lock() {
     Vanity.Menu.instance.close_menu();
-    AstalIO.Process.exec_asyncv.begin({ "bash", "-c", "loginctl lock-session" });
+    VanityIO.Process.exec_asyncv.begin({ "bash", "-c", "loginctl lock-session" });
   }
 
   [GtkCallback]
   public void activate_logout() {
     Vanity.Menu.instance.close_menu();
-    AstalIO.Process.exec_asyncv.begin({ "bash", "-c", "loginctl terminate-session $XDG_SESSION_ID" });
+    VanityIO.Process.exec_asyncv.begin({ "bash", "-c", "loginctl terminate-session $XDG_SESSION_ID" });
   }
 
   [GtkCallback]
   public void activate_sleep() {
     Vanity.Menu.instance.close_menu();
-    AstalIO.Process.exec_asyncv.begin({ "bash", "-c", "systemctl suspend" });
+    VanityIO.Process.exec_asyncv.begin({ "bash", "-c", "systemctl suspend" });
   }
 
   [GtkCallback]
   public void activate_hibernate() {
     Vanity.Menu.instance.close_menu();
-    AstalIO.Process.exec_asyncv.begin({ "bash", "-c", "systemctl hibernate" });
+    VanityIO.Process.exec_asyncv.begin({ "bash", "-c", "systemctl hibernate" });
   }
 
   [GtkCallback]
   public void activate_reboot() {
     Vanity.Menu.instance.close_menu();
-    AstalIO.Process.exec_asyncv.begin({ "bash", "-c", "systemctl reboot" });
+    VanityIO.Process.exec_asyncv.begin({ "bash", "-c", "systemctl reboot" });
   }
 
   [GtkCallback]
   public void activate_poweroff() {
     Vanity.Menu.instance.close_menu();
-    AstalIO.Process.exec_asyncv.begin({ "bash", "-c", "systemctl poweroff" });
+    VanityIO.Process.exec_asyncv.begin({ "bash", "-c", "systemctl poweroff" });
   }
 
   construct {

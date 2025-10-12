@@ -1,5 +1,6 @@
 subdir('brightness')
 subdir('dbus-ifaces')
 subdir('idle')
+subdir('io')
 subdir('weather')
 subdir('yubikey-touch-detector')
