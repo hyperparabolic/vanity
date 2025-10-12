@@ -56,12 +56,13 @@ class Vanity.MenuWeather : Gtk.Box {
     var ec = new Gtk.EventControllerScroll(Gtk.EventControllerScrollFlags.VERTICAL);
     // scroll horizonally with vertical scrolling
     ec.scroll.connect((dx, dy) => {
-      // message("%f, %f", dx, dy);
-      // TODO: handle all Gdk.ScrollUnit, this currently only behaves for mouse wheels
-      // I think this might just need to drop the multiplier for surface scrolling?
-      // Test on laptop
-      // https://docs.gtk.org/gtk4/method.EventControllerScroll.get_unit.html
+      if (ec.get_unit() == Gdk.ScrollUnit.SURFACE) {
+        // surface scrolling always has horizontal scroll, ignore
+        return false;
+      }
+
       this.scroll_window.hadjustment.value += (dy * 30.0);
+      return true;
     });
     this.scroll_window.add_controller(ec);
 
