@@ -18,15 +18,44 @@ public class VanityWeather.DaySummary : Object {
 }
 
 public interface VanityWeather.Forecast : Object {
+  public abstract string location { get; set; }
   public abstract string now_temp { get; set; }
   public abstract string now_icon { get; set; }
+
+  /**
+   * Returns number of DaySummarys stored internally.
+   */
+  public abstract uint days_length();
+
+  /**
+   * Get DaySummary at index, zero indexed.
+   */
+  public abstract DaySummary? get_day(uint index);
 }
 
 public class VanityWeather.NWSForecast : VanityWeather.Forecast, Object {
+  public string location { get; set; }
   public string now_temp { get; set; }
   public string now_icon { get; set; }
   // NWSForecast will include 7 DaySummary entries
   private List<VanityWeather.DaySummary> days;
+
+  public uint days_length() {
+    if (days == null) {
+      return 0;
+    }
+    return (uint)days.length();
+  }
+
+  public DaySummary? get_day(uint index) {
+    if (days == null) {
+      return null;
+    }
+    if (index >= (uint)days.length) {
+      return null;
+    }
+    return days.nth_data(index);
+  }
 
   /**
    * nws_forecast_list - GWeather.Info.get_forecast_list() for the
@@ -45,6 +74,7 @@ public class VanityWeather.NWSForecast : VanityWeather.Forecast, Object {
     var now = sliced.data.data;
     var now_temp_d = 0.0;
     now.get_value_temp(VanityWeather.TEMP_UNIT, out now_temp_d);
+    this.location = now.get_location_name();
     this.now_temp = format_temp(now_temp_d);
     this.now_icon = now.get_symbolic_icon_name();
     this.days = new List<VanityWeather.DaySummary>();
