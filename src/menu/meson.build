@@ -7,6 +7,7 @@ project_resources += files(
   'menu-selector.vala',
   'menu-system-controls.vala',
   'menu-weather.vala',
+  'menu-weather-forecast.vala',
   'menu.vala',
   'player.vala',
 )

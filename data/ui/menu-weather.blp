@@ -46,8 +46,10 @@ template $VanityMenuWeather : Box {
           orientation: horizontal;
 
           Image now_icon {
+            styles [ "weather_icon" ]
+
             icon-name: "weather-none-available-symbolic";
-            pixel-size: 200;
+            pixel-size: 150;
           }
 
           Box {
@@ -66,10 +68,6 @@ template $VanityMenuWeather : Box {
         margin-end: 15;
         spacing: 15;
         orientation: horizontal;
-
-        Separator {
-          orientation: horizontal;
-        }
       }
     }
 

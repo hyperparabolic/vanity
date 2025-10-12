@@ -1,0 +1,51 @@
+using Gtk 4.0;
+
+template $VanityMenuWeatherForecast: Box {
+  orientation: vertical;
+
+  Label day_label {
+    label: "Day";
+  }
+
+  Box {
+    orientation: horizontal;
+
+    Overlay {
+      styles [ "weather_icon" ]
+      child: Image icon_night {
+        styles[ "night" ]
+        halign: end;
+        valign: start;
+
+
+        icon-name: "weather-clear-night-symbolic";
+        pixel-size: 100;
+      };
+
+      [overlay]
+      Image icon_day {
+        styles [ "day" ]
+        halign: start;
+        valign: end;
+
+
+        icon-name: "weather-clear-symbolic";
+        pixel-size: 100;
+      }
+    }
+    Box {
+      orientation: vertical;
+
+      Label temp_max {
+        styles [ "weather_temp_max" ]
+        vexpand: true;
+        label: "...°F";
+      }
+      Label temp_min {
+        styles [ "weather_temp_min" ]
+        vexpand: true;
+        label: "...°F";
+      }
+    }
+  }
+}

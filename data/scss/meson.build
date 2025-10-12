@@ -4,6 +4,7 @@ scss_deps = files(
   '_menu.scss',
   '_osd.scss',
   '_player.scss',
+  '_weather.scss',
   'main.scss',
 )
 

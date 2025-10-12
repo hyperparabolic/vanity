@@ -44,7 +44,7 @@ public class VanityWeather.NWSForecast : VanityWeather.Forecast, Object {
     if (days == null) {
       return 0;
     }
-    return (uint)days.length;
+    return (uint)days.length();
   }
 
   public DaySummary? get_day(uint index) {
