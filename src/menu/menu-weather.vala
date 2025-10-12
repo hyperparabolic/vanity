@@ -12,6 +12,9 @@ class Vanity.MenuWeather : Gtk.Box {
   private unowned Gtk.Label now_temp;
 
   [GtkChild]
+  private unowned Gtk.ScrolledWindow scroll_window;
+
+  [GtkChild]
   private unowned Gtk.Box forecast;
 
   [GtkCallback]
@@ -46,10 +49,22 @@ class Vanity.MenuWeather : Gtk.Box {
         forecast.append(new Gtk.Separator(0));
         forecast.append(new Vanity.MenuWeatherForecast(ds));
       }
-    };
+    }
   }
 
   construct {
+    var ec = new Gtk.EventControllerScroll(Gtk.EventControllerScrollFlags.VERTICAL);
+    // scroll horizonally with vertical scrolling
+    ec.scroll.connect((dx, dy) => {
+      // message("%f, %f", dx, dy);
+      // TODO: handle all Gdk.ScrollUnit, this currently only behaves for mouse wheels
+      // I think this might just need to drop the multiplier for surface scrolling?
+      // Test on laptop
+      // https://docs.gtk.org/gtk4/method.EventControllerScroll.get_unit.html
+      this.scroll_window.hadjustment.value += (dy * 30.0);
+    });
+    this.scroll_window.add_controller(ec);
+
     weather = VanityWeather.Weather.get_default();
 
     weather.updated.connect(render_forecast);
