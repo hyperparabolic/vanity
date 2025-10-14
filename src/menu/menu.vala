@@ -201,4 +201,12 @@ public class Vanity.Menu : Astal.Window {
     }
     this.visible = false;
   }
+
+  public void toggle_menu() {
+    if (this.visible == true) {
+      this.close_menu();
+    } else {
+      this.open_menu();
+    }
+  }
 }

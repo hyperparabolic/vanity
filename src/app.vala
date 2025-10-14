@@ -1,48 +1,58 @@
-namespace Vanity {}
+namespace Vanity {
+  const string APP_ID = "com.github.hyperparabolic.vanity";
+}
 
-class Vanity.Application : Astal.Application {
+class Vanity.Application : Gtk.Application {
   public static Application instance;
   public AstalHyprland.Hyprland hyprland { get; set; }
 
-  private static Vanity.Menu menu;
   private static VanityWeather.Weather weather;
 
-  // *INDENT-OFF*
-  private Regex cmd_re = /^(?P<context>.*):(?P<command>.*)$/;
-  // *INDENT-ON*
+  private static bool toggle_menu = false;
 
-  public override void request(string msg, GLib.SocketConnection conn) {
-    MatchInfo m;
-    if (!cmd_re.match(msg, 0, out m)) {
-      AstalIO.write_sock.begin(conn, @"invalid message format on $instance_name");
-      return;
-    }
-    var context = m.fetch_named("context");
-    var command = m.fetch_named("command");
+  private const OptionEntry[] OPTIONS = {
+    {
+      "toggle-menu", 0, OptionFlags.NONE, OptionArg.NONE, ref toggle_menu,
+      "Remote only, toggle menu on primary monitor", null
+    },
 
-    // transition to switch and handler functions if this grows
-    if (context == "menu" && command == "toggle") {
-      this.toggle_menu();
-      AstalIO.write_sock.begin(conn, @"menu toggled on $instance_name");
-    } else {
-      AstalIO.write_sock.begin(conn, @"unknown context: $context or command: $command on $instance_name");
-    }
-  }
+    // terminator
+    { null }
+  };
 
-  construct {
-    instance_name = "vanity";
+  public override int command_line(ApplicationCommandLine command_line) {
+    var args = command_line.get_arguments();
+
     try {
-      acquire_socket();
-    } catch (Error e) {
-      printerr("%s", e.message);
+      var context = new OptionContext();
+      context.set_help_enabled(true);
+      context.add_main_entries(OPTIONS, null);
+
+      // parse removes strings from args without freeing, make a weak copy
+      string *[] _args = new string[args.length];
+      for (int i = 0; i < args.length; i++) {
+        _args[i] = args[i];
+      }
+      unowned string[] tmp = _args;
+      context.parse(ref tmp);
+    } catch (OptionError e) {
+      command_line.print("error: %s\n", e.message);
+      command_line.print("Run '%s --help' to see a full list of available command line options.\n", args[0]);
+      return 0;
     }
-    hyprland = AstalHyprland.Hyprland.get_default();
-    instance = this;
+
+    if (command_line.is_remote) {
+      if (toggle_menu) {
+        Vanity.Menu.instance.toggle_menu();
+      }
+    } else {
+      init();
+    }
+
+    return 0;
   }
 
-  public override void activate() {
-    base.activate();
-
+  private void init() {
     Gtk.IconTheme icon_theme = Gtk.IconTheme.get_for_display(Gdk.Display.get_default());
     icon_theme.add_resource_path("/com/github/hyperparabolic/vanity/icons/");
 
@@ -51,9 +61,6 @@ class Vanity.Application : Astal.Application {
     Gtk.StyleContext.add_provider_for_display(Gdk.Display.get_default(), provider,
                                               Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
 
-    // weather singleton has async init that takes a while, start initialization now so other
-    // consumers are more likely to have a forecast ready when they request it
-    weather = VanityWeather.Weather.get_default();
 
     var monitors = Gdk.Display.get_default().get_monitors();
     for (var i = 0; i <= monitors.get_n_items(); ++i) {
@@ -65,18 +72,23 @@ class Vanity.Application : Astal.Application {
       }
     }
 
-    menu = new Vanity.Menu();
-    add_window(menu);
-
-    this.hold();
+    add_window(new Vanity.Menu());
   }
 
-  public void toggle_menu() {
-    if (menu.visible == true) {
-      menu.close_menu();
-    } else {
-      menu.open_menu();
-    }
+  public Application() {
+    application_id = Vanity.APP_ID;
+    flags =
+      ApplicationFlags.HANDLES_COMMAND_LINE |
+      // allow replacement with --gapplication-replace
+      ApplicationFlags.ALLOW_REPLACEMENT;
+  }
+
+  construct {
+    instance = this;
+    hyprland = AstalHyprland.Hyprland.get_default();
+    // weather singleton has async init that takes a while, start initialization now so other
+    // consumers are more likely to have a forecast ready when they request it
+    weather = VanityWeather.Weather.get_default();
   }
 
   public Gdk.Monitor get_active_monitor() {

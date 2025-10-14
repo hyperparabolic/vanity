@@ -1,5 +1,6 @@
 public static void main(string[] args) {
   Adw.init();
+  Environment.set_prgname("vanity");
 
   var app = new Vanity.Application();
 
