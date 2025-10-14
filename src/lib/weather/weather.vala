@@ -1,7 +1,3 @@
-namespace VanityWeather {
-  const string APP_ID = "com.github.hyperparabolic.vanity";
-}
-
 /**
  * Location interface. Probably just sticking with geoclue (beacondb), but some
  * other thoughts if I find it's flaky away from home:
@@ -63,7 +59,7 @@ public class VanityWeather.Weather : Object {
     this.gw_loc = gw_loc.find_nearest_city(this.v_loc.latitude, this.v_loc.longitude);
 
     this.info = new GWeather.Info(gw_loc);
-    this.info.set_application_id(VanityWeather.APP_ID);
+    this.info.set_application_id(Vanity.APP_ID);
     this.info.set_contact_info("hi@decent.id");
     this.info.set_enabled_providers(GWeather.Provider.NWS);
 

@@ -26,7 +26,7 @@ public class VanityWeather.GeoclueLocation : VanityWeather.ILocation, Object {
     }
 
     try {
-      gclue = yield new GClue.Simple(VanityWeather.APP_ID, GClue.AccuracyLevel.EXACT, null);
+      gclue = yield new GClue.Simple(Vanity.APP_ID, GClue.AccuracyLevel.EXACT, null);
       client = gclue.get_client();
       client.location_updated.connect(() => this.sync());
     } catch (Error e) {
