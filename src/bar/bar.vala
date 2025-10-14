@@ -13,7 +13,7 @@ public class Vanity.Bar : Astal.Window {
 
   [GtkCallback]
   public void toggle_menu() {
-    Vanity.Application.menu.toggle_menu();
+    Vanity.Menu.instance.toggle_menu();
   }
 
   public Bar(Gdk.Monitor monitor) {

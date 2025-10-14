@@ -6,13 +6,15 @@ class Vanity.Application : Gtk.Application {
   public static Application instance;
   public AstalHyprland.Hyprland hyprland { get; set; }
 
-  public static Vanity.Menu menu;
   private static VanityWeather.Weather weather;
 
   private static bool toggle_menu = false;
 
-  private const OptionEntry[] options = {
-    { "toggle-menu", 0, OptionFlags.NONE, OptionArg.NONE, ref toggle_menu, "Remote only, toggle menu on primary monitor", null },
+  private const OptionEntry[] OPTIONS = {
+    {
+      "toggle-menu", 0, OptionFlags.NONE, OptionArg.NONE, ref toggle_menu,
+      "Remote only, toggle menu on primary monitor", null
+    },
 
     // terminator
     { null }
@@ -24,7 +26,7 @@ class Vanity.Application : Gtk.Application {
     try {
       var context = new OptionContext();
       context.set_help_enabled(true);
-      context.add_main_entries(options, null);
+      context.add_main_entries(OPTIONS, null);
 
       // parse removes strings from args without freeing, make a weak copy
       string *[] _args = new string[args.length];
@@ -41,7 +43,7 @@ class Vanity.Application : Gtk.Application {
 
     if (command_line.is_remote) {
       if (toggle_menu) {
-        menu.toggle_menu();
+        Vanity.Menu.instance.toggle_menu();
       }
     } else {
       init();
@@ -70,8 +72,7 @@ class Vanity.Application : Gtk.Application {
       }
     }
 
-    menu = new Vanity.Menu();
-    add_window(menu);
+    add_window(new Vanity.Menu());
   }
 
   public Application() {
