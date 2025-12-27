@@ -10,4 +10,5 @@ project_resources += files(
   'menu-weather-forecast.vala',
   'menu.vala',
   'player.vala',
+  'player-stub.vala',
 )

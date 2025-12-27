@@ -18,6 +18,7 @@ public static void main(string[] args) {
   typeof (Vanity.MenuWeatherForecast).ensure();
   typeof (Vanity.OSD).ensure();
   typeof (Vanity.Player).ensure();
+  typeof (Vanity.PlayerStub).ensure();
   typeof (Vanity.SyncMarquee).ensure();
   typeof (Vanity.Tray).ensure();
   app.run(args);

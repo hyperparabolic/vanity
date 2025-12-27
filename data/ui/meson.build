@@ -14,6 +14,7 @@ blueprints = custom_target(
     'menu.blp',
     'osd.blp',
     'player.blp',
+    'player-stub.blp',
     'sync-marquee.blp',
   ),
   output: '.',

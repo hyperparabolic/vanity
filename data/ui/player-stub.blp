@@ -1,0 +1,66 @@
+using Gtk 4.0;
+
+template $VanityPlayerStub: Box {
+  hexpand: true;
+
+  styles [
+    "player_card"
+  ]
+
+  Box {
+
+    Image player_album_art {
+      styles [
+        "player_album_art"
+      ]
+
+      pixel-size: 200;
+      icon-name: "emblem-music-symbolic";
+    }
+  }
+
+  Box {
+    styles [
+    ]
+
+    orientation: vertical;
+    hexpand: true;
+    valign: center;
+    spacing: 10;
+    margin-start: 20;
+
+    $VanitySyncMarquee {
+      child: Label {
+        label: "-";
+      };
+    }
+
+    $VanitySyncMarquee {
+      child: Label {
+        label: "-";
+      };
+    }
+
+    $VanitySyncMarquee {
+      child: Label {
+        label: "-";
+      };
+    }
+
+    Box {
+      halign: center;
+
+      Button {
+        icon-name: "media-skip-backward-symbolic";
+      }
+
+      Button {
+        icon-name: "media-playback-start-symbolic";
+      }
+
+      Button {
+        icon-name: "media-skip-forward-symbolic";
+      }
+    }
+  }
+}

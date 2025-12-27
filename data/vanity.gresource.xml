@@ -15,6 +15,7 @@
         <file preprocess="xml-stripblanks">ui/menu-weather-forecast.ui</file>
         <file preprocess="xml-stripblanks">ui/osd.ui</file>
         <file preprocess="xml-stripblanks">ui/player.ui</file>
+        <file preprocess="xml-stripblanks">ui/player-stub.ui</file>
         <file preprocess="xml-stripblanks">ui/sync-marquee.ui</file>
 
         <file compressed="true">icons/symbolic/apps/nixos-symbolic.svg</file>
