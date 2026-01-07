@@ -19,6 +19,5 @@
         <file preprocess="xml-stripblanks">ui/sync-marquee.ui</file>
 
         <file compressed="true">icons/symbolic/apps/nixos-symbolic.svg</file>
-        <file compressed="true">icons/symbolic/apps/security-key-symbolic.svg</file>
     </gresource>
 </gresources>

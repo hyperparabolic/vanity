@@ -24,7 +24,11 @@ template $VanityOSD: Astal.Window {
       halign: center;
 
       Image {
-        icon-name: "security-key-symbolic";
+        styles [
+          "osd_image"
+        ]
+
+        icon-name: "auth-fingerprint-symbolic";
         pixel-size: 200;
       }
       Label yubikey_subtext {
