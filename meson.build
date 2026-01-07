@@ -1,7 +1,7 @@
 project(
   'vanity',
   ['vala', 'c'],
-  version: run_command('cat', 'version').stdout().strip(),
+  version: run_command('cat', 'version', check: true).stdout().strip(),
   meson_version: '>= 1.5.0',
   default_options: ['warning_level=2', 'werror=false'],
 )
