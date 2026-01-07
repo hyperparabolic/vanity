@@ -44,9 +44,6 @@
           vala
           vala-lint
         ];
-        local-libs = with self.packages.${system}; [
-          libglycin
-        ];
         runtime-deps = with pkgs; [
           # libglycin deps
           glycin-loaders
@@ -60,6 +57,7 @@
           gtk4
           gtk4-layer-shell
           libadwaita
+          libglycin
           libgweather
           wrapGAppsHook4
         ];
@@ -81,7 +79,6 @@
             astal-libs
             ++ build-tools
             ++ compiler-tools
-            ++ local-libs
             ++ system-libs;
 
           propagatedBuildInputs = runtime-deps;
@@ -92,15 +89,11 @@
             astal-libs
             ++ build-tools
             ++ compiler-tools
-            ++ local-libs
             ++ runtime-deps
             ++ system-libs;
         };
-
-        libglycin = pkgs.callPackage ./nix/libglycin/libglycin.nix {};
       in {
         packages.default = vanity;
-        packages.libglycin = libglycin;
         devShells.default = shell;
       }
     );
