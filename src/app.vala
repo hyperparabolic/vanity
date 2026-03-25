@@ -8,25 +8,31 @@ class Vanity.Application : Gtk.Application {
 
   private static VanityWeather.Weather weather;
 
-  private static bool toggle_menu = false;
-
-  private const OptionEntry[] OPTIONS = {
-    {
-      "toggle-menu", 0, OptionFlags.NONE, OptionArg.NONE, ref toggle_menu,
-      "Remote only, toggle menu on primary monitor", null
-    },
-
-    // terminator
-    { null }
-  };
-
   public override int command_line(ApplicationCommandLine command_line) {
     var args = command_line.get_arguments();
+
+    var toggle_menu = false;
+    var toggle_idle = false;
+
+    OptionEntry[] options = {
+      {
+        "toggle-menu", 0, OptionFlags.NONE, OptionArg.NONE, ref toggle_menu,
+        "Remote only, toggle menu on primary monitor", null
+      },
+
+      {
+        "toggle-idle", 0, OptionFlags.NONE, OptionArg.NONE, ref toggle_idle,
+        "Remote only, toggle idle inhibition", null
+      },
+
+      // terminator
+      { null }
+    };
 
     try {
       var context = new OptionContext();
       context.set_help_enabled(true);
-      context.add_main_entries(OPTIONS, null);
+      context.add_main_entries(options, null);
 
       // parse removes strings from args without freeing, make a weak copy
       string *[] _args = new string[args.length];
@@ -44,6 +50,10 @@ class Vanity.Application : Gtk.Application {
     if (command_line.is_remote) {
       if (toggle_menu) {
         Vanity.Menu.instance.toggle_menu();
+      }
+      if (toggle_idle) {
+        var idle = VanityIdle.Inhibitor.get_default();
+        idle.toggle();
       }
     } else {
       init();
