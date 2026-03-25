@@ -58,6 +58,7 @@
           gtk4-layer-shell
           libadwaita
           libglycin
+          libglycin-gtk4
           libgweather
           wrapGAppsHook4
         ];
