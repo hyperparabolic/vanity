@@ -25,6 +25,39 @@ template $VanityMenuWeather : Box {
     }
   }
 
+  Box {
+    // "now" forecast"
+    orientation: vertical;
+    margin-start: 15;
+    margin-end: 15;
+    margin-top: 15;
+    margin-bottom: 15;
+
+    Box {
+      orientation: horizontal;
+
+      Image now_icon {
+        styles [ "weather_icon" ]
+        hexpand: true;
+
+        icon-name: "dialog-question-symbolic";
+        pixel-size: 200;
+      }
+
+      Box {
+        orientation: vertical;
+
+        Label now_temp {
+          hexpand: true;
+          vexpand: true;
+          label: "...°F";
+        }
+      }
+    }
+  }
+
+  Separator {}
+
   ScrolledWindow scroll_window {
     vscrollbar-policy: never;
     Box {
@@ -32,38 +65,8 @@ template $VanityMenuWeather : Box {
       margin-top: 15;
       margin-bottom: 15;
 
-      Box {
-        // "now" forecast"
-        orientation: vertical;
-        margin-start: 15;
-        margin-end: 15;
-
-        Label {
-          label: "Now";
-        }
-
-        Box {
-          orientation: horizontal;
-
-          Image now_icon {
-            styles [ "weather_icon" ]
-
-            icon-name: "weather-none-available-symbolic";
-            pixel-size: 150;
-          }
-
-          Box {
-            orientation: vertical;
-
-            Label now_temp {
-              vexpand: true;
-              label: "...°F";
-            }
-          }
-        }
-      }
-
       Box forecast {
+        styles [ "weather_forecast_icon" ]
         margin-start: 15;
         margin-end: 15;
         spacing: 15;

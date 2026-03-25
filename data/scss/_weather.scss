@@ -1,10 +1,16 @@
 .weather_icon {
-  min-height: 150px;
-  min-width: 150px;
+  min-height: 200px;
+  min-width: 200px;
+}
+
+.weather_forecast_icon {
+  min-height: 100px;
+  min-width: 100px;
 
   .day {
     color: #{"@card_fg_color"};
   }
+
   .night {
     color: color-mix(in srgb, #{"@card_fg_color"} 60%, #{"@card_bg_color"});
   }

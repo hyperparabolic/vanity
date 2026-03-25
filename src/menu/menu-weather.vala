@@ -46,7 +46,9 @@ class Vanity.MenuWeather : Gtk.Box {
     for (var i = 0; i <= weather.forecast.days_length(); ++i) {
       var ds = weather.forecast.get_day(i);
       if (ds != null) {
-        forecast.append(new Gtk.Separator(0));
+        if (i != 0) {
+          forecast.append(new Gtk.Separator(0));
+        }
         forecast.append(new Vanity.MenuWeatherForecast(ds));
       }
     }
