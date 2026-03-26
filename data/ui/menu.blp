@@ -151,11 +151,12 @@ template $VanityMenu: Astal.Window {
           }
         }
 
-        $VanityMenuSelector {
-          // sunset
+        $VanityMenuSelector selector_nightlight {
+          // nightlight
           icon: "night-light-symbolic";
-          active: false;
-          navigate_clicked => $navigate_sunset();
+          active: true;
+          toggle_clicked => $toggle_nightlight();
+          navigate_clicked => $navigate_nightlight();
 
           layout {
             row: "1";
@@ -237,8 +238,8 @@ template $VanityMenu: Astal.Window {
       }
 
       Adw.NavigationPage {
-        tag: "sunset";
-        title: "Sunset";
+        tag: "nightlight";
+        title: "Nightlight";
         child: Box {
           styles [ "menu_segment" ]
 
@@ -247,7 +248,7 @@ template $VanityMenu: Astal.Window {
           vexpand: true;
 
           Label {
-            label: "sunset placeholder";
+            label: "nightlight placeholder";
           }
         };
       }

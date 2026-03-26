@@ -7,6 +7,7 @@ public class Vanity.Menu : Astal.Window {
   public AstalWp.Wp wp { get; private set; }
   public VanityBrightness.Device vbs { get; private set; }
   public VanityIdle.Inhibitor vii { get; private set; }
+  public VanityNightlight.Nightlight nl { get; private set; }
 
   /**
    * Automatically close menu on losing window focus
@@ -38,6 +39,9 @@ public class Vanity.Menu : Astal.Window {
 
   [GtkChild]
   private unowned Vanity.MenuSelector selector_idle;
+
+  [GtkChild]
+  private unowned Vanity.MenuSelector selector_nightlight;
 
   [GtkCallback]
   public void navigate_hud() {
@@ -86,8 +90,8 @@ public class Vanity.Menu : Astal.Window {
   }
 
   [GtkCallback]
-  public void navigate_sunset() {
-    navigate_non_root("sunset");
+  public void navigate_nightlight() {
+    navigate_non_root("nightlight");
   }
 
   [GtkCallback]
@@ -103,6 +107,11 @@ public class Vanity.Menu : Astal.Window {
   [GtkCallback]
   public void toggle_idle() {
     this.vii.toggle();
+  }
+
+  [GtkCallback]
+  public void toggle_nightlight() {
+    this.nl.toggle();
   }
 
   public Menu() {
@@ -140,6 +149,7 @@ public class Vanity.Menu : Astal.Window {
     }
 
     this.vii = VanityIdle.Inhibitor.get_default();
+    this.nl = VanityNightlight.Nightlight.get_default();
 
     init_signals();
   }
@@ -156,6 +166,11 @@ public class Vanity.Menu : Astal.Window {
     this.vii.notify["inhibit"].connect(() => {
       selector_idle.active = this.vii.inhibit;
       selector_idle.icon = this.vii.status_icon;
+    });
+
+    this.nl.notify["enabled"].connect(() => {
+      selector_nightlight.active = this.nl.enabled;
+      selector_nightlight.icon = this.nl.status_icon;
     });
   }
 
