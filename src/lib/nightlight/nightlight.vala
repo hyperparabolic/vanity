@@ -118,13 +118,22 @@ public class VanityNightlight.Nightlight : Object {
   /**
    * Ensures wlsunset is started.
    *
-   * returns 0 if enable successful
+   * Best effort, logs errors
    */
-  public int enable() {
-    // TODO parse response
-    VanityIO.Process.exec_asyncv.begin({ "bash", "-c", "systemctl --user start wlsunset.service" });
+  public void enable() {
+    VanityIO.Process.exec_asyncv.begin({ "bash", "-c", "systemctl --user start wlsunset.service" }, (obj, res) => {
+      try {
+        var result = VanityIO.Process.exec_asyncv.end(res);
 
-    return 0;
+        if (!result.success) {
+          error("VanityNightlight.Nightlight.enable error: %s", result.stderr);
+        }
+      } catch (Error e) {
+        error(e.message);
+      }
+    });
+
+    return;
   }
 
   /**
@@ -135,11 +144,20 @@ public class VanityNightlight.Nightlight : Object {
    * timeout_seconds == 0: at next 2AM
    * timeout_seconds < 0: never
    *
-   * returns 0 if disable successful
+   * Best effort, logs errors
    */
-  public int disable(int timeout_seconds) {
-    // TODO parse response
-    VanityIO.Process.exec_asyncv.begin({ "bash", "-c", "systemctl --user stop wlsunset.service" });
+  public void disable(int timeout_seconds) {
+    VanityIO.Process.exec_asyncv.begin({ "bash", "-c", "systemctl --user stop wlsunset.service" }, (obj, res) => {
+      try {
+        var result = VanityIO.Process.exec_asyncv.end(res);
+
+        if (!result.success) {
+          error("VanityNightlight.Nightlight.disable error: %s", result.stderr);
+        }
+      } catch (Error e) {
+        error(e.message);
+      }
+    });
 
     // restart service after timeout
     var timeout_final = timeout_seconds == 0 ? VanityTime.Util.seconds_until_two_am() : timeout_seconds;
@@ -151,7 +169,7 @@ public class VanityNightlight.Nightlight : Object {
       inhibit_until = now.add_seconds(timeout_final);
     }
 
-    return 0;
+    return;
   }
 
   public string status_string() {
