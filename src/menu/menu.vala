@@ -102,27 +102,7 @@ public class Vanity.Menu : Astal.Window {
 
   [GtkCallback]
   public void toggle_idle() {
-    if (this.vii.inhibit) {
-      this.vii.disable();
-      return;
-    }
-
-    // default toggle sets inhibitor to disable at 2:00AM, just in case I
-    // forget to disable it.
-    var time_now = new DateTime.now_local();
-
-    // let datetime handle date rollover complexity
-    var tomorrow = time_now.add_days(1);
-    var tomorrow_two_am = new DateTime.local(
-      tomorrow.get_year(),
-      tomorrow.get_month(),
-      tomorrow.get_day_of_month(),
-      2,
-      0,
-      0);
-    var d_seconds = (tomorrow_two_am.to_unix() - time_now.to_unix()) % 86400;
-
-    this.vii.enable((int)d_seconds);
+    this.vii.toggle();
   }
 
   public Menu() {

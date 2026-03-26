@@ -71,14 +71,14 @@ public class VanityIdle.Inhibitor : Object {
     if (inhibit) {
       this.disable();
     } else {
-      this.enable(-1);
+      this.enable(0);
     }
     return this.inhibit;
   }
 
   /**
    * The inhibitor will disable itself after `timeout_seconds` seconds.
-   * Supply a negative `timeout_seconds` to last indefinitely.
+   * Inhibits until 2AM if 0 `timeout_seconds`. Inhibits forever if <0.
    *
    * returns 0 if enable successful
    */
@@ -90,15 +90,16 @@ public class VanityIdle.Inhibitor : Object {
     }
 
     var ret = 0;
+    var timeout_final = timeout_seconds == 0 ? VanityTime.Util.seconds_until_two_am() : timeout_seconds;
     try {
       inhibit_fd = this.proxy.inhibit("idle", "vanity", "Inhibit system idle", "block");
 
-      if (timeout_seconds >= 0) {
+      if (timeout_final >= 0) {
         GLib.Timeout.add_seconds_once(
-          timeout_seconds,
+          timeout_final,
           () => { this.disable(); });
         var now = new DateTime.now_local();
-        inhibit_until = now.add_seconds(timeout_seconds);
+        inhibit_until = now.add_seconds(timeout_final);
       }
 
       this.status_icon = enable_icon;
