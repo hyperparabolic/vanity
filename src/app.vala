@@ -83,6 +83,7 @@ class Vanity.Application : Gtk.Application {
     }
 
     add_window(new Vanity.Menu());
+    add_window(new Vanity.Notifications());
   }
 
   public Application() {

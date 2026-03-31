@@ -1,0 +1,28 @@
+using Gtk 4.0;
+using Astal 4.0;
+
+template $VanityNotifications: Astal.Window {
+  styles [
+    "vanity_notifications"
+  ]
+
+  title: "VanityNotifications";
+  keymode: on_demand;
+  margin-top: 15;
+  margin-bottom: 15;
+
+  Box {
+    orientation: vertical;
+    spacing:15;
+    margin-top: 15;
+    margin-bottom: 15;
+    margin-start: 15;
+    margin-end: 15;
+
+    ScrolledWindow {
+      styles [ "notifications_segment" ]
+
+      hscrollbar-policy: never;
+    }
+  }
+}

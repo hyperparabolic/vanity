@@ -2,6 +2,7 @@ scss_deps = files(
   '_bar.scss',
   '_colors.scss',
   '_menu.scss',
+  '_notifications.scss',
   '_osd.scss',
   '_player.scss',
   '_weather.scss',
