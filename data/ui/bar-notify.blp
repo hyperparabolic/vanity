@@ -1,5 +1,6 @@
 using Gtk 4.0;
 
+
 template $VanityBarNotify: Box {
 
   Box preview_container {
@@ -16,8 +17,15 @@ template $VanityBarNotify: Box {
     }
   }
 
-  Button button {
-    icon-name: "switch-off-symbolic";
-    clicked => $toggle_notifications();
+  Box {
+    Image button_icon {
+      icon-name: "switch-off-symbolic";
+    }
+
+    GestureClick gc_left {
+    }
+
+    GestureClick gc_right {
+    }
   }
 }

@@ -77,6 +77,7 @@ class Vanity.Application : Gtk.Application {
     Gtk.StyleContext.add_provider_for_display(Gdk.Display.get_default(), provider,
                                               Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
 
+    add_window(new Vanity.Notifications());
 
     var monitors = Gdk.Display.get_default().get_monitors();
     for (var i = 0; i <= monitors.get_n_items(); ++i) {
@@ -89,7 +90,6 @@ class Vanity.Application : Gtk.Application {
     }
 
     add_window(new Vanity.Menu());
-    add_window(new Vanity.Notifications());
   }
 
   public Application() {

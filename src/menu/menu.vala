@@ -43,6 +43,9 @@ public class Vanity.Menu : Astal.Window {
   [GtkChild]
   private unowned Vanity.MenuSelector selector_nightlight;
 
+  [GtkChild]
+  private unowned Vanity.MenuSelector selector_notifications;
+
   [GtkCallback]
   public void navigate_hud() {
     if (nav_view.visible_page.tag != "hud") {
@@ -114,6 +117,11 @@ public class Vanity.Menu : Astal.Window {
     this.nl.toggle();
   }
 
+  [GtkCallback]
+  public void toggle_notifications_snooze() {
+    Vanity.Notifications.instance.toggle_snooze();
+  }
+
   public Menu() {
     Object(
       application: Vanity.Application.instance,
@@ -171,6 +179,12 @@ public class Vanity.Menu : Astal.Window {
     this.nl.notify["enabled"].connect(() => {
       selector_nightlight.active = this.nl.enabled;
       selector_nightlight.icon = this.nl.status_icon;
+    });
+
+    Vanity.Notifications.instance.notify["snoozed"].connect(() => {
+      selector_notifications.active = Vanity.Notifications.instance.snoozed;
+      selector_notifications.icon = Vanity.Notifications.instance.snoozed
+        ? "notification-disabled-new-symbolic" : "notification-active-symbolic";
     });
   }
 
