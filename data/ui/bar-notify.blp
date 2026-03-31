@@ -1,0 +1,22 @@
+using Gtk 4.0;
+
+template $VanityBarNotify: Box {
+
+  Box preview_container {
+    styles [
+      "bar_notify_preview"
+    ]
+    hexpand: false;
+    visible: false;
+
+    $VanitySyncMarquee {
+      child: Label preview {
+        label: "";
+      };
+    }
+  }
+
+  Button button {
+    icon-name: "switch-off-symbolic";
+  }
+}

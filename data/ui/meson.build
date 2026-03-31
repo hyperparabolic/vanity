@@ -2,6 +2,7 @@ blueprints = custom_target(
   'blueprints',
   input: files(
     'bar.blp',
+    'bar-notify.blp',
     'confirmation-button.blp',
     'menu-audio-row.blp',
     'menu-audio.blp',
