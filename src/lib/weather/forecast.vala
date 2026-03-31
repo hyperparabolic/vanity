@@ -19,8 +19,10 @@ public class VanityWeather.DaySummary : Object {
 
 public interface VanityWeather.Forecast : Object {
   public abstract string location { get; set; }
-  public abstract string now_temp { get; set; }
   public abstract string now_icon { get; set; }
+  public abstract string now_summary { get; set; }
+  public abstract string now_temp { get; set; }
+  public abstract string now_wind { get; set; }
 
   /**
    * Returns number of DaySummarys stored internally.
@@ -34,9 +36,12 @@ public interface VanityWeather.Forecast : Object {
 }
 
 public class VanityWeather.NWSForecast : VanityWeather.Forecast, Object {
+
   public string location { get; set; }
-  public string now_temp { get; set; }
   public string now_icon { get; set; }
+  public string now_summary { get; set; }
+  public string now_temp { get; set; }
+  public string now_wind { get; set; }
   // NWSForecast will include 7 DaySummary entries
   private List<VanityWeather.DaySummary> days;
 
@@ -75,8 +80,10 @@ public class VanityWeather.NWSForecast : VanityWeather.Forecast, Object {
     var now_temp_d = 0.0;
     now.get_value_temp(VanityWeather.TEMP_UNIT, out now_temp_d);
     this.location = now.get_location_name();
-    this.now_temp = format_temp(now_temp_d);
     this.now_icon = now.get_symbolic_icon_name();
+    this.now_summary = strip_summary_location(now.get_weather_summary());
+    this.now_temp = format_temp(now_temp_d);
+    this.now_wind = now.get_wind();
     this.days = new List<VanityWeather.DaySummary>();
 
     var day_of_week = new DateTime.now_local().get_day_of_week();
@@ -225,6 +232,22 @@ public class VanityWeather.NWSForecast : VanityWeather.Forecast, Object {
           summary.icon_night);
 
     return summary;
+  }
+
+  private static string strip_summary_location(string summary) {
+    // prevent uncrustify from mangling regex literal
+    /* *INDENT-OFF* */
+    // will fail if location has a colon
+    Regex summary_location = /^.*: /;
+    /* *INDENT-ON* */
+    string stripped;
+    try {
+      stripped = summary_location.replace(summary, -1, 0, "");
+    } catch (Error e) {
+      message(e.message);
+      stripped = summary;
+    }
+    return stripped;
   }
 
   private static string format_temp(double temp) {

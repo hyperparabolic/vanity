@@ -9,7 +9,13 @@ class Vanity.MenuWeather : Gtk.Box {
   private unowned Gtk.Image now_icon;
 
   [GtkChild]
+  private unowned Gtk.Label now_summary;
+
+  [GtkChild]
   private unowned Gtk.Label now_temp;
+
+  [GtkChild]
+  private unowned Gtk.Label now_wind;
 
   [GtkChild]
   private unowned Gtk.ScrolledWindow scroll_window;
@@ -35,7 +41,9 @@ class Vanity.MenuWeather : Gtk.Box {
 
     location.label = weather.forecast.location;
     now_icon.icon_name = weather.forecast.now_icon;
+    now_summary.label = weather.forecast.now_summary;
     now_temp.label = weather.forecast.now_temp;
+    now_wind.label = weather.forecast.now_wind;
 
     Gtk.Widget child = forecast.get_first_child();
     while (child != null) {

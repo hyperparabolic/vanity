@@ -47,10 +47,24 @@ template $VanityMenuWeather : Box {
       Box {
         orientation: vertical;
 
+        $VanitySyncMarquee {
+          vexpand: true;
+          child: Label now_summary {
+            label: "...";
+          };
+        }
+
         Label now_temp {
           hexpand: true;
           vexpand: true;
           label: "...°F";
+        }
+
+        $VanitySyncMarquee {
+          vexpand: true;
+          child: Label now_wind {
+            label: "...";
+          };
         }
       }
     }
