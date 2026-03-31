@@ -12,19 +12,22 @@ class Vanity.Application : Gtk.Application {
     var args = command_line.get_arguments();
 
     var toggle_menu = false;
+    var toggle_notifications = false;
     var toggle_idle = false;
 
     OptionEntry[] options = {
       {
-        "toggle-menu", 0, OptionFlags.NONE, OptionArg.NONE, ref toggle_menu,
-        "Remote only, toggle menu on primary monitor", null
-      },
-
-      {
         "toggle-idle", 0, OptionFlags.NONE, OptionArg.NONE, ref toggle_idle,
         "Remote only, toggle idle inhibition", null
       },
-
+      {
+        "toggle-menu", 0, OptionFlags.NONE, OptionArg.NONE, ref toggle_menu,
+        "Remote only, toggle menu on primary monitor", null
+      },
+      {
+        "toggle-notifications", 0, OptionFlags.NONE, OptionArg.NONE, ref toggle_notifications,
+        "Remote only, toggle notifications on primary monitor", null
+      },
       // terminator
       { null }
     };
@@ -50,6 +53,9 @@ class Vanity.Application : Gtk.Application {
     if (command_line.is_remote) {
       if (toggle_menu) {
         Vanity.Menu.instance.toggle_menu();
+      }
+      if (toggle_notifications) {
+        Vanity.Notifications.instance.toggle_notifications();
       }
       if (toggle_idle) {
         var idle = VanityIdle.Inhibitor.get_default();
