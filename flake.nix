@@ -26,6 +26,7 @@
           battery
           hyprland
           io
+          notifd
           mpris
           tray
           wireplumber
