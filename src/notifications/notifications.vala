@@ -54,6 +54,7 @@ public class Vanity.Notifications : Astal.Window {
 
   construct {
     this.notifd = AstalNotifd.Notifd.get_default();
+    this.notifd.ignore_timeout = true;
   }
 
   public void open_notifications() {
