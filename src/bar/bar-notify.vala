@@ -22,7 +22,7 @@ class Vanity.BarNotify : Gtk.Box {
       return;
     }
 
-    this.preview_container.visible = this.notifications.show_previews;
+    this.preview_container.visible = this.notifications.show_previews && this.notifications.notifications_count > 0;
     // TODO: icon tweaks based on unread and total notification count
     this.button_icon.icon_name = "switch-off-symbolic";
     // TODO: preview text
