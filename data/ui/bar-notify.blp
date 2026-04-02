@@ -22,10 +22,16 @@ template $VanityBarNotify: Box {
       icon-name: "switch-off-symbolic";
     }
 
-    GestureClick gc_left {
+    GestureClick {
+      // left click
+      button: 1;
+      pressed => $toggle_notifications();
     }
 
-    GestureClick gc_right {
+    GestureClick {
+      // right click
+      button: 3;
+      pressed => $toggle_previews();
     }
   }
 }

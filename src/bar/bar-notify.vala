@@ -8,11 +8,17 @@ class Vanity.BarNotify : Gtk.Box {
   [GtkChild]
   private unowned Gtk.Image button_icon;
 
-  [GtkChild]
-  private unowned Gtk.GestureClick gc_left;
+  [GtkCallback]
+  public void toggle_notifications() {
+    Vanity.Notifications.instance.toggle_notifications();
+  }
 
-  [GtkChild]
-  private unowned Gtk.GestureClick gc_right;
+  [GtkCallback]
+  public void toggle_previews() {
+    Vanity.Notifications.instance.toggle_previews();
+    // self triggered updates do not trigger notify callback
+    update();
+  }
 
   private void update() {
     if (this.notifications.snoozed) {
@@ -30,17 +36,6 @@ class Vanity.BarNotify : Gtk.Box {
 
   construct {
     this.notifications = Vanity.Notifications.instance;
-
-    gc_left.set_button(Gdk.BUTTON_PRIMARY);
-    gc_left.pressed.connect(() => {
-      Vanity.Notifications.instance.toggle_notifications();
-    });
-    gc_right.set_button(Gdk.BUTTON_SECONDARY);
-    gc_right.pressed.connect(() => {
-      Vanity.Notifications.instance.toggle_previews();
-      // self triggered updates do not trigger notify callback
-      update();
-    });
 
     this.notifications.notify["snoozed"].connect(() => {
       update();
