@@ -33,6 +33,9 @@ public class Vanity.Notifications : Astal.Window {
 
   private static DateTime? snooze_until;
 
+  [GtkChild]
+  private unowned Gtk.ListBox notifications;
+
   public Notifications() {
     Object(
       application : Vanity.Application.instance,
@@ -55,6 +58,38 @@ public class Vanity.Notifications : Astal.Window {
   construct {
     this.notifd = AstalNotifd.Notifd.get_default();
     this.notifd.ignore_timeout = true;
+
+    this.notifd.notified.connect(handle_notify);
+    this.notifd.resolved.connect(handle_closed);
+  }
+
+  public void handle_notify(uint id, bool replaced) {
+    if (replaced) {
+      this.handle_closed(id, AstalNotifd.ClosedReason.UNDEFINED);
+      return;
+    }
+
+    var a_notif = notifd.get_notification(id);
+    if (a_notif == null) {
+      message(@"received null notification, id: $(id)");
+      return;
+    }
+
+    var notification = new Vanity.Notification(a_notif);
+    notifications.prepend(notification);
+  }
+
+  public void handle_closed(uint id, AstalNotifd.ClosedReason reason) {
+    int i = 0;
+
+    Vanity.Notification? n = (Vanity.Notification)notifications.get_row_at_index(i);
+    while (n != null) {
+      if (n.notification.id == id) {
+        notifications.remove(n);
+        break;
+      }
+      n = (Vanity.Notification)notifications.get_row_at_index(++i);
+    }
   }
 
   public void open_notifications() {

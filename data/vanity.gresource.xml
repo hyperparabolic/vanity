@@ -14,6 +14,7 @@
         <file preprocess="xml-stripblanks">ui/menu-system-controls.ui</file>
         <file preprocess="xml-stripblanks">ui/menu-weather.ui</file>
         <file preprocess="xml-stripblanks">ui/menu-weather-forecast.ui</file>
+        <file preprocess="xml-stripblanks">ui/notification.ui</file>
         <file preprocess="xml-stripblanks">ui/notifications.ui</file>
         <file preprocess="xml-stripblanks">ui/osd.ui</file>
         <file preprocess="xml-stripblanks">ui/player.ui</file>

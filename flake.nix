@@ -92,7 +92,8 @@
             ++ build-tools
             ++ compiler-tools
             ++ runtime-deps
-            ++ system-libs;
+            ++ system-libs
+            ++ [pkgs.libnotify];
         };
       in {
         packages.default = vanity;

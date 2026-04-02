@@ -7,22 +7,23 @@ template $VanityNotifications: Astal.Window {
   ]
 
   title: "VanityNotifications";
-  keymode: on_demand;
+  keymode: none;
   margin-top: 15;
   margin-bottom: 15;
 
   Box {
     orientation: vertical;
-    spacing:15;
     margin-top: 15;
     margin-bottom: 15;
     margin-start: 15;
     margin-end: 15;
 
-    ScrolledWindow {
-      styles [ "notifications_segment" ]
+    ListBox notifications {
+      styles [
+        "notifications"
+      ]
 
-      hscrollbar-policy: never;
+      vexpand: true;
     }
   }
 }
