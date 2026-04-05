@@ -1,0 +1,8 @@
+@use "colors";
+
+.vanity_notification {
+  min-width: 1000px;
+  border-radius: 25px;
+  background-color: #{"@window_bg_color"};
+  opacity: 0.9;
+}
