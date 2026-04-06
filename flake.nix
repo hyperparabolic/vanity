@@ -58,6 +58,7 @@
           gtk4
           gtk4-layer-shell
           libadwaita
+          libgee
           libglycin
           libglycin-gtk4
           libgweather
