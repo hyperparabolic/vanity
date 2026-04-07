@@ -19,6 +19,20 @@ public class Vanity.NotificationManager : Object {
 
   private DateTime? snooze_until;
 
+  private enum NotificationVisibility {
+    // no notifications are actively being shown
+    NONE,
+    // notifications have been explicitly toggled visible
+    SHOW,
+    // notification popups are currently present
+    SHOW_TEMP,
+  }
+
+  // notifications are bound to a monitor while being shown, this includes
+  // temporary notification popups.
+  private NotificationVisibility visibility = NotificationVisibility.NONE;
+
+  // currently bound monitor, may only be nulled / modified in NONE state
   private Gdk.Monitor? display_monitor;
 
   public static NotificationManager get_default() {
@@ -90,25 +104,52 @@ public class Vanity.NotificationManager : Object {
 
   public void show_all_notifications() {
     notifications_mutex.lock();
+    if (this.visibility == NotificationVisibility.SHOW) {
+      notifications_mutex.unlock();
+      return;
+    }
+
+    this.visibility = NotificationVisibility.SHOW;
     if (this.display_monitor == null) {
       this.display_monitor = Vanity.Application.instance.get_active_monitor();
     }
-    notifications.@foreach((n) => {
-      // TODO cancel popup timeout once that exists
-      n.show_notification(this.display_monitor);
-      return true;
-    });
+    // iterate in reverse to preserve layers
+    var iter = notifications.bidir_list_iterator();
+    for (var has_next = iter.last(); has_next; has_next = iter.previous()) {
+      iter.get().show_notification(this.display_monitor);
+    }
     notifications_mutex.unlock();
   }
 
   public void hide_all_notifications() {
     notifications_mutex.lock();
+    if (this.visibility == NotificationVisibility.NONE) {
+      notifications_mutex.unlock();
+      return;
+    }
+
+    this.visibility = NotificationVisibility.NONE;
     this.display_monitor = null;
     notifications.@foreach((n) => {
       n.hide_notification();
       return true;
     });
     notifications_mutex.unlock();
+  }
+
+  public void toggle_notifications() {
+    switch (this.visibility) {
+      case NotificationVisibility.NONE :
+        show_all_notifications();
+        break;
+      case NotificationVisibility.SHOW :
+        hide_all_notifications();
+        break;
+      case NotificationVisibility.SHOW_TEMP :
+        hide_all_notifications();
+        show_all_notifications();
+        break;
+    }
   }
 
   public void toggle_previews() {
