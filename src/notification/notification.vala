@@ -36,8 +36,10 @@ public class Vanity.Notification : Astal.Window {
   public void refresh_position() {
     if (above_notification == null || above_notification.get_height() == 0) {
       this.margin_top = BASE_OFFSET;
+      this.add_css_class("active");
       return;
     }
+    this.remove_css_class("active");
     this.margin_top = above_notification.margin_top + above_notification.get_height() + BASE_OFFSET;
   }
 

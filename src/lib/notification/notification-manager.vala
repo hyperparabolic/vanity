@@ -40,7 +40,6 @@ public class Vanity.NotificationManager : Object {
   // #TODO popups
   // #TODO menu controls
   // #TODO bar preview
-  // #TODO active notification styling
 
   public static NotificationManager get_default() {
     if (default_manager != null) {
