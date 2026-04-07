@@ -16,6 +16,8 @@ class Vanity.Application : Gtk.Application {
     var toggle_idle = false;
     var toggle_menu = false;
     var toggle_notifications = false;
+    var notify_activate = false;
+    var notify_dismiss = false;
 
     OptionEntry[] options = {
       {
@@ -29,6 +31,14 @@ class Vanity.Application : Gtk.Application {
       {
         "toggle-notifications", 0, OptionFlags.NONE, OptionArg.NONE, ref toggle_notifications,
         "Remote only, toggle notifications on active monitor",
+      },
+      {
+        "notify-activate", 0, OptionFlags.NONE, OptionArg.NONE, ref notify_activate,
+        "Invoke the default action of the most recent notificaiton",
+      },
+      {
+        "notify-dismiss", 0, OptionFlags.NONE, OptionArg.NONE, ref notify_dismiss,
+        "Invoke the default action of the most recent notificaiton",
       },
       // terminator
       { null }
@@ -53,6 +63,21 @@ class Vanity.Application : Gtk.Application {
     }
 
     if (command_line.is_remote) {
+      if (notify_activate) {
+        var n = this.notification_manager.active_notification;
+        if (n != null) {
+          var a = n.actions.data;
+          if (a != null) {
+            n.invoke(a.id);
+          }
+        }
+      }
+      if (notify_dismiss) {
+        var n = this.notification_manager.active_notification;
+        if (n != null) {
+          n.dismiss();
+        }
+      }
       if (toggle_idle) {
         var idle = VanityIdle.Inhibitor.get_default();
         idle.toggle();

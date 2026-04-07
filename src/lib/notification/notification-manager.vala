@@ -5,6 +5,8 @@ public class Vanity.NotificationManager : Object {
 
   public AstalNotifd.Notifd notifd { get; set; }
 
+  public AstalNotifd.Notification? active_notification { get; private set; default = null; }
+
   private Gee.LinkedList<Vanity.Notification> notifications;
 
   private Mutex notifications_mutex = Mutex();
@@ -79,6 +81,8 @@ public class Vanity.NotificationManager : Object {
     Vanity.Application.instance.add_window(notification);
     notifications_mutex.lock();
     notifications.offer_head(notification);
+    // most recent notification is always active
+    this.active_notification = notification.notification;
     if (this.display_monitor != null) {
       notification.show_notification(this.display_monitor);
     }
@@ -96,6 +100,10 @@ public class Vanity.NotificationManager : Object {
     }
 
     notifications.remove(notification);
+    if (notification.notification.id == active_notification.id && !notifications.is_empty) {
+      var new_active = notifications.get(0);
+      this.active_notification = new_active != null ? new_active.notification : null;
+    }
     notification.hide_notification();
     notification.close();
     Vanity.Application.instance.remove_window(notification);
