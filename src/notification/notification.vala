@@ -6,6 +6,10 @@ const int BASE_OFFSET = 15;
 public class Vanity.Notification : Astal.Window {
   public AstalNotifd.Notification notification { get; construct; }
 
+  public Vanity.Notification? above_notification { get; set; }
+
+  public Vanity.Notification? below_notification { get; set; }
+
   [GtkChild]
   private unowned Gtk.Image notification_icon;
 
@@ -29,15 +33,23 @@ public class Vanity.Notification : Astal.Window {
     });
   }
 
+  public void refresh_position() {
+    if (above_notification == null || above_notification.get_height() == 0) {
+      this.margin_top = BASE_OFFSET;
+      return;
+    }
+    this.margin_top = above_notification.margin_top + above_notification.get_height() + BASE_OFFSET;
+  }
+
   public Notification(AstalNotifd.Notification notification) {
     Object(
-      application: Vanity.Application.instance,
+      application : Vanity.Application.instance,
       // uncrustify bug, being interpreted as a namespace and applying an
       // incorrect rule, disable here.
       // *INDENT-OFF*
       namespace: "notifications",
       // *INDENT-ON*
-      anchor: Astal.WindowAnchor.TOP,
+      anchor : Astal.WindowAnchor.TOP,
       visible: false,
       margin_top: BASE_OFFSET,
       notification: notification

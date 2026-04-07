@@ -37,6 +37,11 @@ public class Vanity.NotificationManager : Object {
   // currently bound monitor, may only be nulled / modified in NONE state
   private Gdk.Monitor? display_monitor;
 
+  // #TODO popups
+  // #TODO menu controls
+  // #TODO bar preview
+  // #TODO active notification styling
+
   public static NotificationManager get_default() {
     if (default_manager != null) {
       return default_manager;
@@ -65,6 +70,19 @@ public class Vanity.NotificationManager : Object {
     }
   }
 
+  private void refresh_positions() {
+    // needs to wait a moment for `present()` and height requests to settle
+    // 50 ms seems more than fast enough for animation length and consistent
+    GLib.Timeout.add_once(
+      50,
+      () => {
+      notifications.@foreach((n) => {
+        n.refresh_position();
+        return true;
+      });
+    });
+  }
+
   private void handle_notified(uint id, bool replaced) {
     if (replaced) {
       this.handle_resolved(id, AstalNotifd.ClosedReason.UNDEFINED);
@@ -78,7 +96,13 @@ public class Vanity.NotificationManager : Object {
     }
 
     var notification = new Vanity.Notification(a_notif);
+    var below = !notifications.is_empty ? notifications.get(0) : null;
+    if (below != null) {
+      below.above_notification = notification;
+      notification.below_notification = below;
+    }
     Vanity.Application.instance.add_window(notification);
+
     notifications_mutex.lock();
     notifications.offer_head(notification);
     // most recent notification is always active
@@ -86,6 +110,7 @@ public class Vanity.NotificationManager : Object {
     if (this.display_monitor != null) {
       notification.show_notification(this.display_monitor);
     }
+    refresh_positions();
     notifications_mutex.unlock();
   }
 
@@ -99,6 +124,15 @@ public class Vanity.NotificationManager : Object {
       return;
     }
 
+    var above = notification.above_notification;
+    var below = notification.below_notification;
+    if (above != null) {
+      above.below_notification = below;
+    }
+    if (below != null) {
+      below.above_notification = above;
+    }
+
     notifications.remove(notification);
     if (notification.notification.id == active_notification.id && !notifications.is_empty) {
       var new_active = notifications.get(0);
@@ -107,6 +141,7 @@ public class Vanity.NotificationManager : Object {
     notification.hide_notification();
     notification.close();
     Vanity.Application.instance.remove_window(notification);
+    refresh_positions();
     notifications_mutex.unlock();
   }
 
@@ -126,6 +161,7 @@ public class Vanity.NotificationManager : Object {
     for (var has_next = iter.last(); has_next; has_next = iter.previous()) {
       iter.get().show_notification(this.display_monitor);
     }
+    refresh_positions();
     notifications_mutex.unlock();
   }
 
