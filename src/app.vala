@@ -13,20 +13,23 @@ class Vanity.Application : Gtk.Application {
   public override int command_line(ApplicationCommandLine command_line) {
     var args = command_line.get_arguments();
 
-    var toggle_menu = false;
     var toggle_idle = false;
+    var toggle_menu = false;
+    var toggle_notifications = false;
 
     OptionEntry[] options = {
-      {
-        "toggle-menu", 0, OptionFlags.NONE, OptionArg.NONE, ref toggle_menu,
-        "Remote only, toggle menu on primary monitor", null
-      },
-
       {
         "toggle-idle", 0, OptionFlags.NONE, OptionArg.NONE, ref toggle_idle,
         "Remote only, toggle idle inhibition", null
       },
-
+      {
+        "toggle-menu", 0, OptionFlags.NONE, OptionArg.NONE, ref toggle_menu,
+        "Remote only, toggle menu on active monitor", null
+      },
+      {
+        "toggle-notifications", 0, OptionFlags.NONE, OptionArg.NONE, ref toggle_notifications,
+        "Remote only, toggle notifications on active monitor",
+      },
       // terminator
       { null }
     };
@@ -50,12 +53,15 @@ class Vanity.Application : Gtk.Application {
     }
 
     if (command_line.is_remote) {
-      if (toggle_menu) {
-        Vanity.Menu.instance.toggle_menu();
-      }
       if (toggle_idle) {
         var idle = VanityIdle.Inhibitor.get_default();
         idle.toggle();
+      }
+      if (toggle_menu) {
+        Vanity.Menu.instance.toggle_menu();
+      }
+      if (toggle_notifications) {
+        this.notification_manager.toggle_notifications();
       }
     } else {
       init();
@@ -85,7 +91,6 @@ class Vanity.Application : Gtk.Application {
     }
 
     add_window(new Vanity.Menu());
-    this.notification_manager = Vanity.NotificationManager.get_default();
   }
 
   public Application() {
@@ -102,6 +107,7 @@ class Vanity.Application : Gtk.Application {
     // weather singleton has async init that takes a while, start initialization now so other
     // consumers are more likely to have a forecast ready when they request it
     weather = VanityWeather.Weather.get_default();
+    this.notification_manager = Vanity.NotificationManager.get_default();
   }
 
   public Gdk.Monitor get_active_monitor() {
