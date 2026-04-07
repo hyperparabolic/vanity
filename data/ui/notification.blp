@@ -8,47 +8,62 @@ template $VanityNotification: Astal.Window {
   ]
 
   title: "VanityNotification";
+  layer: overlay;
+  exclusivity: normal;
   keymode: none;
+  default-height: -1;
+  default-width: 1000;
   margin-top: 15;
+  overflow: hidden;
 
   Box {
-    orientation: horizontal;
-    spacing: 10;
-
-    Image notification_icon {
-      valign: center;
-      pixel-size: 100;
-      icon-name: "org.gnome.Settings-notifications-symbolic";
-    }
+    orientation: vertical;
+    margin-top: 15;
+    margin-bottom: 15;
+    margin-start: 15;
+    margin-end: 15;
 
     Box {
-      orientation: vertical;
-      spacing: 5;
-      halign: start;
+      orientation: horizontal;
+      halign: fill;
       hexpand: true;
+      spacing: 10;
 
-      Label {
-        label: bind template.notification as <AstalNotifd.Notification>.summary;
+      Image notification_icon {
         halign: start;
-        ellipsize: end;
+        valign: center;
+        pixel-size: 100;
+        icon-name: "org.gnome.Settings-notifications-symbolic";
       }
 
-      Label {
-        label: bind template.notification as <AstalNotifd.Notification>.body;
-        halign: start;
-        wrap: true;
-        wrap-mode: word_char;
-      }
+      Box {
+        orientation: vertical;
+        spacing: 5;
+        valign: center;
 
-      Box actions {
-        
+        Label {
+          label: bind template.notification as <AstalNotifd.Notification>.summary;
+          halign: start;
+          ellipsize: end;
+        }
+
+        Label {
+          label: bind template.notification as <AstalNotifd.Notification>.body;
+          halign: start;
+          wrap: true;
+          wrap-mode: word_char;
+        }
+
+        Box actions {
+          orientation: horizontal;
+          halign: fill;
+        }
       }
     }
-
-    GestureClick {
-      // right click
-      button: 3;
-      pressed => $dismiss();
-    }
+  }
+  GestureClick {
+    // right click
+    button: 3;
+    pressed => $dismiss();
   }
 }

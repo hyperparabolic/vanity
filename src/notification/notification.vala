@@ -1,5 +1,7 @@
 using GtkLayerShell;
 
+const int BASE_OFFSET = 15;
+
 [GtkTemplate(ui = "/com/github/hyperparabolic/vanity/ui/notification.ui")]
 public class Vanity.Notification : Astal.Window {
   public AstalNotifd.Notification notification { get; construct; }
@@ -7,9 +9,24 @@ public class Vanity.Notification : Astal.Window {
   [GtkChild]
   private unowned Gtk.Image notification_icon;
 
+  [GtkChild]
+  private unowned Gtk.Box actions;
+
   [GtkCallback]
   public void dismiss() {
     this.notification.dismiss();
+  }
+
+  private void setup_actions() {
+    notification.actions.@foreach((a) => {
+      Gtk.Button action = new Gtk.Button();
+      action.label = a.label;
+      action.halign = Gtk.Align.END;
+      action.hexpand = true;
+      action.add_css_class("notification_action");
+      action.clicked.connect(() => { this.notification.invoke(a.id); });
+      this.actions.append(action);
+    });
   }
 
   public Notification(AstalNotifd.Notification notification) {
@@ -22,12 +39,14 @@ public class Vanity.Notification : Astal.Window {
       // *INDENT-ON*
       anchor: Astal.WindowAnchor.TOP,
       visible: false,
+      margin_top: BASE_OFFSET,
       notification: notification
     );
 
     if (notification.app_icon != null && notification.app_icon != "") {
       this.notification_icon.icon_name = notification.app_icon;
     }
+    setup_actions();
   }
 
   construct {
