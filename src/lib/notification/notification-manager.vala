@@ -52,7 +52,8 @@ public class Vanity.NotificationManager : Object {
       return default_manager;
     }
 
-    return new NotificationManager();
+    default_manager = new NotificationManager();
+    return default_manager;
   }
 
   private NotificationManager() {
