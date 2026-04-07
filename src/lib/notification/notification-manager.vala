@@ -43,7 +43,12 @@ public class Vanity.NotificationManager : Object {
   // currently bound monitor, may only be nulled / modified in NONE state
   private Gdk.Monitor? display_monitor;
 
-  // #TODO bar preview
+  public signal void new_notification();
+
+  public signal void resolved_notification();
+
+  public signal void open_notifications();
+
   // #TODO icons
 
   public static NotificationManager get_default() {
@@ -174,6 +179,7 @@ public class Vanity.NotificationManager : Object {
     notifications_mutex.unlock();
 
     popup(notification);
+    new_notification();
   }
 
   private void handle_resolved(uint id, AstalNotifd.ClosedReason reason) {
@@ -196,15 +202,18 @@ public class Vanity.NotificationManager : Object {
     }
 
     notifications.remove(notification);
-    if (notification.notification.id == active_notification.id && !notifications.is_empty) {
-      var new_active = notifications.get(0);
-      this.active_notification = new_active != null ? new_active.notification : null;
+    if (notifications.is_empty) {
+      this.active_notification = null;
+    } else if (notification.notification.id == active_notification.id) {
+      this.active_notification = notifications.get(0).notification;
     }
+
     notification.hide_notification();
     notification.close();
     Vanity.Application.instance.remove_window(notification);
     refresh_positions();
     notifications_mutex.unlock();
+    resolved_notification();
   }
 
   public void show_all_notifications() {
@@ -225,6 +234,7 @@ public class Vanity.NotificationManager : Object {
     }
     refresh_positions();
     notifications_mutex.unlock();
+    open_notifications();
   }
 
   public void hide_all_notifications() {

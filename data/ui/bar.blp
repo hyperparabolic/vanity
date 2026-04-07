@@ -30,6 +30,22 @@ template $VanityBar: Astal.Window {
       }
     }
 
+    [center]
+    Box notification_preview {
+      styles [
+        "bar_segment",
+        "bar_notify_preview"
+      ]
+      hexpand: false;
+      visible: false;
+
+      $VanitySyncMarquee {
+        child: Label notification_label {
+          label: "";
+        };
+      }
+    }
+
     [end]
     Box right_box {
       styles [
@@ -49,6 +65,24 @@ template $VanityBar: Astal.Window {
       Box {
         Label clock {
           name: "clock";
+        }
+      }
+
+      Box {
+        Image notification_button_icon {
+          icon-name: "switch-off-symbolic";
+        }
+
+        GestureClick {
+          // left click
+          button: 1;
+          pressed => $toggle_notifications();
+        }
+
+        GestureClick {
+          // right click
+          button: 3;
+          pressed => $toggle_previews();
         }
       }
 
