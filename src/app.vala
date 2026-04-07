@@ -6,6 +6,8 @@ class Vanity.Application : Gtk.Application {
   public static Application instance;
   public AstalHyprland.Hyprland hyprland { get; set; }
 
+  public Vanity.NotificationManager notification_manager { get; set; }
+
   private static VanityWeather.Weather weather;
 
   public override int command_line(ApplicationCommandLine command_line) {
@@ -83,6 +85,7 @@ class Vanity.Application : Gtk.Application {
     }
 
     add_window(new Vanity.Menu());
+    this.notification_manager = Vanity.NotificationManager.get_default();
   }
 
   public Application() {
