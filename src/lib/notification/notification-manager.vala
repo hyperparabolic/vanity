@@ -9,6 +9,12 @@ public class Vanity.NotificationManager : Object {
 
   private Gee.LinkedList<Vanity.Notification> notifications;
 
+  // FIFO queue for managing popups by AstalNotifd.Notification.id
+  private Gee.LinkedList<uint> popup_ids;
+
+  // Not currently doing anything, but keeping this possible to run in a dedicated
+  // thread if necessary. Could be split into visibility and list mutexes if necessary
+  // but currently handles changes in both.
   private Mutex notifications_mutex = Mutex();
 
   // Show notification preview text
@@ -37,9 +43,9 @@ public class Vanity.NotificationManager : Object {
   // currently bound monitor, may only be nulled / modified in NONE state
   private Gdk.Monitor? display_monitor;
 
-  // #TODO popups
   // #TODO menu controls
   // #TODO bar preview
+  // #TODO icons
 
   public static NotificationManager get_default() {
     if (default_manager != null) {
@@ -52,6 +58,7 @@ public class Vanity.NotificationManager : Object {
   private NotificationManager() {
     this.notifd = AstalNotifd.Notifd.get_default();
     this.notifications = new Gee.LinkedList<Vanity.Notification>();
+    this.popup_ids = new Gee.LinkedList<uint>();
     this.show_previews = true;
     this.snoozed = false;
 
@@ -72,14 +79,72 @@ public class Vanity.NotificationManager : Object {
   private void refresh_positions() {
     // needs to wait a moment for `present()` and height requests to settle
     // 50 ms seems more than fast enough for animation length and consistent
-    GLib.Timeout.add_once(
-      50,
-      () => {
+    GLib.Timeout.add_once(50, () => {
+      notifications_mutex.lock();
       notifications.@foreach((n) => {
         n.refresh_position();
         return true;
       });
+      notifications_mutex.unlock();
     });
+  }
+
+  // Display a notification (or don't) appropriately for current visibility and state.
+  // This handles all state checks, and refreshes positions as necessary.
+  private void popup(Vanity.Notification notification) {
+    if (!this.show_previews || this.snoozed) {
+      return;
+    }
+
+    notifications_mutex.lock();
+    if (this.visibility == NotificationVisibility.SHOW) {
+      notification.show_notification(this.display_monitor);
+      refresh_positions();
+      notifications_mutex.unlock();
+      return;
+    }
+
+    if (this.visibility == NotificationVisibility.NONE) {
+      // transition to SHOW_TEMP
+      this.display_monitor = Vanity.Application.instance.get_active_monitor();
+      this.visibility = NotificationVisibility.SHOW_TEMP;
+    }
+
+    // SHOW_TEMP behavior
+    notification.show_notification(this.display_monitor);
+    popup_ids.offer(notification.notification.id);
+    GLib.Timeout.add_once(5000, () => {
+      hide_next_popup();
+    });
+
+    refresh_positions();
+    notifications_mutex.unlock();
+  }
+
+  private void hide_next_popup() {
+    if (this.visibility != NotificationVisibility.SHOW_TEMP) {
+      // user triggered state transition, ignore
+      return;
+    }
+
+    notifications_mutex.lock();
+    var id = popup_ids.poll();
+    Vanity.Notification? notification = notifications.first_match((n) => {
+      return id == n.notification.id;
+    });
+    if (notification == null) {
+      notifications_mutex.unlock();
+      return;
+    }
+
+    notification.hide_notification();
+    if (notification.above_notification == null) {
+      // this is the last temporary popup
+      this.visibility = NotificationVisibility.NONE;
+      this.display_monitor = null;
+    }
+    notifications_mutex.unlock();
+    return;
   }
 
   private void handle_notified(uint id, bool replaced) {
@@ -106,11 +171,9 @@ public class Vanity.NotificationManager : Object {
     notifications.offer_head(notification);
     // most recent notification is always active
     this.active_notification = notification.notification;
-    if (this.display_monitor != null) {
-      notification.show_notification(this.display_monitor);
-    }
-    refresh_positions();
     notifications_mutex.unlock();
+
+    popup(notification);
   }
 
   private void handle_resolved(uint id, AstalNotifd.ClosedReason reason) {
@@ -189,7 +252,6 @@ public class Vanity.NotificationManager : Object {
         hide_all_notifications();
         break;
       case NotificationVisibility.SHOW_TEMP :
-        hide_all_notifications();
         show_all_notifications();
         break;
     }
