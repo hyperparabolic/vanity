@@ -43,7 +43,6 @@ public class Vanity.NotificationManager : Object {
   // currently bound monitor, may only be nulled / modified in NONE state
   private Gdk.Monitor? display_monitor;
 
-  // #TODO menu controls
   // #TODO bar preview
   // #TODO icons
 
