@@ -49,8 +49,6 @@ public class Vanity.NotificationManager : Object {
 
   public signal void open_notifications();
 
-  // #TODO icons
-
   public static NotificationManager get_default() {
     if (default_manager != null) {
       return default_manager;

@@ -36,12 +36,15 @@ template $VanityBar: Astal.Window {
         "bar_segment",
         "bar_notify_preview"
       ]
+      overflow: hidden;
       hexpand: false;
+      vexpand: false;
       visible: false;
 
       $VanitySyncMarquee {
         child: Label notification_label {
           label: "";
+          single-line-mode: true;
         };
       }
     }

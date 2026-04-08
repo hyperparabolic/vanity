@@ -1,1 +1,4 @@
-project_resources += files('process.vala')
+project_resources += files(
+  'image.vala',
+  'process.vala',
+)

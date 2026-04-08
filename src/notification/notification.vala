@@ -33,6 +33,19 @@ public class Vanity.Notification : Astal.Window {
     });
   }
 
+  private void setup_icon() {
+    if (notification.image != null && notification.image != "") {
+      try {
+        var texture = VanityIO.Image.load_image_texture(notification.image);
+        this.notification_icon.paintable = texture;
+      } catch (Error e) {
+        message(e.message);
+      }
+    } else if (notification.app_icon != null && notification.app_icon != "") {
+      this.notification_icon.icon_name = notification.app_icon;
+    }
+  }
+
   public void refresh_position() {
     if (above_notification == null || above_notification.get_height() == 0) {
       this.margin_top = BASE_OFFSET;
@@ -57,9 +70,7 @@ public class Vanity.Notification : Astal.Window {
       notification: notification
     );
 
-    if (notification.app_icon != null && notification.app_icon != "") {
-      this.notification_icon.icon_name = notification.app_icon;
-    }
+    setup_icon();
     setup_actions();
   }
 
