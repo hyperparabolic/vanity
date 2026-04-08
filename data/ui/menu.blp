@@ -126,10 +126,11 @@ template $VanityMenu: Astal.Window {
           }
         }
 
-        $VanityMenuSelector {
+        $VanityMenuSelector selector_notifications {
           // notifications
           icon: "notification-active-symbolic";
           active: false;
+          toggle_clicked => $toggle_notifications_snooze();
           navigate_clicked => $navigate_notifications();
 
           layout {

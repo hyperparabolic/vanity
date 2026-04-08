@@ -1,0 +1,69 @@
+using Gtk 4.0;
+using Astal 4.0;
+using AstalNotifd 0.1;
+
+template $VanityNotification: Astal.Window {
+  styles [
+    "vanity_notification"
+  ]
+
+  title: "VanityNotification";
+  layer: overlay;
+  exclusivity: normal;
+  keymode: none;
+  default-height: -1;
+  default-width: 1000;
+  margin-top: 15;
+  overflow: hidden;
+
+  Box {
+    orientation: vertical;
+    margin-top: 15;
+    margin-bottom: 15;
+    margin-start: 15;
+    margin-end: 15;
+
+    Box {
+      orientation: horizontal;
+      halign: fill;
+      hexpand: true;
+      spacing: 10;
+
+      Image notification_icon {
+        halign: start;
+        valign: center;
+        pixel-size: 100;
+        icon-name: "org.gnome.Settings-notifications-symbolic";
+      }
+
+      Box {
+        orientation: vertical;
+        spacing: 5;
+        valign: center;
+
+        Label {
+          label: bind template.notification as <AstalNotifd.Notification>.summary;
+          halign: start;
+          ellipsize: end;
+        }
+
+        Label {
+          label: bind template.notification as <AstalNotifd.Notification>.body;
+          halign: start;
+          wrap: true;
+          wrap-mode: word_char;
+        }
+
+        Box actions {
+          orientation: horizontal;
+          halign: fill;
+        }
+      }
+    }
+  }
+  GestureClick {
+    // right click
+    button: 3;
+    pressed => $dismiss();
+  }
+}

@@ -5,6 +5,7 @@ public class Vanity.Menu : Astal.Window {
   public static Menu instance;
 
   public AstalWp.Wp wp { get; private set; }
+  public Vanity.NotificationManager notification_manager { get; private set; }
   public VanityBrightness.Device vbs { get; private set; }
   public VanityIdle.Inhibitor vii { get; private set; }
   public VanityNightlight.Nightlight nl { get; private set; }
@@ -42,6 +43,9 @@ public class Vanity.Menu : Astal.Window {
 
   [GtkChild]
   private unowned Vanity.MenuSelector selector_nightlight;
+
+  [GtkChild]
+  private unowned Vanity.MenuSelector selector_notifications;
 
   [GtkCallback]
   public void navigate_hud() {
@@ -114,6 +118,11 @@ public class Vanity.Menu : Astal.Window {
     this.nl.toggle();
   }
 
+  [GtkCallback]
+  public void toggle_notifications_snooze() {
+    this.notification_manager.toggle_snooze();
+  }
+
   public Menu() {
     Object(
       application: Vanity.Application.instance,
@@ -150,6 +159,7 @@ public class Vanity.Menu : Astal.Window {
 
     this.vii = VanityIdle.Inhibitor.get_default();
     this.nl = VanityNightlight.Nightlight.get_default();
+    this.notification_manager = Vanity.NotificationManager.get_default();
 
     init_signals();
   }
@@ -171,6 +181,12 @@ public class Vanity.Menu : Astal.Window {
     this.nl.notify["enabled"].connect(() => {
       selector_nightlight.active = this.nl.enabled;
       selector_nightlight.icon = this.nl.status_icon;
+    });
+
+    this.notification_manager.notify["snoozed"].connect(() => {
+      selector_notifications.active = this.notification_manager.snoozed;
+      selector_notifications.icon = this.notification_manager.snoozed
+        ? "notification-disabled-new-symbolic" : "notification-active-symbolic";
     });
   }
 

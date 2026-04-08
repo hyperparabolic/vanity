@@ -2,6 +2,7 @@ subdir('bar')
 subdir('lib')
 subdir('menu')
 subdir('module')
+subdir('notification')
 subdir('osd')
 
 vapidir = meson.current_source_dir() + '/vapi/'
@@ -18,8 +19,10 @@ executable(
     dependency('astal-hyprland-0.1'),
     dependency('astal-io-0.1'),
     dependency('astal-mpris-0.1'),
+    dependency('astal-notifd-0.1'),
     dependency('astal-tray-0.1'),
     dependency('astal-wireplumber-0.1'),
+    dependency('gee-0.8'),
     dependency('gio-2.0'),
     dependency('gio-unix-2.0'),
     dependency('glycin-2'),

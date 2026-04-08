@@ -26,6 +26,7 @@
           battery
           hyprland
           io
+          notifd
           mpris
           tray
           wireplumber
@@ -57,6 +58,7 @@
           gtk4
           gtk4-layer-shell
           libadwaita
+          libgee
           libglycin
           libglycin-gtk4
           libgweather

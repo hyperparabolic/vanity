@@ -1,0 +1,37 @@
+@use "colors";
+
+.vanity_notification {
+  border-radius: 25px;
+  background-color: #{"@window_bg_color"};
+  opacity: 0.9;
+
+  button {
+    background-color: transparent;
+    border: 1px solid #{"@accent_bg_color"};
+  }
+
+  &.active {
+    border: 1px solid color-mix(in srgb, #{"@accent_bg_color"} 90%, #{"@accent_fg_color"});
+  }
+
+  .notification_action {
+
+    &:first-child {
+      border: 1px solid color-mix(in srgb, #{"@accent_bg_color"} 90%, #{"@accent_fg_color"});
+    }
+
+    &:not(:first-child) {
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+
+    &:not(:last-child) {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+
+    &:hover {
+      background-color: color-mix(in srgb, #{"@accent_bg_color"} 90%, #{"@accent_fg_color"});
+    }
+  }
+}

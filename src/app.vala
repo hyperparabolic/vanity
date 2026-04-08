@@ -6,25 +6,40 @@ class Vanity.Application : Gtk.Application {
   public static Application instance;
   public AstalHyprland.Hyprland hyprland { get; set; }
 
+  public Vanity.NotificationManager notification_manager { get; set; }
+
   private static VanityWeather.Weather weather;
 
   public override int command_line(ApplicationCommandLine command_line) {
     var args = command_line.get_arguments();
 
-    var toggle_menu = false;
     var toggle_idle = false;
+    var toggle_menu = false;
+    var toggle_notifications = false;
+    var notify_activate = false;
+    var notify_dismiss = false;
 
     OptionEntry[] options = {
-      {
-        "toggle-menu", 0, OptionFlags.NONE, OptionArg.NONE, ref toggle_menu,
-        "Remote only, toggle menu on primary monitor", null
-      },
-
       {
         "toggle-idle", 0, OptionFlags.NONE, OptionArg.NONE, ref toggle_idle,
         "Remote only, toggle idle inhibition", null
       },
-
+      {
+        "toggle-menu", 0, OptionFlags.NONE, OptionArg.NONE, ref toggle_menu,
+        "Remote only, toggle menu on active monitor", null
+      },
+      {
+        "toggle-notifications", 0, OptionFlags.NONE, OptionArg.NONE, ref toggle_notifications,
+        "Remote only, toggle notifications on active monitor",
+      },
+      {
+        "notify-activate", 0, OptionFlags.NONE, OptionArg.NONE, ref notify_activate,
+        "Invoke the default action of the most recent notificaiton",
+      },
+      {
+        "notify-dismiss", 0, OptionFlags.NONE, OptionArg.NONE, ref notify_dismiss,
+        "Invoke the default action of the most recent notificaiton",
+      },
       // terminator
       { null }
     };
@@ -48,12 +63,30 @@ class Vanity.Application : Gtk.Application {
     }
 
     if (command_line.is_remote) {
-      if (toggle_menu) {
-        Vanity.Menu.instance.toggle_menu();
+      if (notify_activate) {
+        var n = this.notification_manager.active_notification;
+        if (n != null) {
+          var a = n.actions.data;
+          if (a != null) {
+            n.invoke(a.id);
+          }
+        }
+      }
+      if (notify_dismiss) {
+        var n = this.notification_manager.active_notification;
+        if (n != null) {
+          n.dismiss();
+        }
       }
       if (toggle_idle) {
         var idle = VanityIdle.Inhibitor.get_default();
         idle.toggle();
+      }
+      if (toggle_menu) {
+        Vanity.Menu.instance.toggle_menu();
+      }
+      if (toggle_notifications) {
+        this.notification_manager.toggle_notifications();
       }
     } else {
       init();
@@ -99,6 +132,7 @@ class Vanity.Application : Gtk.Application {
     // weather singleton has async init that takes a while, start initialization now so other
     // consumers are more likely to have a forecast ready when they request it
     weather = VanityWeather.Weather.get_default();
+    this.notification_manager = Vanity.NotificationManager.get_default();
   }
 
   public Gdk.Monitor get_active_monitor() {

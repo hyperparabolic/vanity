@@ -12,6 +12,7 @@ blueprints = custom_target(
     'menu-weather.blp',
     'menu-weather-forecast.blp',
     'menu.blp',
+    'notification.blp',
     'osd.blp',
     'player.blp',
     'player-stub.blp',
