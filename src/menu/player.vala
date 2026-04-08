@@ -2,6 +2,9 @@
 class Vanity.Player : Gtk.Box {
   public AstalMpris.Player player { get; set; }
 
+  // unix timestamp indicating last full art update, used for debounce
+  private int64 last_update_unix = 0;
+
   [GtkChild]
   private unowned Gtk.Image player_album_art;
 
@@ -28,19 +31,25 @@ class Vanity.Player : Gtk.Box {
   }
 
   private void update_cover_art() {
-    player_album_art.clear();
-    if (player.cover_art == null) {
+    // firefox is doing something screwy here, and all cover art changes
+    // are immediately being followed by another change blanking out the
+    // changes. Debounce change for a bit after last full image
+    var now_unix = new DateTime.now_utc().to_unix();
+    if (now_unix - last_update_unix <= 6) {
+      return;
+    }
+
+    if (player.cover_art == null || player.cover_art == "") {
+      player_album_art.clear();
       player_album_art.set_from_icon_name("emblem-music-symbolic");
       return;
     }
 
     try {
-      var f = File.new_for_path(player.cover_art);
-      var loader = new Gly.Loader(f);
-      var image = loader.load();
-      var frame = image.next_frame();
-      var texture = GlyGtk4.frame_get_texture(frame);
+      var texture = VanityIO.Image.load_image_texture(player.cover_art);
+      player_album_art.clear();
       player_album_art.set_from_paintable(texture);
+      last_update_unix = new DateTime.now_utc().to_unix();
     } catch (Error e) {
       player_album_art.set_from_icon_name("emblem-music-symbolic");
       critical(e.message);
