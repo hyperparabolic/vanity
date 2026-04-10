@@ -12,6 +12,7 @@ template $VanityOSD: Astal.Window {
   hexpand: false;
 
   Box {
+    orientation: horizontal;
     spacing: 10;
     halign: center;
     valign: center;
@@ -22,6 +23,7 @@ template $VanityOSD: Astal.Window {
       ]
       orientation: vertical;
       halign: center;
+      visible: false;
 
       Image {
         styles [
@@ -32,6 +34,27 @@ template $VanityOSD: Astal.Window {
         pixel-size: 200;
       }
       Label yubikey_subtext {
+        label: "";
+      }
+    }
+
+    Box idle {
+      styles [
+        "osd_notifier"
+      ]
+      orientation: vertical;
+      halign: center;
+      visible: false;
+
+      Image idle_icon {
+        styles [
+          "osd_image"
+        ]
+
+        icon-name: "my-caffeine-on-symbolic";
+        pixel-size: 200;
+      }
+      Label idle_subtext {
         label: "";
       }
     }
