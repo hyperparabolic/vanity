@@ -95,7 +95,7 @@ public class VanityIdle.Inhibitor : Object {
       inhibit_fd = this.proxy.inhibit("idle", "vanity", "Inhibit system idle", "block");
 
       if (timeout_final >= 0) {
-        GLib.Timeout.add_seconds_once(
+        inhibit_timeout = GLib.Timeout.add_seconds_once(
           timeout_final,
           () => { this.disable(); });
         var now = new DateTime.now_local();
